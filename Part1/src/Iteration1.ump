@@ -1,0 +1,81 @@
+namespace ca.mcgill.ecse223.block.model;
+
+class UserRole   {
+  abstract;
+}
+
+
+class Admin {
+  isA UserRole;
+  String adminpassword;
+  
+}
+
+class Player {
+  String playerpassword;
+  isA UserRole;
+  
+}
+
+class Ball {
+  Integer minimumSpeed;
+  Double speedFactor;
+  lazy Double currentSpeed;
+  const Double Diameter = 10 ; 
+  
+}
+
+class Level {
+  Integer levelnumber;
+  1 -- 1 PlayArea;
+  1 -- 1 Grid;
+  }
+
+class PlayArea {
+  1 <@>- 1 Ball ball;
+  1 <@>- 1 Paddle paddle;
+  1<@>- * Grid grid;
+   Integer width;
+   Integer height;
+  1 --1 Game;
+  
+}
+class Paddle {
+    const Integer WIDTH = 5;
+    Integer minimumLength;
+      Integer maximumLength;
+  
+}
+
+class Game {
+  String name;
+  1 -- 0..1 Admin;
+}
+
+class Block {
+  enum Color{Blue, Yellow, Red, Grey, Black, Orange};
+   Color color;
+  const Integer SIDE=20;
+  Integer points;
+  
+        0..1 -- 1 GridCell;
+}
+class User
+{
+  String username;
+  * -- 2 UserRole;  
+}
+
+class Grid
+{
+  1 <@>-  * GridCell cell; 
+}
+
+class GridCell{
+  Boolean isEmpty;
+}
+
+class HallOfFame{
+  1 -- 1 Game;
+  1 -- * User;
+}
