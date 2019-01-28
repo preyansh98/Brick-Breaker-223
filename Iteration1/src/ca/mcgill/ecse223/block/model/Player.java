@@ -2,7 +2,6 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
-import java.util.*;
 
 // line 30 "../../../../../Iteration1.ump"
 public class Player extends UserRole
@@ -19,9 +18,9 @@ public class Player extends UserRole
   // CONSTRUCTOR
   //------------------------
 
-  public Player(Block223 aBlock223, String aPlayerpassword)
+  public Player(Block223 aBlock223, User aUser, String aPlayerpassword)
   {
-    super(aBlock223);
+    super(aBlock223, aUser);
     playerpassword = aPlayerpassword;
   }
 

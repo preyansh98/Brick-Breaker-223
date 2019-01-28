@@ -22,9 +22,9 @@ public class Admin extends UserRole
   // CONSTRUCTOR
   //------------------------
 
-  public Admin(Block223 aBlock223, String aAdminpassword)
+  public Admin(Block223 aBlock223, User aUser, String aAdminpassword)
   {
-    super(aBlock223);
+    super(aBlock223, aUser);
     adminpassword = aAdminpassword;
     games = new ArrayList<Game>();
   }

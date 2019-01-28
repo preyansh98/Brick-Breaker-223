@@ -24,15 +24,10 @@ public class User
   // CONSTRUCTOR
   //------------------------
 
-  public User(String aUsername, Block223 aBlock223, HallOfFame aHallOfFame, UserRole... allUserRoles)
+  public User(String aUsername, Block223 aBlock223, HallOfFame aHallOfFame)
   {
     username = aUsername;
     userRoles = new ArrayList<UserRole>();
-    boolean didAddUserRoles = setUserRoles(allUserRoles);
-    if (!didAddUserRoles)
-    {
-      throw new RuntimeException("Unable to create User, must have 2 userRoles");
-    }
     boolean didAddBlock223 = setBlock223(aBlock223);
     if (!didAddBlock223)
     {
@@ -101,28 +96,19 @@ public class User
   {
     return hallOfFame;
   }
-  /* Code from template association_IsNumberOfValidMethod */
-  public boolean isNumberOfUserRolesValid()
-  {
-    boolean isValid = numberOfUserRoles() >= minimumNumberOfUserRoles() && numberOfUserRoles() <= maximumNumberOfUserRoles();
-    return isValid;
-  }
-  /* Code from template association_RequiredNumberOfMethod */
-  public static int requiredNumberOfUserRoles()
-  {
-    return 2;
-  }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfUserRoles()
   {
-    return 2;
+    return 0;
   }
   /* Code from template association_MaximumNumberOfMethod */
   public static int maximumNumberOfUserRoles()
   {
     return 2;
   }
-  /* Code from template association_AddManyToManyMethod */
+  /* Code from template association_AddOptionalNToOne */
+
+
   public boolean addUserRole(UserRole aUserRole)
   {
     boolean wasAdded = false;
@@ -132,91 +118,62 @@ public class User
       return wasAdded;
     }
 
-    userRoles.add(aUserRole);
-    if (aUserRole.indexOfUser(this) != -1)
+    User existingUser = aUserRole.getUser();
+    boolean isNewUser = existingUser != null && !this.equals(existingUser);
+    if (isNewUser)
     {
-      wasAdded = true;
+      aUserRole.setUser(this);
     }
     else
     {
-      wasAdded = aUserRole.addUser(this);
-      if (!wasAdded)
-      {
-        userRoles.remove(aUserRole);
-      }
+      userRoles.add(aUserRole);
     }
+    wasAdded = true;
     return wasAdded;
   }
-  /* Code from template association_AddMNToMany */
+
   public boolean removeUserRole(UserRole aUserRole)
   {
     boolean wasRemoved = false;
-    if (!userRoles.contains(aUserRole))
+    //Unable to remove aUserRole, as it must always have a user
+    if (!this.equals(aUserRole.getUser()))
     {
-      return wasRemoved;
-    }
-
-    if (numberOfUserRoles() <= minimumNumberOfUserRoles())
-    {
-      return wasRemoved;
-    }
-
-    int oldIndex = userRoles.indexOf(aUserRole);
-    userRoles.remove(oldIndex);
-    if (aUserRole.indexOfUser(this) == -1)
-    {
+      userRoles.remove(aUserRole);
       wasRemoved = true;
-    }
-    else
-    {
-      wasRemoved = aUserRole.removeUser(this);
-      if (!wasRemoved)
-      {
-        userRoles.add(oldIndex,aUserRole);
-      }
     }
     return wasRemoved;
   }
-  /* Code from template association_SetMNToMany */
-  public boolean setUserRoles(UserRole... newUserRoles)
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addUserRoleAt(UserRole aUserRole, int index)
+  {  
+    boolean wasAdded = false;
+    if(addUserRole(aUserRole))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfUserRoles()) { index = numberOfUserRoles() - 1; }
+      userRoles.remove(aUserRole);
+      userRoles.add(index, aUserRole);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveUserRoleAt(UserRole aUserRole, int index)
   {
-    boolean wasSet = false;
-    ArrayList<UserRole> verifiedUserRoles = new ArrayList<UserRole>();
-    for (UserRole aUserRole : newUserRoles)
+    boolean wasAdded = false;
+    if(userRoles.contains(aUserRole))
     {
-      if (verifiedUserRoles.contains(aUserRole))
-      {
-        continue;
-      }
-      verifiedUserRoles.add(aUserRole);
-    }
-
-    if (verifiedUserRoles.size() != newUserRoles.length || verifiedUserRoles.size() < minimumNumberOfUserRoles() || verifiedUserRoles.size() > maximumNumberOfUserRoles())
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfUserRoles()) { index = numberOfUserRoles() - 1; }
+      userRoles.remove(aUserRole);
+      userRoles.add(index, aUserRole);
+      wasAdded = true;
+    } 
+    else 
     {
-      return wasSet;
+      wasAdded = addUserRoleAt(aUserRole, index);
     }
-
-    ArrayList<UserRole> oldUserRoles = new ArrayList<UserRole>(userRoles);
-    userRoles.clear();
-    for (UserRole aNewUserRole : verifiedUserRoles)
-    {
-      userRoles.add(aNewUserRole);
-      if (oldUserRoles.contains(aNewUserRole))
-      {
-        oldUserRoles.remove(aNewUserRole);
-      }
-      else
-      {
-        aNewUserRole.addUser(this);
-      }
-    }
-
-    for (UserRole anOldUserRole : oldUserRoles)
-    {
-      anOldUserRole.removeUser(this);
-    }
-    wasSet = true;
-    return wasSet;
+    return wasAdded;
   }
   /* Code from template association_SetOneToMany */
   public boolean setBlock223(Block223 aBlock223)
@@ -259,11 +216,10 @@ public class User
 
   public void delete()
   {
-    ArrayList<UserRole> copyOfUserRoles = new ArrayList<UserRole>(userRoles);
-    userRoles.clear();
-    for(UserRole aUserRole : copyOfUserRoles)
+    for(int i=userRoles.size(); i > 0; i--)
     {
-      aUserRole.removeUser(this);
+      UserRole aUserRole = userRoles.get(i - 1);
+      aUserRole.delete();
     }
     Block223 placeholderBlock223 = block223;
     this.block223 = null;

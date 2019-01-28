@@ -96,9 +96,9 @@ public class HallOfFame
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public User addUser(String aUsername, Block223 aBlock223, UserRole... allUserRoles)
+  public User addUser(String aUsername, Block223 aBlock223)
   {
-    return new User(aUsername, aBlock223, this, allUserRoles);
+    return new User(aUsername, aBlock223, this);
   }
 
   public boolean addUser(User aUser)

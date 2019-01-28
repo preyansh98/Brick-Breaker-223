@@ -81,7 +81,7 @@ class Block {
 class User
 {
   String username;
-  * -- 2 UserRole;  
+  1 --0..2 UserRole;  
 }
 
 class Grid
