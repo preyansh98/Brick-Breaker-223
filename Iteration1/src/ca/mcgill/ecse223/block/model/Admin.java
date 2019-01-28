@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 8 "../../../../../Iteration1.ump"
+// line 24 "../../../../../Iteration1.ump"
 public class Admin extends UserRole
 {
 
@@ -16,21 +16,17 @@ public class Admin extends UserRole
   private String adminpassword;
 
   //Admin Associations
-  private Game game;
+  private List<Game> games;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Admin(String aAdminpassword, Game aGame)
+  public Admin(Block223 aBlock223, String aAdminpassword)
   {
-    super();
+    super(aBlock223);
     adminpassword = aAdminpassword;
-    boolean didAddGame = setGame(aGame);
-    if (!didAddGame)
-    {
-      throw new RuntimeException("Unable to create admin due to game");
-    }
+    games = new ArrayList<Game>();
   }
 
   //------------------------
@@ -49,47 +45,115 @@ public class Admin extends UserRole
   {
     return adminpassword;
   }
-  /* Code from template association_GetOne */
-  public Game getGame()
+  /* Code from template association_GetMany */
+  public Game getGame(int index)
   {
-    return game;
+    Game aGame = games.get(index);
+    return aGame;
   }
-  /* Code from template association_SetOneToOptionalOne */
-  public boolean setGame(Game aNewGame)
-  {
-    boolean wasSet = false;
-    if (aNewGame == null)
-    {
-      //Unable to setGame to null, as admin must always be associated to a game
-      return wasSet;
-    }
-    
-    Admin existingAdmin = aNewGame.getAdmin();
-    if (existingAdmin != null && !equals(existingAdmin))
-    {
-      //Unable to setGame, the current game already has a admin, which would be orphaned if it were re-assigned
-      return wasSet;
-    }
-    
-    Game anOldGame = game;
-    game = aNewGame;
-    game.setAdmin(this);
 
-    if (anOldGame != null)
+  public List<Game> getGames()
+  {
+    List<Game> newGames = Collections.unmodifiableList(games);
+    return newGames;
+  }
+
+  public int numberOfGames()
+  {
+    int number = games.size();
+    return number;
+  }
+
+  public boolean hasGames()
+  {
+    boolean has = games.size() > 0;
+    return has;
+  }
+
+  public int indexOfGame(Game aGame)
+  {
+    int index = games.indexOf(aGame);
+    return index;
+  }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfGames()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public Game addGame(String aName, int aNumOfLevels, Block223 aBlock223, PlayArea aPlayArea, HallOfFame aHallOfFame)
+  {
+    return new Game(aName, aNumOfLevels, this, aBlock223, aPlayArea, aHallOfFame);
+  }
+
+  public boolean addGame(Game aGame)
+  {
+    boolean wasAdded = false;
+    if (games.contains(aGame)) { return false; }
+    Admin existingAdmin = aGame.getAdmin();
+    boolean isNewAdmin = existingAdmin != null && !this.equals(existingAdmin);
+    if (isNewAdmin)
     {
-      anOldGame.setAdmin(null);
+      aGame.setAdmin(this);
     }
-    wasSet = true;
-    return wasSet;
+    else
+    {
+      games.add(aGame);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeGame(Game aGame)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aGame, as it must always have a admin
+    if (!this.equals(aGame.getAdmin()))
+    {
+      games.remove(aGame);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addGameAt(Game aGame, int index)
+  {  
+    boolean wasAdded = false;
+    if(addGame(aGame))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfGames()) { index = numberOfGames() - 1; }
+      games.remove(aGame);
+      games.add(index, aGame);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveGameAt(Game aGame, int index)
+  {
+    boolean wasAdded = false;
+    if(games.contains(aGame))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfGames()) { index = numberOfGames() - 1; }
+      games.remove(aGame);
+      games.add(index, aGame);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addGameAt(aGame, index);
+    }
+    return wasAdded;
   }
 
   public void delete()
   {
-    Game existingGame = game;
-    game = null;
-    if (existingGame != null)
+    for(int i=games.size(); i > 0; i--)
     {
-      existingGame.setAdmin(null);
+      Game aGame = games.get(i - 1);
+      aGame.delete();
     }
     super.delete();
   }
@@ -98,7 +162,6 @@ public class Admin extends UserRole
   public String toString()
   {
     return super.toString() + "["+
-            "adminpassword" + ":" + getAdminpassword()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
+            "adminpassword" + ":" + getAdminpassword()+ "]";
   }
 }

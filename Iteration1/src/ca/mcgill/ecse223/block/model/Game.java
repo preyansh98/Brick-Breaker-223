@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.block.model;
 
-// line 50 "../../../../../Iteration1.ump"
+// line 67 "../../../../../Iteration1.ump"
 public class Game
 {
 
@@ -13,9 +13,11 @@ public class Game
 
   //Game Attributes
   private String name;
+  private int numOfLevels;
 
   //Game Associations
   private Admin admin;
+  private Block223 block223;
   private PlayArea playArea;
   private HallOfFame hallOfFame;
 
@@ -23,9 +25,20 @@ public class Game
   // CONSTRUCTOR
   //------------------------
 
-  public Game(String aName, PlayArea aPlayArea, HallOfFame aHallOfFame)
+  public Game(String aName, int aNumOfLevels, Admin aAdmin, Block223 aBlock223, PlayArea aPlayArea, HallOfFame aHallOfFame)
   {
     name = aName;
+    numOfLevels = aNumOfLevels;
+    boolean didAddAdmin = setAdmin(aAdmin);
+    if (!didAddAdmin)
+    {
+      throw new RuntimeException("Unable to create game due to admin");
+    }
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create game due to block223");
+    }
     if (aPlayArea == null || aPlayArea.getGame() != null)
     {
       throw new RuntimeException("Unable to create Game due to aPlayArea");
@@ -38,11 +51,22 @@ public class Game
     hallOfFame = aHallOfFame;
   }
 
-  public Game(String aName, int aWidthForPlayArea, int aHeightForPlayArea, Ball aBallForPlayArea, Paddle aPaddleForPlayArea)
+  public Game(String aName, int aNumOfLevels, Admin aAdmin, Block223 aBlock223, int aWidthForPlayArea, int aHeightForPlayArea, Ball aBallForPlayArea, Paddle aPaddleForPlayArea, Block223 aBlock223ForPlayArea, Block223 aBlock223ForHallOfFame)
   {
     name = aName;
-    playArea = new PlayArea(aWidthForPlayArea, aHeightForPlayArea, aBallForPlayArea, aPaddleForPlayArea, this);
-    hallOfFame = new HallOfFame(this);
+    numOfLevels = aNumOfLevels;
+    boolean didAddAdmin = setAdmin(aAdmin);
+    if (!didAddAdmin)
+    {
+      throw new RuntimeException("Unable to create game due to admin");
+    }
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create game due to block223");
+    }
+    playArea = new PlayArea(aWidthForPlayArea, aHeightForPlayArea, aBallForPlayArea, aPaddleForPlayArea, this, aBlock223ForPlayArea);
+    hallOfFame = new HallOfFame(this, aBlock223ForHallOfFame);
   }
 
   //------------------------
@@ -57,20 +81,32 @@ public class Game
     return wasSet;
   }
 
+  public boolean setNumOfLevels(int aNumOfLevels)
+  {
+    boolean wasSet = false;
+    numOfLevels = aNumOfLevels;
+    wasSet = true;
+    return wasSet;
+  }
+
   public String getName()
   {
     return name;
+  }
+
+  public int getNumOfLevels()
+  {
+    return numOfLevels;
   }
   /* Code from template association_GetOne */
   public Admin getAdmin()
   {
     return admin;
   }
-
-  public boolean hasAdmin()
+  /* Code from template association_GetOne */
+  public Block223 getBlock223()
   {
-    boolean has = admin != null;
-    return has;
+    return block223;
   }
   /* Code from template association_GetOne */
   public PlayArea getPlayArea()
@@ -82,41 +118,58 @@ public class Game
   {
     return hallOfFame;
   }
-  /* Code from template association_SetOptionalOneToOne */
-  public boolean setAdmin(Admin aNewAdmin)
+  /* Code from template association_SetOneToMany */
+  public boolean setAdmin(Admin aAdmin)
   {
     boolean wasSet = false;
-    if (admin != null && !admin.equals(aNewAdmin) && equals(admin.getGame()))
+    if (aAdmin == null)
     {
-      //Unable to setAdmin, as existing admin would become an orphan
       return wasSet;
     }
 
-    admin = aNewAdmin;
-    Game anOldGame = aNewAdmin != null ? aNewAdmin.getGame() : null;
-
-    if (!this.equals(anOldGame))
+    Admin existingAdmin = admin;
+    admin = aAdmin;
+    if (existingAdmin != null && !existingAdmin.equals(aAdmin))
     {
-      if (anOldGame != null)
-      {
-        anOldGame.admin = null;
-      }
-      if (admin != null)
-      {
-        admin.setGame(this);
-      }
+      existingAdmin.removeGame(this);
     }
+    admin.addGame(this);
+    wasSet = true;
+    return wasSet;
+  }
+  /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removeGame(this);
+    }
+    block223.addGame(this);
     wasSet = true;
     return wasSet;
   }
 
   public void delete()
   {
-    Admin existingAdmin = admin;
-    admin = null;
-    if (existingAdmin != null)
+    Admin placeholderAdmin = admin;
+    this.admin = null;
+    if(placeholderAdmin != null)
     {
-      existingAdmin.delete();
+      placeholderAdmin.removeGame(this);
+    }
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removeGame(this);
     }
     PlayArea existingPlayArea = playArea;
     playArea = null;
@@ -136,8 +189,10 @@ public class Game
   public String toString()
   {
     return super.toString() + "["+
-            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
+            "name" + ":" + getName()+ "," +
+            "numOfLevels" + ":" + getNumOfLevels()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "admin = "+(getAdmin()!=null?Integer.toHexString(System.identityHashCode(getAdmin())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "playArea = "+(getPlayArea()!=null?Integer.toHexString(System.identityHashCode(getPlayArea())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "hallOfFame = "+(getHallOfFame()!=null?Integer.toHexString(System.identityHashCode(getHallOfFame())):"null");
   }

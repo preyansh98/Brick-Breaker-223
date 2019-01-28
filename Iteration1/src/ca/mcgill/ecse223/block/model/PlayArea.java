@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 34 "../../../../../Iteration1.ump"
+// line 51 "../../../../../Iteration1.ump"
 public class PlayArea
 {
 
@@ -21,13 +21,14 @@ public class PlayArea
   private Paddle paddle;
   private List<Grid> grid;
   private Game game;
+  private Block223 block223;
   private List<Level> levels;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public PlayArea(int aWidth, int aHeight, Ball aBall, Paddle aPaddle, Game aGame)
+  public PlayArea(int aWidth, int aHeight, Ball aBall, Paddle aPaddle, Game aGame, Block223 aBlock223)
   {
     width = aWidth;
     height = aHeight;
@@ -47,17 +48,27 @@ public class PlayArea
       throw new RuntimeException("Unable to create PlayArea due to aGame");
     }
     game = aGame;
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create playArea due to block223");
+    }
     levels = new ArrayList<Level>();
   }
 
-  public PlayArea(int aWidth, int aHeight, int aMinimumSpeedForBall, double aSpeedFactorForBall, int aMinimumLengthForPaddle, int aMaximumLengthForPaddle, String aNameForGame, HallOfFame aHallOfFameForGame)
+  public PlayArea(int aWidth, int aHeight, int aMinimumSpeedForBall, double aSpeedFactorForBall, Block223 aBlock223ForBall, int aMinimumLengthForPaddle, int aMaximumLengthForPaddle, Block223 aBlock223ForPaddle, String aNameForGame, int aNumOfLevelsForGame, Admin aAdminForGame, Block223 aBlock223ForGame, HallOfFame aHallOfFameForGame, Block223 aBlock223)
   {
     width = aWidth;
     height = aHeight;
-    ball = new Ball(aMinimumSpeedForBall, aSpeedFactorForBall, this);
-    paddle = new Paddle(aMinimumLengthForPaddle, aMaximumLengthForPaddle, this);
+    ball = new Ball(aMinimumSpeedForBall, aSpeedFactorForBall, aBlock223ForBall, this);
+    paddle = new Paddle(aMinimumLengthForPaddle, aMaximumLengthForPaddle, aBlock223ForPaddle, this);
     grid = new ArrayList<Grid>();
-    game = new Game(aNameForGame, this, aHallOfFameForGame);
+    game = new Game(aNameForGame, aNumOfLevelsForGame, aAdminForGame, aBlock223ForGame, this, aHallOfFameForGame);
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create playArea due to block223");
+    }
     levels = new ArrayList<Level>();
   }
 
@@ -135,6 +146,11 @@ public class PlayArea
   {
     return game;
   }
+  /* Code from template association_GetOne */
+  public Block223 getBlock223()
+  {
+    return block223;
+  }
   /* Code from template association_GetMany */
   public Level getLevel(int index)
   {
@@ -171,9 +187,9 @@ public class PlayArea
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Grid addGrid(Level aLevel)
+  public Grid addGrid(Block223 aBlock223, Level aLevel)
   {
-    return new Grid(aLevel, this);
+    return new Grid(aBlock223, aLevel, this);
   }
 
   public boolean addGrid(Grid aGrid)
@@ -237,15 +253,34 @@ public class PlayArea
     }
     return wasAdded;
   }
+  /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removePlayArea(this);
+    }
+    block223.addPlayArea(this);
+    wasSet = true;
+    return wasSet;
+  }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfLevels()
   {
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Level addLevel(int aLevelnumber, Grid aGrid)
+  public Level addLevel(int aLevelnumber, boolean aIsRandom, Grid aGrid, Block223 aBlock223)
   {
-    return new Level(aLevelnumber, this, aGrid);
+    return new Level(aLevelnumber, aIsRandom, this, aGrid, aBlock223);
   }
 
   public boolean addLevel(Level aLevel)
@@ -337,6 +372,12 @@ public class PlayArea
     {
       existingGame.delete();
     }
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removePlayArea(this);
+    }
     for(int i=levels.size(); i > 0; i--)
     {
       Level aLevel = levels.get(i - 1);
@@ -352,6 +393,7 @@ public class PlayArea
             "height" + ":" + getHeight()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "ball = "+(getBall()!=null?Integer.toHexString(System.identityHashCode(getBall())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "paddle = "+(getPaddle()!=null?Integer.toHexString(System.identityHashCode(getPaddle())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
+            "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null");
   }
 }

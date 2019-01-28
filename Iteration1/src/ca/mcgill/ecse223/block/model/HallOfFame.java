@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 78 "../../../../../Iteration1.ump"
+// line 96 "../../../../../Iteration1.ump"
 public class HallOfFame
 {
 
@@ -15,12 +15,13 @@ public class HallOfFame
   //HallOfFame Associations
   private Game game;
   private List<User> users;
+  private Block223 block223;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public HallOfFame(Game aGame)
+  public HallOfFame(Game aGame, Block223 aBlock223)
   {
     if (aGame == null || aGame.getHallOfFame() != null)
     {
@@ -28,12 +29,22 @@ public class HallOfFame
     }
     game = aGame;
     users = new ArrayList<User>();
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create halfOfFame due to block223");
+    }
   }
 
-  public HallOfFame(String aNameForGame, PlayArea aPlayAreaForGame)
+  public HallOfFame(String aNameForGame, int aNumOfLevelsForGame, Admin aAdminForGame, Block223 aBlock223ForGame, PlayArea aPlayAreaForGame, Block223 aBlock223)
   {
-    game = new Game(aNameForGame, aPlayAreaForGame, this);
+    game = new Game(aNameForGame, aNumOfLevelsForGame, aAdminForGame, aBlock223ForGame, aPlayAreaForGame, this);
     users = new ArrayList<User>();
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create halfOfFame due to block223");
+    }
   }
 
   //------------------------
@@ -74,15 +85,20 @@ public class HallOfFame
     int index = users.indexOf(aUser);
     return index;
   }
+  /* Code from template association_GetOne */
+  public Block223 getBlock223()
+  {
+    return block223;
+  }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfUsers()
   {
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public User addUser(String aUsername, UserRole... allUserRoles)
+  public User addUser(String aUsername, Block223 aBlock223, UserRole... allUserRoles)
   {
-    return new User(aUsername, this, allUserRoles);
+    return new User(aUsername, aBlock223, this, allUserRoles);
   }
 
   public boolean addUser(User aUser)
@@ -146,6 +162,25 @@ public class HallOfFame
     }
     return wasAdded;
   }
+  /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removeHalfOfFame(this);
+    }
+    block223.addHalfOfFame(this);
+    wasSet = true;
+    return wasSet;
+  }
 
   public void delete()
   {
@@ -159,6 +194,12 @@ public class HallOfFame
     {
       User aUser = users.get(i - 1);
       aUser.delete();
+    }
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removeHalfOfFame(this);
     }
   }
 

@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 69 "../../../../../Iteration1.ump"
+// line 87 "../../../../../Iteration1.ump"
 public class Grid
 {
 
@@ -14,6 +14,7 @@ public class Grid
 
   //Grid Associations
   private List<GridCell> cell;
+  private Block223 block223;
   private Level level;
   private PlayArea playArea;
 
@@ -21,9 +22,14 @@ public class Grid
   // CONSTRUCTOR
   //------------------------
 
-  public Grid(Level aLevel, PlayArea aPlayArea)
+  public Grid(Block223 aBlock223, Level aLevel, PlayArea aPlayArea)
   {
     cell = new ArrayList<GridCell>();
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create grid due to block223");
+    }
     if (aLevel == null || aLevel.getGrid() != null)
     {
       throw new RuntimeException("Unable to create Grid due to aLevel");
@@ -36,10 +42,15 @@ public class Grid
     }
   }
 
-  public Grid(int aLevelnumberForLevel, PlayArea aPlayAreaForLevel, PlayArea aPlayArea)
+  public Grid(Block223 aBlock223, int aLevelnumberForLevel, boolean aIsRandomForLevel, PlayArea aPlayAreaForLevel, Block223 aBlock223ForLevel, PlayArea aPlayArea)
   {
     cell = new ArrayList<GridCell>();
-    level = new Level(aLevelnumberForLevel, aPlayAreaForLevel, this);
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create grid due to block223");
+    }
+    level = new Level(aLevelnumberForLevel, aIsRandomForLevel, aPlayAreaForLevel, this, aBlock223ForLevel);
     boolean didAddPlayArea = setPlayArea(aPlayArea);
     if (!didAddPlayArea)
     {
@@ -81,6 +92,11 @@ public class Grid
     return index;
   }
   /* Code from template association_GetOne */
+  public Block223 getBlock223()
+  {
+    return block223;
+  }
+  /* Code from template association_GetOne */
   public Level getLevel()
   {
     return level;
@@ -96,9 +112,9 @@ public class Grid
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public GridCell addCell(boolean aIsEmpty)
+  public GridCell addCell(boolean aIsEmpty, Block223 aBlock223)
   {
-    return new GridCell(aIsEmpty, this);
+    return new GridCell(aIsEmpty, aBlock223, this);
   }
 
   public boolean addCell(GridCell aCell)
@@ -163,6 +179,25 @@ public class Grid
     return wasAdded;
   }
   /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removeGrid(this);
+    }
+    block223.addGrid(this);
+    wasSet = true;
+    return wasSet;
+  }
+  /* Code from template association_SetOneToMany */
   public boolean setPlayArea(PlayArea aPlayArea)
   {
     boolean wasSet = false;
@@ -191,6 +226,12 @@ public class Grid
       cell.remove(aCell);
     }
     
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removeGrid(this);
+    }
     Level existingLevel = level;
     level = null;
     if (existingLevel != null)

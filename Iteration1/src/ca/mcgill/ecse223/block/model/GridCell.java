@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.block.model;
 
-// line 74 "../../../../../Iteration1.ump"
+// line 92 "../../../../../Iteration1.ump"
 public class GridCell
 {
 
@@ -15,6 +15,7 @@ public class GridCell
   private boolean isEmpty;
 
   //GridCell Associations
+  private Block223 block223;
   private Block block;
   private Grid grid;
 
@@ -22,9 +23,14 @@ public class GridCell
   // CONSTRUCTOR
   //------------------------
 
-  public GridCell(boolean aIsEmpty, Grid aGrid)
+  public GridCell(boolean aIsEmpty, Block223 aBlock223, Grid aGrid)
   {
     isEmpty = aIsEmpty;
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create gridCell due to block223");
+    }
     boolean didAddGrid = setGrid(aGrid);
     if (!didAddGrid)
     {
@@ -54,6 +60,11 @@ public class GridCell
     return isEmpty;
   }
   /* Code from template association_GetOne */
+  public Block223 getBlock223()
+  {
+    return block223;
+  }
+  /* Code from template association_GetOne */
   public Block getBlock()
   {
     return block;
@@ -68,6 +79,25 @@ public class GridCell
   public Grid getGrid()
   {
     return grid;
+  }
+  /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removeGridCell(this);
+    }
+    block223.addGridCell(this);
+    wasSet = true;
+    return wasSet;
   }
   /* Code from template association_SetOptionalOneToOne */
   public boolean setBlock(Block aNewBlock)
@@ -118,6 +148,12 @@ public class GridCell
 
   public void delete()
   {
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removeGridCell(this);
+    }
     Block existingBlock = block;
     block = null;
     if (existingBlock != null)
@@ -137,6 +173,7 @@ public class GridCell
   {
     return super.toString() + "["+
             "isEmpty" + ":" + getIsEmpty()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "block = "+(getBlock()!=null?Integer.toHexString(System.identityHashCode(getBlock())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "grid = "+(getGrid()!=null?Integer.toHexString(System.identityHashCode(getGrid())):"null");
   }

@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 63 "../../../../../Iteration1.ump"
+// line 81 "../../../../../Iteration1.ump"
 public class User
 {
 
@@ -17,13 +17,14 @@ public class User
 
   //User Associations
   private List<UserRole> userRoles;
+  private Block223 block223;
   private HallOfFame hallOfFame;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public User(String aUsername, HallOfFame aHallOfFame, UserRole... allUserRoles)
+  public User(String aUsername, Block223 aBlock223, HallOfFame aHallOfFame, UserRole... allUserRoles)
   {
     username = aUsername;
     userRoles = new ArrayList<UserRole>();
@@ -31,6 +32,11 @@ public class User
     if (!didAddUserRoles)
     {
       throw new RuntimeException("Unable to create User, must have 2 userRoles");
+    }
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create user due to block223");
     }
     boolean didAddHallOfFame = setHallOfFame(aHallOfFame);
     if (!didAddHallOfFame)
@@ -84,6 +90,11 @@ public class User
   {
     int index = userRoles.indexOf(aUserRole);
     return index;
+  }
+  /* Code from template association_GetOne */
+  public Block223 getBlock223()
+  {
+    return block223;
   }
   /* Code from template association_GetOne */
   public HallOfFame getHallOfFame()
@@ -208,6 +219,25 @@ public class User
     return wasSet;
   }
   /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removeUser(this);
+    }
+    block223.addUser(this);
+    wasSet = true;
+    return wasSet;
+  }
+  /* Code from template association_SetOneToMany */
   public boolean setHallOfFame(HallOfFame aHallOfFame)
   {
     boolean wasSet = false;
@@ -235,6 +265,12 @@ public class User
     {
       aUserRole.removeUser(this);
     }
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removeUser(this);
+    }
     HallOfFame placeholderHallOfFame = hallOfFame;
     this.hallOfFame = null;
     if(placeholderHallOfFame != null)
@@ -248,6 +284,7 @@ public class User
   {
     return super.toString() + "["+
             "username" + ":" + getUsername()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "hallOfFame = "+(getHallOfFame()!=null?Integer.toHexString(System.identityHashCode(getHallOfFame())):"null");
   }
 }

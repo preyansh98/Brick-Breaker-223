@@ -1,5 +1,21 @@
 namespace ca.mcgill.ecse223.block.model;
 
+
+class Block223 {
+  1 <@>- * UserRole userrole;
+   1 <@>- * Ball ball;
+   1 <@>- * Level level;
+   1 <@>- * PlayArea playArea;
+   1 <@>- * Paddle paddle;
+   1 <@>- * Game game;
+   1 <@>- * User user;
+   1 <@>- * Grid grid;
+   1 <@>- * GridCell gridCell;
+   1 <@>- * HallOfFame halfOfFame;
+  
+  
+}
+
 class UserRole   {
   abstract;
 }
@@ -27,6 +43,7 @@ class Ball {
 
 class Level {
   Integer levelnumber;
+  Boolean isRandom;
   * -- 1 PlayArea;
   1 -- 1 Grid;
   }
@@ -49,7 +66,8 @@ class Paddle {
 
 class Game {
   String name;
-  1 -- 0..1 Admin;
+  Integer numOfLevels;
+  * -- 1 Admin;
 }
 
 class Block {

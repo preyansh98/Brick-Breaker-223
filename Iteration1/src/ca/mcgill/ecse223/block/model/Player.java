@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 14 "../../../../../Iteration1.ump"
+// line 30 "../../../../../Iteration1.ump"
 public class Player extends UserRole
 {
 
@@ -19,9 +19,9 @@ public class Player extends UserRole
   // CONSTRUCTOR
   //------------------------
 
-  public Player(String aPlayerpassword)
+  public Player(Block223 aBlock223, String aPlayerpassword)
   {
-    super();
+    super(aBlock223);
     playerpassword = aPlayerpassword;
   }
 

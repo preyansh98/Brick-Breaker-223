@@ -4,7 +4,7 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 3 "../../../../../Iteration1.ump"
+// line 19 "../../../../../Iteration1.ump"
 public abstract class UserRole
 {
 
@@ -13,20 +13,31 @@ public abstract class UserRole
   //------------------------
 
   //UserRole Associations
+  private Block223 block223;
   private List<User> users;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public UserRole()
+  public UserRole(Block223 aBlock223)
   {
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create userrole due to block223");
+    }
     users = new ArrayList<User>();
   }
 
   //------------------------
   // INTERFACE
   //------------------------
+  /* Code from template association_GetOne */
+  public Block223 getBlock223()
+  {
+    return block223;
+  }
   /* Code from template association_GetMany */
   public User getUser(int index)
   {
@@ -56,6 +67,25 @@ public abstract class UserRole
   {
     int index = users.indexOf(aUser);
     return index;
+  }
+  /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removeUserrole(this);
+    }
+    block223.addUserrole(this);
+    wasSet = true;
+    return wasSet;
   }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfUsers()
@@ -142,6 +172,12 @@ public abstract class UserRole
 
   public void delete()
   {
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removeUserrole(this);
+    }
     ArrayList<User> copyOfUsers = new ArrayList<User>(users);
     users.clear();
     for(User aUser : copyOfUsers)
