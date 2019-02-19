@@ -24,8 +24,7 @@ public class BlockAssignment
   // CONSTRUCTOR
   //------------------------
 
-  public BlockAssignment(int aGridHorizontalPosition, int aGridVerticalPosition, Level aLevel,
-		  Block aBlock, Game aGame)
+  public BlockAssignment(int aGridHorizontalPosition, int aGridVerticalPosition, Level aLevel, Block aBlock, Game aGame)
   {
     gridHorizontalPosition = aGridHorizontalPosition;
     gridVerticalPosition = aGridVerticalPosition;
