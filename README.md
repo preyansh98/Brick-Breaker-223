@@ -6,3 +6,4 @@
 3. Zakaria Essadaoui
 4. Marwan Shiraz
 5. Ragheed Qasmieh
+6. Osman Warsi
