@@ -122,9 +122,21 @@ public class Block223Controller {
 		}
 
 		public static TOGame getCurrentDesignableGame() {
+		Game thisgame = Block223Application.getCurrentGame();
+		TOGame to = new TOGame(thisgame.getName(),thisgame.getLevels().size(),thisgame.getNrBlocksPerLevel(),thisgame.getBall().getMinBallSpeedX(),thisgame.getBall().getMinBallSpeedY(),thisgame.getBall().getBallSpeedIncreaseFactor(),thisgame.getPaddle().getMaxPaddleLength(),thisgame.getPaddle().getMinPaddleLength());
+		return to;
+		
 		}
 
 		public static List<TOBlock> getBlocksOfCurrentDesignableGame() {
+			Game thisgame = Block223Application.getCurrentGame();
+			List<TOBlock> result = new ArrayList<TOBlock>();
+			List<Block> blocks = thisgame.getBlocks();
+			for (int i=0;i<blocks.size();i++) {
+				TOBlock to = new TOBlock (blocks.get(i).getId(), blocks.get(i).getRed(), blocks.get(i).getGreen(), blocks.get(i).getBlue(), blocks.get(i).getPoints());
+				result.add(to);
+			}
+			return result;
 		}
 
 		public static TOBlock getBlockOfCurrentDesignableGame(int id) throws InvalidInputException {
