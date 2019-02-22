@@ -78,7 +78,6 @@ public class Block223Controller {
 
 		public static void removeBlock(int level, int gridHorizontalPosition, int gridVerticalPosition)
 				throws InvalidInputException {
-			//TODO: implement. 
 		}
 
 		public static void saveGame() throws InvalidInputException {
