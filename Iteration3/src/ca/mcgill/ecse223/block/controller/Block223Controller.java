@@ -46,6 +46,14 @@ public class Block223Controller {
 		}
 
 		public static void updateBlock(int id, int red, int green, int blue, int points) throws InvalidInputException {
+		Game game = Block223Application.getCurrentGame();
+		Block block = game.findBlock(id);
+		
+		block.setRed(red);
+		block.setGreen(green);
+		block.setBlue(blue);
+		block.setPoints(points);
+		
 		}
 
 		//Modifier method to position block
