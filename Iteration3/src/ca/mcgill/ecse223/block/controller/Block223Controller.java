@@ -2,8 +2,10 @@ package ca.mcgill.ecse223.block.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*; 
 
 import ca.mcgill.ecse223.block.application.*;
+import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 import ca.mcgill.ecse223.block.model.*; 
 
 public class Block223Controller {
@@ -126,12 +128,43 @@ public class Block223Controller {
 		}
 
 		public static TOBlock getBlockOfCurrentDesignableGame(int id) throws InvalidInputException {
+			Game thisgame = Block223Application.getCurrentGame();
+			Block thisblock = thisgame.findBlock(id);
+			
+			TOBlock to = new TOBlock (thisblock.getId(), thisblock.getRed(), thisblock.getGreen(), thisblock.getBlue(), thisblock.getPoints());
+			
+			return to;
 		}
 
 		public List<TOGridCell> getBlocksAtLevelOfCurrentDesignableGame(int level) throws InvalidInputException {
+			Game thisgame = Block223Application.getCurrentGame();
+			List<TOGridCell> result = new ArrayList<TOGridCell>();
+			Level thislevel = thisgame.getLevel(level);
+			List<BlockAssignment> assignments= thislevel.getBlockAssignments();
+			for (int i=0;i<assignments.size();i++) {
+					TOGridCell to = new TOGridCell(assignments.get(i).getGridHorizontalPosition(),assignments.get(i).getGridVerticalPosition(),assignments.get(i).getBlock().getId(),assignments.get(i).getBlock().getRed(),assignments.get(i).getBlock().getGreen(),assignments.get(i).getBlock().getBlue(), assignments.get(i).getBlock().getPoints());
+					result.add(to);
+			}
+			return result;
+			
+			
+			
 		}
 
 		public static TOUserMode getUserMode() {
+		UserRole thisrole = Block223Application.getCurrentUserRole();
+		TOUserMode to = new TOUserMode(Mode.None);
+		if (thisrole == null) {
+			to = new TOUserMode(Mode.None);
+		}
+		if (thisrole instanceof Player) {
+			to = new TOUserMode(Mode.Play);
+			
+		}
+		if (thisrole instanceof Admin) {
+			to = new TOUserMode(Mode.Design);
+		}
+		return to;
 		}
 
 }
