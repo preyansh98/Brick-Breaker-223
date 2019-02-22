@@ -1,5 +1,6 @@
 package ca.mcgill.ecse223.block.application;
 
+import ca.mcgill.ecse223.block.model.Admin;
 import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.Level;
@@ -25,5 +26,10 @@ public class Block223Application {
 
 	public static void getLevel(Level level) {
 		// TODO Auto-generated method stub
+	}
+
+	public static Admin getCurrentUserRole() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
