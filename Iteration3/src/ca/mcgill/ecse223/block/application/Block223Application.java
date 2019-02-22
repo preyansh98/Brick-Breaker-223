@@ -5,12 +5,30 @@ import ca.mcgill.ecse223.block.model.Admin;
 import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.Level;
+import ca.mcgill.ecse223.block.model.UserRole;
 
 public class Block223Application {
 	
 	private static Block223 block223; 
-	private static Game game;
+	private static Game currentGame;
+	private static UserRole currentUserRole; 
 	
+	public static Game getCurrentGame() {
+		return currentGame;
+	}
+
+	public static void setCurrentGame(Game currentGame) {
+		Block223Application.currentGame = currentGame;
+	}
+
+	public static UserRole getCurrentUserRole() {
+		return currentUserRole;
+	}
+
+	public static void setCurrentUserRole(UserRole currentUserRole) {
+		Block223Application.currentUserRole = currentUserRole;
+	}
+
 	public static Block223 getBlock223() {
 		//temporary implementation
 		if(block223 == null) {
@@ -21,17 +39,7 @@ public class Block223Application {
 		}
 	}
 
-	public static Game getCurrentGame() {
-//to be implemented
-		return null;
-	}
 
-	public static void getLevel(Level level) {
-		// TODO Auto-generated method stub
-	}
 
-	public static Admin getCurrentUserRole() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }
