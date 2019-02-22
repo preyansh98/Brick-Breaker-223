@@ -613,8 +613,12 @@ public class Game
   }
   
   public Block findBlock(int id) {
-	// TODO Auto-generated method stub
- 	 //have to implement! 
+	List<Block> blocks = this.getBlocks();
+	for (int i=0;i<blocks.size();i++) {
+		if (blocks.get(i).getId() == id) {
+			return blocks.get(i);
+		}
+	}
 	return null;
 }
 }
