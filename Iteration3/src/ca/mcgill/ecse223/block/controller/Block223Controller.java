@@ -3,6 +3,8 @@ package ca.mcgill.ecse223.block.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.xml.internal.ws.assembler.dev.ServerTubelineAssemblyContext;
+
 import ca.mcgill.ecse223.block.application.*;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 import ca.mcgill.ecse223.block.model.*;
@@ -23,36 +25,70 @@ public class Block223Controller {
 	}
 
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
-			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException {
-	// To do: Add Checksss
-		//1-select game
+			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException 
+	{
+																// To do: Add Checksss
+		
 		String error = "";
 		Admin admin = (Admin) Block223Application.getCurrentUserRole();
-		if (admin == null) {
-			error="Admin previleges are required to define game settings";
-		} else if (!admin.hasGames()) { //NOT SURE
-			error="Only the admin who created the game can define its game settings";
-		} else {
+			if (admin == null) 
+		{
+				throw new InvalidInputException("Admin previleges are required to define game settings");
+		} 	else if (!admin.hasGames()) 
+		{ //NOT SURE
+			throw new InvalidInputException("Only the admin who created the game can define its game settings");
+		}  
+		
 		
 		if (nrLevels < 1 || nrLevels >99 ) {
-			error="The number of levels must be between 1 and 99";
+			throw new InvalidInputException("The number of levels must be between 1 and 99");
 		}
+		
+		
     Game game = Block223Application.getCurrentGame();
-    if (game == null) {
-    	error = "A Game must be selected to define game settings";
+    if (game == null) 
+    {
+    	throw new InvalidInputException("A Game must be selected to define game settings");
     }
+    
+    if(nrLevels < 1 || nrLevels >99) {
+    	throw new InvalidInputException("The number of levels must be between 1 and 99.");
+    }
+    
+   
     //setting number of blocks
+    if (nrBlocksPerLevel <= 0) {
+    	throw new InvalidInputException("The number of blocks per level must be greater than zero.");
+    }
     game.setNrBlocksPerLevel(nrBlocksPerLevel);
 //get ball
     Ball ball = game.getBall();
     //change ball settings
+    if (minBallSpeedX <= 0) {
+    	throw new InvalidInputException("The minimum speed of the ball must be greater than zero");
+    }
     ball.setMinBallSpeedX(minBallSpeedX);
+    
+    if (minBallSpeedY <= 0) {
+    	throw new InvalidInputException("The minimum speed of the ball must be greater than zero");
+    	
+    }
     ball.setMinBallSpeedY(minBallSpeedY);
+    
+    if(ballSpeedIncreaseFactor <= 0) {
+    	throw new InvalidInputException("The speed increase factor of the ball must be greater than zero");
+    }
     ball.setBallSpeedIncreaseFactor(ballSpeedIncreaseFactor);
 //get paddle
     Paddle paddle = game.getPaddle();
     //change paddle settings
+    if(maxPaddleLength <=0 || maxPaddleLength >400) {
+    	throw new InvalidInputException("The maximum length of the paddle must be greater than zero or less than or equal to 400.");
+    }
     paddle.setMaxPaddleLength(maxPaddleLength);
+    if (minPaddleLength <= 0) {
+    	throw new InvalidInputException("The minimum length of the paddle must be greater than zero.");
+    }
     paddle.setMinPaddleLength(minPaddleLength);
     //get levels
     List<Level> level = game.getLevels();
@@ -70,10 +106,11 @@ public class Block223Controller {
     	level.size(); //MIGHT BE WRONG
     	//NOT SURE ABOUT 'size = size() ' method
     }
+    
 		}
 
 
-	}
+	
 
 	public static void deleteGame(String name) throws InvalidInputException {
 		Game game = Game.getWithName(name);
@@ -83,10 +120,43 @@ public class Block223Controller {
 	}
 
 	public static void selectGame(String name) throws InvalidInputException {
+	Game game = Game.getWithName(name);
+	//Use findGame due to bug in Umple
+	
+	
+	//Block223Application.getCurrentUserRole()
+	
+	
+	if (game == null) {
+		throw new InvalidInputException("A game with name "+name+" does not exist");
+	}
+	Block223Application.setCurrentGame(game);
 	}
 
 	public static void updateGame(String name, int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
-			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException {
+			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException 
+	{
+		
+		
+							//Checks
+		if (Block223Application.getCurrentGame() == null) {
+			throw new InvalidInputException("A game must be selected to define game settings");
+			
+		}
+		
+		Game game =  Block223Application.getCurrentGame();
+		String currentName = game.getName();
+		
+		if(!game.setName(name)) {
+			//NOT SURE
+			throw new InvalidInputException("The name of the game must be unique");
+		}
+		
+		if (currentName != name) {
+			game.setName(name);
+		}
+		Block223Controller.setGameDetails(nrLevels, nrBlocksPerLevel, minBallSpeedX, minBallSpeedY, ballSpeedIncreaseFactor, maxPaddleLength, minPaddleLength);
+		
 	}
 
 	public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
