@@ -17,7 +17,7 @@ public class Block223Controller {
 		Block223 block223 = Block223Application.getBlock223();
 
 		// get Current User role has to be implemented
-		Admin admin = Block223Application.getCurrentUserRole();
+		Admin admin = (Admin)Block223Application.getCurrentUserRole(); // TODO: Add checks
 
 		Game game = new Game(name, 1, admin, 1, 1, 1, 10, 10, block223);
 	}
@@ -99,7 +99,7 @@ public class Block223Controller {
 	// ****************************
 	public static List<TOGame> getDesignableGames() {
 		Block223 block223 = Block223Application.getBlock223();
-		Admin admin = Block223Application.getCurrentUserRole();
+		Admin admin = (Admin)Block223Application.getCurrentUserRole();
 
 		List<TOGame> result = new ArrayList<TOGame>();
 
