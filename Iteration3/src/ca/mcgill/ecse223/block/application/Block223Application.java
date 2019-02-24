@@ -6,6 +6,7 @@ import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.Level;
 import ca.mcgill.ecse223.block.model.UserRole;
+import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 
 public class Block223Application {
 	
@@ -32,13 +33,15 @@ public class Block223Application {
 	public static Block223 getBlock223() {
 		//temporary implementation
 		if(block223 == null) {
-			return (new Block223()); 
+			block223=Block223Persistence.load();
 		}
-		else {
 		return block223; 
-		}
 	}
-
+	
+	
+	public static void resetBlock223() {
+		block223=Block223Persistence.load();
+	}
 
 
 

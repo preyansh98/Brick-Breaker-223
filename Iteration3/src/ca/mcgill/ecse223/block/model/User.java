@@ -2,10 +2,12 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
+import java.io.Serializable;
 import java.util.*;
 
-// line 9 "../../../../../Block223 v2 (2).ump"
-public class User
+// line 29 "../../../../../Block223Persistence.ump"
+// line 11 "../../../../../Block223 v2.ump"
+public class User implements Serializable
 {
 
   //------------------------
@@ -245,11 +247,27 @@ public class User
     }
   }
 
+  // line 35 "../../../../../Block223Persistence.ump"
+   public static  void reinitializeUniqueUsername(List<User> users){
+    usersByUsername = new HashMap<String, User>();
+    for (User user : users) {
+      usersByUsername.put(user.getUsername(), user);
+    }
+  }
+
 
   public String toString()
   {
     return super.toString() + "["+
             "username" + ":" + getUsername()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null");
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 32 "../../../../../Block223Persistence.ump"
+  private static final long serialVersionUID = 8896099581655989380L ;
+
+  
 }
