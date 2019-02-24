@@ -8,7 +8,11 @@ import javax.swing.*;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 
-
+/**
+ * AddGame UI screen
+ * @author Preyansh
+ *
+ */
 public class AddGamePage {
 	static String error_msg = null; 
 
@@ -22,6 +26,7 @@ public class AddGamePage {
 	JButton addGameButton = new JButton("Add Game"); 
 	JTextField addGameTextEntry = new JTextField();
 	JTextField levelTextEntry = new JTextField(); 
+	JTextArea errorMsg = new JTextArea(error_msg); 
 	
 	//frame related
 	mainFrame.setVisible(true); 
@@ -44,6 +49,7 @@ public class AddGamePage {
 	levelText.setBackground(mainFrame.getBackground());
 	
 	addGameTextEntry.setSize(200, 20);
+	//setting location in a way that whenever the text moves, the text entry field is always next to it
 	addGameTextEntry.setLocation((int) (addGameText.getLocation().x + addGameText.getSize().getWidth() + 20), 
 			addGameText.getLocation().y);
 	levelTextEntry.setSize(200, 20);
@@ -56,6 +62,10 @@ public class AddGamePage {
 	addGameButton.setSize(95, 26);
 	addGameButton.setLocation(280, 180);
 	
+	errorMsg.setEditable(false);
+	errorMsg.setSize(300,20);
+	errorMsg.setLocation(30, 20);
+	errorMsg.setBackground(mainFrame.getBackground());
 	
 	//Adding all components to frame
 	mainFrame.add(addGameText);
@@ -64,6 +74,7 @@ public class AddGamePage {
 	mainFrame.add(addGameButton);
 	mainFrame.add(addGameTextEntry);
 	mainFrame.add(levelTextEntry);
+	mainFrame.add(errorMsg); 
 
 	//Design here:
 	mainFrame.setBackground(Color.gray); //could probably do some rgb
