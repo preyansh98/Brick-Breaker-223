@@ -2,7 +2,6 @@ package ca.mcgill.ecse223.block.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.*;
 
 import ca.mcgill.ecse223.block.application.*;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
@@ -49,7 +48,7 @@ public class Block223Controller {
 
 	public static void updateBlock(int id, int red, int green, int blue, int points) throws InvalidInputException {
 		Game game = Block223Application.getCurrentGame();
-		Block block = game.findBlock(id);
+		Block block = game.getBlock(id);
 
 		block.setRed(red);
 		block.setGreen(green);
@@ -67,7 +66,7 @@ public class Block223Controller {
 		Level currentlevel = game.getLevel(level);
 
 		// findBlock has to be implemented
-		Block block = game.findBlock(Id);
+		Block block = game.getBlock(Id);
 
 		BlockAssignment blockassignment = new BlockAssignment(gridHorizontalPosition, gridVerticalPosition,
 				currentlevel, block, game);
@@ -166,7 +165,7 @@ public class Block223Controller {
 	// ****************************
 	public static List<TOGame> getDesignableGames() {
 		Block223 block223 = Block223Application.getBlock223();
-		Admin admin = (Admin) Block223Application.getCurrentUserRole();
+		Admin admin = (Admin) Block223Application.getCurrentUserRole();//TODO: add checks
 
 		List<TOGame> result = new ArrayList<TOGame>();
 
@@ -211,7 +210,7 @@ public class Block223Controller {
 
 	public static TOBlock getBlockOfCurrentDesignableGame(int id) throws InvalidInputException {
 		Game thisgame = Block223Application.getCurrentGame();
-		Block thisblock = thisgame.findBlock(id);
+		Block thisblock = thisgame.getBlock(id);
 
 		TOBlock to = new TOBlock(thisblock.getId(), thisblock.getRed(), thisblock.getGreen(), thisblock.getBlue(),
 				thisblock.getPoints());
