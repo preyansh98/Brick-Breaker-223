@@ -24,6 +24,14 @@ public class Block223Controller {
 
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
 			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException {
+	//1-select game
+
+		//2-get current game
+		Block223 block223 = Block223Application.getCurrentGame();
+		//3- set Nr of Blocks
+		Game game = Block223Application.getCurrentGame();
+
+
 	}
 
 	public static void deleteGame(String name) throws InvalidInputException {
