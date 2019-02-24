@@ -1,0 +1,89 @@
+external interface Serializable {}
+
+class Block223 {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = -2683593616927798071L;
+  
+  public void reinitialize() {
+	Game.reinitializeUniqueName(this.getGames());
+	User.reinitializeUniqueUsername(this.getUsers());
+  }
+  
+}
+
+class Game {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 2315072607928790501L;
+  
+  public static void reinitializeUniqueName(List<Game> games) {
+    gamesByName = new HashMap<String, Game>();
+    for (Game game : games) {
+      gamesByName.put(game.getName(), game);
+    }
+  }
+ 
+}
+
+class User {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 8896099581655989380L;
+  
+  public static void reinitializeUniqueUsername(List<User> users) {
+    usersByUsername = new HashMap<String, User>();
+    for (User user : users) {
+      usersByUsername.put(user.getUsername(), user);
+    }
+  }
+  
+}
+
+class UserRole {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 386717977557499839L;
+}
+
+class Player {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = -3900912597282882073L;
+}
+
+class Admin {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 2045406856025012133L;
+}
+
+class Level {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = -7403802774454467836L;
+}
+
+class Block {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = -7403802774454234836L;
+}
+
+class BlockAssignment {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = -7401283774454467836L;
+}
+
+class Paddle {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = -7403802774484317836L;
+}
+
+class Ball {
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = -740380277440987836L;
+}
