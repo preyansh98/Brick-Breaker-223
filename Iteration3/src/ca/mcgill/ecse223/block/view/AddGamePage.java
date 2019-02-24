@@ -111,5 +111,6 @@ public class AddGamePage {
 		}
 		
 		// add method here to move on to next screen
+		
 	}
 }
