@@ -15,11 +15,11 @@ import ca.mcgill.ecse223.block.controller.InvalidInputException;
  */
 public class AddGamePage {
 	static String error_msg = null; 
-
+	static JFrame mainFrame = new JFrame("Add a Game"); 
+	
 	public static void main(String[] args) {
 		
 	//UI Elements
-	JFrame mainFrame = new JFrame("Add a Game"); 
 	JTextArea addGameText = new JTextArea("Enter new game name: "); 
 	JTextArea levelText = new JTextArea("Enter no. of Levels: "); 
 	JButton cancelButton = new JButton("Cancel"); 
@@ -86,6 +86,12 @@ public class AddGamePage {
 			addGameButtonActionPerformed(evt, addGameTextEntry);
 		}
 	});
+	
+	cancelButton.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			cancelButtonActionPerformed(evt);
+		}
+	});
 
 	
 	//testing
@@ -113,4 +119,18 @@ public class AddGamePage {
 		// add method here to move on to next screen
 		
 	}
+	
+	private static void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		// clear error message
+		error_msg = null; 
+		
+		try {
+			//close the main frame
+			mainFrame.dispose(); 
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
