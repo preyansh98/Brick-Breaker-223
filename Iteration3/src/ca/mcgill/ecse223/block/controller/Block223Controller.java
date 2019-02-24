@@ -7,6 +7,7 @@ import java.util.*;
 import ca.mcgill.ecse223.block.application.*;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 import ca.mcgill.ecse223.block.model.*;
+import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 
 public class Block223Controller {
 
@@ -17,7 +18,7 @@ public class Block223Controller {
 		Block223 block223 = Block223Application.getBlock223();
 
 		// get Current User role has to be implemented
-		Admin admin = (Admin)Block223Application.getCurrentUserRole(); // TODO: Add checks
+		Admin admin = (Admin) Block223Application.getCurrentUserRole(); // TODO: Add checks
 
 		Game game = new Game(name, 1, admin, 1, 1, 1, 10, 10, block223);
 	}
@@ -82,16 +83,35 @@ public class Block223Controller {
 	}
 
 	public static void saveGame() throws InvalidInputException {
+		UserRole role = Block223Application.getCurrentUserRole();
+		if (role instanceof Admin) {
+			Game currentGame = Block223Application.getCurrentGame();
+			if (currentGame != null) {
+				if (currentGame.getAdmin() == (Admin) role) {
+					Block223 block223 = Block223Application.getBlock223();
+					Block223Persistence.save(block223);
+				} else {
+					throw new InvalidInputException("Only the admin who created the game can save it.");
+				}
+			} else {
+				throw new InvalidInputException("A game must be selected to save it.");
+			}
+		} else {
+			throw new InvalidInputException("Admin privileges are required to save a game.");
+		}
+
 	}
 
 	public static void register(String username, String playerPassword, String adminPassword)
 			throws InvalidInputException {
+		
 	}
 
 	public static void login(String username, String password) throws InvalidInputException {
 	}
 
 	public static void logout() {
+		Block223Application.setCurrentUserRole(null);
 	}
 
 	// ****************************
@@ -99,7 +119,7 @@ public class Block223Controller {
 	// ****************************
 	public static List<TOGame> getDesignableGames() {
 		Block223 block223 = Block223Application.getBlock223();
-		Admin admin = (Admin)Block223Application.getCurrentUserRole();
+		Admin admin = (Admin) Block223Application.getCurrentUserRole();
 
 		List<TOGame> result = new ArrayList<TOGame>();
 
