@@ -74,12 +74,60 @@ public class Block223Controller {
 	}
 
 	public static void moveBlock(int level, int oldGridHorizontalPosition, int oldGridVerticalPosition,
-			int newGridHorizontalPosition, int newGridVerticalPosition) throws InvalidInputException {
-	}
+				int newGridHorizontalPosition, int newGridVerticalPosition) throws InvalidInputException {
+			
+			Game game = Block223Application.getCurrentGame();
+			Level currentlevel = game.getLevel(level);
+			BlockAssignment assignment;
+			List<BlockAssignment> assignments = currentlevel.getBlockAssignments();
+			
+			if(level <1 || level > game.maximumNumberOfLevels()) {
+				throw new InvalidInputException("Level " + level + " does not exist for the game.");
+			}
+			
+			if(findBlockAssignment(oldGridHorizontalPosition, oldGridVerticalPosition)==null) {
+				throw new InvalidInputException("A block does not exist at location" + oldGridHorizontalPosition + "/" + oldGridVerticalPosition + ".");
+			}else {
+				assignment= findBlockAssignment(oldGridHorizontalPosition, oldGridVerticalPosition);
+			}
+			
+			for(BlockAssignment assign: assignments) {
+				
+				int h= assign.getGridHorizontalPosition();
+				int v= assign.getGridVerticalPosition();
+				
+				if(h==newGridHorizontalPosition && v==newGridVerticalPosition) {
+					throw new InvalidInputException("A block already exists at location" + newGridHorizontalPosition + "/" + newGridVerticalPosition + ".");
+				}
+			}
+			
+		}
 
-	public static void removeBlock(int level, int gridHorizontalPosition, int gridVerticalPosition)
-			throws InvalidInputException {
-	}
+		public static void removeBlock(int level, int gridHorizontalPosition, int gridVerticalPosition)
+				throws InvalidInputException {
+			
+			Game game = Block223Application.getCurrentGame();
+			Level currentlevel = game.getLevel(level);
+			BlockAssignment assignment;
+			List<BlockAssignment> assignments = currentlevel.getBlockAssignments();
+			
+			assignment= findBlockAssignment(gridHorizontalPosition, gridVerticalPosition);
+			
+			if(assignment != null) {
+				
+				for(BlockAssignment assign: assignments) {
+					
+					int h= assign.getGridHorizontalPosition();
+					int v= assign.getGridVerticalPosition();
+					
+					if(h==gridHorizontalPosition && v==gridVerticalPosition) {
+						 assign.delete();
+					}
+				}
+				
+			}
+
+		}
 
 	public static void saveGame() throws InvalidInputException {
 		UserRole role = Block223Application.getCurrentUserRole();
@@ -246,5 +294,25 @@ public class Block223Controller {
 		}
 		return to;
 	}
+	public static BlockAssignment findBlockAssignment(int gridHorizontalPosition, int gridVerticalPosition){
+			
+			Game thisgame = Block223Application.getCurrentGame();
+			List<BlockAssignment> assignments = thisgame.getBlockAssignments();
+			
+			
+			for(BlockAssignment assignment: assignments) {
+				
+				int h= assignment.getGridHorizontalPosition();
+				int v= assignment.getGridVerticalPosition();
+				
+				if(h==gridHorizontalPosition && v==gridVerticalPosition) {
+					return assignment;
+				}else {
+					return null;
+				}
+			}
+			
+			return null;
+		}
 
 }
