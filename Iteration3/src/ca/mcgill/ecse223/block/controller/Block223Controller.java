@@ -24,12 +24,38 @@ public class Block223Controller {
 
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
 			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException {
-	//1-select game
-
-		//2-get current game
-		Block223 block223 = Block223Application.getCurrentGame();
-		//3- set Nr of Blocks
-		Game game = Block223Application.getCurrentGame();
+	// To do: Add Checksss
+		//1-select game
+    Game game = Block223Application.getCurrentGame();
+    //setting number of blocks
+    game.setNrBlocksPerLevel(nrBlocksPerLevel);
+//get ball
+    Ball ball = game.getBall();
+    //change ball settings
+    ball.setMinBallSpeedX(minBallSpeedX);
+    ball.setMinBallSpeedY(minBallSpeedY);
+    ball.setBallSpeedIncreaseFactor(ballSpeedIncreaseFactor);
+//get paddle
+    Paddle paddle = game.getPaddle();
+    //change paddle settings
+    paddle.setMaxPaddleLength(maxPaddleLength);
+    paddle.setMinPaddleLength(minPaddleLength);
+    //get levels
+    List<Level> level = game.getLevels();
+    
+    //level.size();
+    //game.numberOfLevels();
+    while (game.numberOfLevels() > level.size()) {
+    	game.addLevel();
+    level.size(); //MIGHT BE WRONG	
+    	
+    }
+    while (game.numberOfLevels() < level.size()) {
+    	level.get(level.size() - 1);
+    	level.remove(level.size());
+    	level.size(); //MIGHT BE WRONG
+    	//NOT SURE ABOUT 'size = size() ' method
+    }
 
 
 	}
