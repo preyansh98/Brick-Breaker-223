@@ -26,7 +26,21 @@ public class Block223Controller {
 			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException {
 	// To do: Add Checksss
 		//1-select game
+		String error = "";
+		Admin admin = (Admin) Block223Application.getCurrentUserRole();
+		if (admin == null) {
+			error="Admin previleges are required to define game settings";
+		} else if (!admin.hasGames()) { //NOT SURE
+			error="Only the admin who created the game can define its game settings";
+		} else {
+		
+		if (nrLevels < 1 || nrLevels >99 ) {
+			error="The number of levels must be between 1 and 99";
+		}
     Game game = Block223Application.getCurrentGame();
+    if (game == null) {
+    	error = "A Game must be selected to define game settings";
+    }
     //setting number of blocks
     game.setNrBlocksPerLevel(nrBlocksPerLevel);
 //get ball
@@ -56,6 +70,7 @@ public class Block223Controller {
     	level.size(); //MIGHT BE WRONG
     	//NOT SURE ABOUT 'size = size() ' method
     }
+		}
 
 
 	}
