@@ -22,7 +22,7 @@ public class AdminDashboardPage {
 
 	//for updating the game
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InvalidInputException {
 		
 	//UI Elements
 	JTextArea selectGameText = new JTextArea("Select a game: "); 
@@ -132,7 +132,7 @@ public class AdminDashboardPage {
 		// add method here to move on to next screen
 	}
 	
-	public static void refreshGames(HashMap<Integer, String> currentGames, JComboBox<String> selectGames, int gameIndex) {
+	public static void refreshGames(HashMap<Integer, String> currentGames, JComboBox<String> selectGames, int gameIndex) throws InvalidInputException {
 		
 		
 		currentGames = new HashMap<Integer, String>();
