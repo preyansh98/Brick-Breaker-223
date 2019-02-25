@@ -306,6 +306,7 @@ public class Block223Controller {
 
 	public static void login(String username, String password) throws InvalidInputException {
 		UserRole currentRole = Block223Application.getCurrentUserRole();
+		Block223Application.resetBlock223();
 		String error="";
 		User user=User.getWithUsername(username);
 		if(currentRole!=null) {
@@ -317,7 +318,6 @@ public class Block223Controller {
 			for(UserRole role:roles) {
 				if(role.getPassword().equals(password)) {
 					Block223Application.setCurrentUserRole(role);
-					Block223Application.resetBlock223();
 					return;
 				}
 			}
