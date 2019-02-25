@@ -21,7 +21,7 @@ public class PlayerPage {
 		// frame related
 		mainFrame.setVisible(true);
 		mainFrame.setLayout(null);
-		mainFrame.setBackground(Color.gray);
+
 		mainFrame.setSize(400, 300); 
 		
 		// text output related parameters
@@ -38,7 +38,7 @@ public class PlayerPage {
 		// Components initialization
 		mainFrame.add(logoutButton);
 		mainFrame.add(displayText);
-		
+		mainFrame.setBackground(Color.gray);
 		logoutButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				registerButtonActionPerformed(evt);

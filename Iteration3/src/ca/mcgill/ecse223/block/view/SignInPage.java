@@ -2,6 +2,7 @@ package ca.mcgill.ecse223.block.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
@@ -19,7 +20,7 @@ public class SignInPage {
 	public static void main(String[] args) {
 
 		// UI Elements1
-		JTextArea welcomeText=new JTextArea("Welcome to Block223");
+		JTextArea welcomeText=new JTextArea("Welcome to Block223!");
 		JTextArea usernameText = new JTextArea("Username: ");
 		JTextArea passwordText = new JTextArea("Password: ");
 		JTextArea newUserText=new JTextArea("New User?");
@@ -41,9 +42,12 @@ public class SignInPage {
 		passwordText.setEditable(false);
 		newUserText.setEditable(false);
 		
-		welcomeText.setLocation(140, 30);
+		
+		welcomeText.setFont(new Font("test", 1, 14));
+		welcomeText.setLocation(200-welcomeText.getPreferredSize().width/2, 10);
 		welcomeText.setSize(welcomeText.getPreferredSize());
 		welcomeText.setBackground(mainFrame.getBackground());
+		
 		
 		usernameText.setLocation(30, 60);
 		Dimension addGameDimension = usernameText.getPreferredSize();
@@ -75,9 +79,9 @@ public class SignInPage {
 		
 		errorMsg.setEditable(false);
 		errorMsg.setSize(300, 20);
-		errorMsg.setLocation(30, 20);
+		errorMsg.setLocation(30, 30);
 		errorMsg.setBackground(mainFrame.getBackground());
-
+		errorMsg.setForeground(Color.RED);
 		// Adding all components to frame
 		mainFrame.add(welcomeText);
 		mainFrame.add(usernameText);
