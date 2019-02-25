@@ -21,6 +21,10 @@ public class BlockDesignPage {
 	static String error_msg = null; 
 	static HashMap<Integer, Integer> currentBlocks;
 	static JComboBox<Integer> selectBlocks;
+	static JTextField redtextentry = new JTextField();
+	static JTextField greentextentry = new JTextField();
+	static JTextField bluetextentry = new JTextField();
+	static JTextField pointstextentry = new JTextField();
 	public static void main(String[] args) {
 	
 	//UI Elements
@@ -33,10 +37,7 @@ public class BlockDesignPage {
 	JButton cancelButton = new JButton("Cancel"); 
 	JButton updateButton = new JButton("Update"); 
 	JButton deleteButton = new JButton("Delete from Game"); 
-	JTextField redtextentry = new JTextField();
-	JTextField greentextentry = new JTextField();
-	JTextField bluetextentry = new JTextField();
-	JTextField pointstextentry = new JTextField();
+	
 	JTextField updatetextentry = new JTextField();
 	JTextArea errorMsg = new JTextArea(error_msg); 
 	
@@ -167,7 +168,7 @@ public class BlockDesignPage {
 	
 	updateButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
-			updateButtonActionPerformed(evt);
+			updateButtonActionPerformed(evt, currentBlocks, selectBlocks);
 		}
 	});
 	
@@ -185,22 +186,58 @@ public class BlockDesignPage {
 	private static void updateButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<Integer, Integer> currentBlocks, JComboBox<Integer> selectBlocks) {
 		// clear error message
 		error_msg = null; 
-		
+		try {
+			Integer.parseInt(redtextentry.getText());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			Integer.parseInt(greentextentry.getText());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			Integer.parseInt(bluetextentry.getText());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			Integer.parseInt(pointstextentry.getText());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		try {
 			//close the main frame
-			Block223Controller.updateBlock(id, red, green, blue, points);currentBlocks.get(selectBlocks.getSelectedItem());
+			Block223Controller.updateBlock(currentBlocks.get(selectBlocks.getSelectedItem()), Integer.parseInt(redtextentry.getText()), Integer.parseInt(greentextentry.getText()), Integer.parseInt(bluetextentry.getText()), Integer.parseInt(pointstextentry.getText()));
 			mainWindow.dispose(); 
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
 	private static void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		// clear error message
 		error_msg = null; 
 		
 		try {
 			//close the main frame
+			mainWindow.dispose(); 
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private static void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		// clear error message
+		error_msg = null; 
+		
+		try {
+			Block223Controller.deleteBlock(currentBlocks.get(selectBlocks.getSelectedItem()));
 			mainWindow.dispose(); 
 		}
 		catch(Exception e) {
