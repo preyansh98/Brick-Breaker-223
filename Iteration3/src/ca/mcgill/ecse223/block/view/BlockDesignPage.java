@@ -1,11 +1,14 @@
 package ca.mcgill.ecse223.block.view;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.HashMap;
 
 import javax.swing.*;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
+import ca.mcgill.ecse223.block.controller.TOBlock;
+import ca.mcgill.ecse223.block.controller.TOGame;
 
 /**
  * AddGame UI screen
@@ -16,11 +19,12 @@ import ca.mcgill.ecse223.block.controller.InvalidInputException;
 public class BlockDesignPage {
 	static JFrame mainWindow = new JFrame("Block Settings");
 	static String error_msg = null; 
-
+	static HashMap<Integer, Integer> currentBlocks;
+	static JComboBox<Integer> selectBlocks;
 	public static void main(String[] args) {
-		
+	
 	//UI Elements
-	 
+	JTextArea selectBlockText = new JTextArea("Select a block: ");
 	JTextArea Colour = new JTextArea("Colour:"); 
 	JTextArea red = new JTextArea("R"); 
 	JTextArea green = new JTextArea("G"); 
@@ -36,6 +40,31 @@ public class BlockDesignPage {
 	JTextField updatetextentry = new JTextField();
 	JTextArea errorMsg = new JTextArea(error_msg); 
 	
+	
+	selectBlockText.setEditable(false);
+	
+	selectBlockText.setLocation(30, 55);
+	Dimension selectBlockDimension = selectBlockText.getPreferredSize();
+	selectBlockText.setSize(selectBlockDimension);
+	selectBlockText.setBackground(mainWindow.getBackground()); 
+	
+	HashMap<Integer, Integer> currentBlocks = null; 
+	JComboBox<Integer> selectBlocks = new JComboBox<Integer>(new Integer[0]); 
+	int blockIndex = 0;
+	try {
+		refreshblocks(currentBlocks, selectBlocks, blockIndex);
+	} catch (InvalidInputException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+	selectBlocks.setEditable(false);
+	selectBlocks.setSize(110, 26);
+	selectBlocks.setVisible(true);
+	selectBlocks.setName("Game");
+	selectBlocks.setLocation((int) (selectBlockText.getLocation().x + selectBlockText.getSize().getWidth() + 10)
+			, (int) selectBlockText.getLocation().getY());
 	//frame related
 	mainWindow.setVisible(true); 
 	mainWindow.setLayout(null);
@@ -48,29 +77,29 @@ public class BlockDesignPage {
 	blue.setEditable(false);
 	points.setEditable(false);
 	
-	Colour.setLocation(20, 60);
+	Colour.setLocation(20, 100);
 	Dimension BlockSettingsdimension = Colour.getPreferredSize();
 	Colour.setSize(BlockSettingsdimension);
 	Colour.setBackground(mainWindow.getBackground()); //added this so it doesnt stand out
 	
 	Dimension redDimension = red.getPreferredSize();
 	red.setSize(redDimension);	
-	red.setLocation(80, 60);
+	red.setLocation(80, 100);
 	red.setBackground(mainWindow.getBackground());
 	
 	Dimension pointsDimension = points.getPreferredSize();
 	points.setSize(pointsDimension);	
-	points.setLocation(20, 120);
+	points.setLocation(20, 150);
 	points.setBackground(mainWindow.getBackground());
 	
 	Dimension blueDimension = blue.getPreferredSize();
 	blue.setSize(blueDimension);	
-	blue.setLocation(280, 60);
+	blue.setLocation(280, 100);
 	blue.setBackground(mainWindow.getBackground());
 	
 	Dimension greenDimension = green.getPreferredSize();
 	green.setSize(greenDimension);	
-	green.setLocation(180, 60);
+	green.setLocation(180, 100);
 	green.setBackground(mainWindow.getBackground());
 	
 	
@@ -116,6 +145,8 @@ public class BlockDesignPage {
 	mainWindow.add(bluetextentry);
 	mainWindow.add(pointstextentry);
 	mainWindow.add(errorMsg); 
+	mainWindow.add(selectBlocks);
+	mainWindow.add(selectBlockText);
 
 	//Design here:
 	mainWindow.setBackground(Color.gray); //could probably do some rgb
@@ -134,6 +165,12 @@ public class BlockDesignPage {
 		}
 	});
 	
+	updateButton.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			updateButtonActionPerformed(evt);
+		}
+	});
+	
 	//testing
 	System.out.println(Colour.getLocation().toString());
 	System.out.println(red.getLocation().toString());
@@ -145,20 +182,19 @@ public class BlockDesignPage {
 	 * Specification for addGame event when listener activated
 	 * @param evt
 	 */
-	private static void addGameButtonActionPerformed(java.awt.event.ActionEvent evt, JTextField textEntry) {
+	private static void updateButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<Integer, Integer> currentBlocks, JComboBox<Integer> selectBlocks) {
 		// clear error message
-		error_msg = null;
+		error_msg = null; 
 		
-		// call the controller
 		try {
-			Block223Controller.createGame(textEntry.getText());
-		} catch (InvalidInputException e) {
-			error_msg = e.getMessage();
+			//close the main frame
+			Block223Controller.updateBlock(id, red, green, blue, points);currentBlocks.get(selectBlocks.getSelectedItem());
+			mainWindow.dispose(); 
 		}
-		
-		// add method here to move on to next screen
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
 	private static void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		// clear error message
 		error_msg = null; 
@@ -170,5 +206,18 @@ public class BlockDesignPage {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+public static void refreshblocks(HashMap<Integer, Integer> currentBlocks, JComboBox<Integer> selectBlocks, int blockid) throws InvalidInputException {
+	
+		
+		currentBlocks = new HashMap<Integer, Integer>();
+		selectBlocks.removeAllItems();
+		blockid = 0;
+		for (TOBlock blocks : Block223Controller.getBlocksOfCurrentDesignableGame()) {
+			currentBlocks.put(blockid, blocks.getId());
+			selectBlocks.addItem(blocks.getId());
+			blockid++;
+		};
+		selectBlocks.setSelectedIndex(-1);
 	}
 }
