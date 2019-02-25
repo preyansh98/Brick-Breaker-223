@@ -63,7 +63,7 @@ public class BlockDesignPage {
 	selectBlocks.setEditable(false);
 	selectBlocks.setSize(110, 26);
 	selectBlocks.setVisible(true);
-	selectBlocks.setName("Game");
+	selectBlocks.setName("Block");
 	selectBlocks.setLocation((int) (selectBlockText.getLocation().x + selectBlockText.getSize().getWidth() + 10)
 			, (int) selectBlockText.getLocation().getY());
 	//frame related
