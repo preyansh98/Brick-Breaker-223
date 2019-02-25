@@ -172,6 +172,12 @@ public class BlockDesignPage {
 		}
 	});
 	
+	deleteButton.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			deleteButtonActionPerformed(evt);
+		}
+	});
+	
 	//testing
 	System.out.println(Colour.getLocation().toString());
 	System.out.println(red.getLocation().toString());
