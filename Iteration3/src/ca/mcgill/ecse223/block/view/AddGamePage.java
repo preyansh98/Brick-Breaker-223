@@ -112,7 +112,8 @@ public class AddGamePage {
 		// call the controller
 		try {
 			Block223Controller.createGame(textEntry.getText());
-		} catch (InvalidInputException e) {
+		} 
+		catch (InvalidInputException e) {
 			error_msg = e.getMessage();
 		}
 		
@@ -131,6 +132,11 @@ public class AddGamePage {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	void initializeThis() {
+		mainFrame.setVisible(true);
+		this.main(null);
 	}
 	
 }

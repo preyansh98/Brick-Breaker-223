@@ -18,13 +18,13 @@ import ca.mcgill.ecse223.block.model.Game;
  */
 public class AdminDashboardPage {
 	static String error_msg = null; 
-	
+	static JFrame mainFrame = new JFrame("Admin DashBoard"); 
+
 	//for updating the game
 
 	public static void main(String[] args) {
 		
 	//UI Elements
-	JFrame mainFrame = new JFrame("Admin DashBoard"); 
 	JTextArea selectGameText = new JTextArea("Select a game: "); 
 	JTextArea orText = new JTextArea("OR: "); 
 	JButton deleteGameButton = new JButton("Delete Game"); 
@@ -123,8 +123,9 @@ public class AdminDashboardPage {
 		
 		// call the controller
 		try {
-			Block223Controller.createGame("this will change");
-		} catch (InvalidInputException e) {
+			 mainFrame.dispose();
+			new AddGamePage().initializeThis(); 
+		} catch (Exception e) {
 			error_msg = e.getMessage();
 		}
 		
@@ -134,7 +135,6 @@ public class AdminDashboardPage {
 	public static void refreshGames(HashMap<Integer, String> currentGames, JComboBox selectGames, int gameIndex) {
 		
 		
-		// schedule driver - driver
 		currentGames = new HashMap<Integer, String>();
 		selectGames.removeAllItems();
 		gameIndex = 0;
