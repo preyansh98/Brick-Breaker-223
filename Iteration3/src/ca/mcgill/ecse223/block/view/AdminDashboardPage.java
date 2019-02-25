@@ -132,7 +132,7 @@ public class AdminDashboardPage {
 		// add method here to move on to next screen
 	}
 	
-	public static void refreshGames(HashMap<Integer, String> currentGames, JComboBox selectGames, int gameIndex) {
+	public static void refreshGames(HashMap<Integer, String> currentGames, JComboBox<String> selectGames, int gameIndex) {
 		
 		
 		currentGames = new HashMap<Integer, String>();
