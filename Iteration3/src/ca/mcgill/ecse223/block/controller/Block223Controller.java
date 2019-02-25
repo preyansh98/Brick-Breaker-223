@@ -3,8 +3,6 @@ package ca.mcgill.ecse223.block.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.xml.internal.ws.assembler.dev.ServerTubelineAssemblyContext;
-
 import ca.mcgill.ecse223.block.application.*;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 import ca.mcgill.ecse223.block.model.*;
@@ -16,10 +14,13 @@ public class Block223Controller {
 	// Modifier methods
 	// ****************************
 	public static void createGame(String name) throws InvalidInputException {
+		if(Block223Application.getCurrentUserRole() instanceof Admin == false) {
+			throw new InvalidInputException("Admin privileges are required to create a game"); 
+		}
+		
 		Block223 block223 = Block223Application.getBlock223();
 
-		// get Current User role has to be implemented
-		Admin admin = (Admin) Block223Application.getCurrentUserRole(); // TODO: Add checks
+		Admin admin = (Admin) Block223Application.getCurrentUserRole();
 
 		Game game = new Game(name, 1, admin, 1, 1, 1, 10, 10, block223);
 	}
@@ -330,7 +331,7 @@ public class Block223Controller {
 	// ****************************
 	// Query methods
 	// ****************************
-	public static List<TOGame> getDesignableGames() {
+	public static List<TOGame> getDesignableGames() throws InvalidInputException {
 		Block223 block223 = Block223Application.getBlock223();
 		Admin admin = (Admin) Block223Application.getCurrentUserRole();//TODO: add checks
 
@@ -353,7 +354,7 @@ public class Block223Controller {
 		return result;
 	}
 
-	public static TOGame getCurrentDesignableGame() {
+	public static TOGame getCurrentDesignableGame() throws InvalidInputException{
 		Game thisgame = Block223Application.getCurrentGame();
 		TOGame to = new TOGame(thisgame.getName(), thisgame.getLevels().size(), thisgame.getNrBlocksPerLevel(),
 				thisgame.getBall().getMinBallSpeedX(), thisgame.getBall().getMinBallSpeedY(),
@@ -363,7 +364,7 @@ public class Block223Controller {
 
 	}
 
-	public static List<TOBlock> getBlocksOfCurrentDesignableGame() {
+	public static List<TOBlock> getBlocksOfCurrentDesignableGame() throws InvalidInputException{
 		Game thisgame = Block223Application.getCurrentGame();
 		List<TOBlock> result = new ArrayList<TOBlock>();
 		List<Block> blocks = thisgame.getBlocks();
