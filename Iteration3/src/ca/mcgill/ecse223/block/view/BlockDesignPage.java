@@ -12,13 +12,15 @@ import ca.mcgill.ecse223.block.controller.InvalidInputException;
  * @author Elie Elia
  *
  */
+
 public class BlockDesignPage {
+	static JFrame mainWindow = new JFrame("Block Settings");
 	static String error_msg = null; 
 
 	public static void main(String[] args) {
 		
 	//UI Elements
-	JFrame mainWindow = new JFrame("Block Settings"); 
+	 
 	JTextArea Colour = new JTextArea("Colour:"); 
 	JTextArea red = new JTextArea("R"); 
 	JTextArea green = new JTextArea("G"); 
@@ -126,6 +128,11 @@ public class BlockDesignPage {
 //		}
 //	});
 
+	cancelButton.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			cancelButtonActionPerformed(evt);
+		}
+	});
 	
 	//testing
 	System.out.println(Colour.getLocation().toString());
@@ -150,5 +157,18 @@ public class BlockDesignPage {
 		}
 		
 		// add method here to move on to next screen
+	}
+	
+	private static void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		// clear error message
+		error_msg = null; 
+		
+		try {
+			//close the main frame
+			mainWindow.dispose(); 
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
