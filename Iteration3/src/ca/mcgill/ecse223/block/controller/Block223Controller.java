@@ -254,11 +254,21 @@ public class Block223Controller {
 
 	public static void moveBlock(int level, int oldGridHorizontalPosition, int oldGridVerticalPosition,
 				int newGridHorizontalPosition, int newGridVerticalPosition) throws InvalidInputException {
+		
+		    if(Block223Application.getCurrentUserRole() instanceof Admin ==false) {
+		    	throw new InvalidInputException("Admin privileges are required to move a block.");
+		    }
+		    
+		    if(Block223Application.getCurrentGame()==null) {
+				throw new InvalidInputException("A game must be selected to move a block.");
+			}
 			
 			Game game = Block223Application.getCurrentGame();
 			Level currentlevel = game.getLevel(level);
 			BlockAssignment assignment;
 			List<BlockAssignment> assignments = currentlevel.getBlockAssignments();
+			
+			
 			
 			if(level <1 || level > game.maximumNumberOfLevels()) {
 				throw new InvalidInputException("Level " + level + " does not exist for the game.");
@@ -284,6 +294,14 @@ public class Block223Controller {
 
 		public static void removeBlock(int level, int gridHorizontalPosition, int gridVerticalPosition)
 				throws InvalidInputException {
+			
+			 if(Block223Application.getCurrentUserRole() instanceof Admin ==false) {
+			    	throw new InvalidInputException("Admin privileges are required to move a block.");
+			    }
+			    
+			    if(Block223Application.getCurrentGame()==null) {
+					throw new InvalidInputException("A game must be selected to move a block.");
+				}
 			
 			Game game = Block223Application.getCurrentGame();
 			Level currentlevel = game.getLevel(level);
