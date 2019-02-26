@@ -1,7 +1,8 @@
 package ca.mcgill.ecse223.block.view;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.HashMap;
+import java.util.*;
+
 
 import javax.swing.*;
 
@@ -22,8 +23,8 @@ public class NewBlockPage {
 	static JTextField greenTextEntry = new JTextField();
 	static JTextField blueTextEntry = new JTextField();
 	static JTextField pointsTextEntry = new JTextField();
+		
 	
-
 	public static void main(String[] args) {
 		
 		JTextArea colourTextArea = new JTextArea("Colour:"); 
@@ -32,7 +33,7 @@ public class NewBlockPage {
 		JTextArea blueTextArea = new JTextArea("B");
 		JTextArea pointsTextArea = new JTextArea("Points");
 		JButton cancelButton = new JButton("Cancel"); 
-		JButton saveButton = new JButton("Save"); 
+		JButton addButton = new JButton("Add"); 
 		JTextArea errorMsg = new JTextArea(error_msg); 
 		
 		//frame related
@@ -44,7 +45,7 @@ public class NewBlockPage {
 		
 		//ColourTextArea formatting
 		colourTextArea.setEditable(false);
-		colourTextArea.setLocation(30, 60);
+		colourTextArea.setLocation(30, 50);
 		Dimension ColourTextAreaDimension = colourTextArea.getPreferredSize();
 		colourTextArea.setSize(ColourTextAreaDimension);
 		colourTextArea.setBackground(mainWindow.getBackground());
@@ -53,28 +54,28 @@ public class NewBlockPage {
 		redTextArea.setEditable(false);
 		Dimension redDimension = redTextArea.getPreferredSize();
 		redTextArea.setSize(redDimension);	
-		redTextArea.setLocation(80, 110);
+		redTextArea.setLocation(80, 50);
 		redTextArea.setBackground(mainWindow.getBackground());
 		
 		//greenTextArea formatting
 		greenTextArea.setEditable(false);
 		Dimension greenDimension = greenTextArea.getPreferredSize();
 		greenTextArea.setSize(greenDimension);	
-		greenTextArea.setLocation(180, 110);
+		greenTextArea.setLocation(180, 50);
 		greenTextArea.setBackground(mainWindow.getBackground());
 		
 		//blueTextaArea formatting
 		blueTextArea.setEditable(false);
 		Dimension blueDimension = blueTextArea.getPreferredSize();
 		blueTextArea.setSize(blueDimension);	
-		blueTextArea.setLocation(280, 110);
+		blueTextArea.setLocation(280, 50);
 		blueTextArea.setBackground(mainWindow.getBackground());
 		
 		//pointsTextArea formatting
 		pointsTextArea.setEditable(false);
 		Dimension pointsDimension = pointsTextArea.getPreferredSize();
 		pointsTextArea.setSize(pointsDimension);	
-		pointsTextArea.setLocation(30, 160);
+		pointsTextArea.setLocation(30, 130);
 		pointsTextArea.setBackground(mainWindow.getBackground());
 		
 		redTextEntry.setSize(50, 20);
@@ -94,11 +95,11 @@ public class NewBlockPage {
 		
 		//cancelButton formatting
 		cancelButton.setSize(75, 26);
-		cancelButton.setLocation(20, 190);
+		cancelButton.setLocation(20, 200);
 		
 		//saveButton formatting
-		saveButton.setSize(95, 26);
-		saveButton.setLocation(220, 190);
+		addButton.setSize(95, 26);
+		addButton.setLocation(260, 200);
 	
 		//errorMsg formatting
 		errorMsg.setEditable(false);
@@ -113,7 +114,7 @@ public class NewBlockPage {
 		mainWindow.add(blueTextArea);
 		mainWindow.add(pointsTextArea);
 		mainWindow.add(cancelButton);
-		mainWindow.add(saveButton);
+		mainWindow.add(addButton);
 		mainWindow.add(redTextEntry);
 		mainWindow.add(greenTextEntry);
 		mainWindow.add(blueTextEntry);
@@ -129,9 +130,9 @@ public class NewBlockPage {
 			}
 		});
 		
-		saveButton.addActionListener(new java.awt.event.ActionListener() {
+		addButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				saveButtonActionPerformed(evt);
+				addButtonActionPerformed(evt);
 			}
 		});
 	
@@ -139,7 +140,7 @@ public class NewBlockPage {
 		System.out.println(colourTextArea.getLocation().toString());
 		System.out.println(redTextArea.getLocation().toString());
 		System.out.println(cancelButton.getPreferredSize().toString());
-		System.out.println(saveButton.getPreferredSize().toString());
+		System.out.println(addButton.getPreferredSize().toString());
 	}
 	
 	/**
@@ -164,7 +165,7 @@ public class NewBlockPage {
 	 * @param evt
 	 */
 	
-	private static void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	private static void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		// clear error message
 		error_msg = null; 
 	
@@ -174,12 +175,14 @@ public class NewBlockPage {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 		try {
 			Integer.parseInt(greenTextEntry.getText());
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 		try {
 			Integer.parseInt(blueTextEntry.getText());
 		}
@@ -202,6 +205,7 @@ public class NewBlockPage {
 			//close the main frame
 			Block223Controller.addBlock(red, green, blue, points);
 			mainWindow.dispose(); 
+			//constructor call for game settings
 		}
 		catch(Exception e) {
 			e.printStackTrace();

@@ -111,8 +111,6 @@ public class Block223Controller {
 		}
 
 
-	
-
 	public static void deleteGame(String name) throws InvalidInputException {
 		Game game = Game.getWithName(name);
 		if (game != null) {
