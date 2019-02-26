@@ -110,9 +110,6 @@ public class Block223Controller {
     
 		}
 
-
-	
-
 	public static void deleteGame(String name) throws InvalidInputException {
 		Game game = Game.getWithName(name);
 		if (game != null) {
@@ -161,9 +158,41 @@ public class Block223Controller {
 	}
 
 	public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
+		if((Block223Application.getCurrentUserRole()) instanceof Admin == false) {
+			throw new InvalidInputException("Admin privileges are required to add a block");
+		}
+		Game game = Block223Application.getCurrentGame();
+		if(game == null) {
+			throw new InvalidInputException("A game must be selected to add a block");
+		}
+		if((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) {
+			throw new InvalidInputException("Only the admin who created the game can add a block");
+		}
+		try {
+			Block block = new Block(red, green, blue, points,game);
+		} catch (RuntimeException e) {
+			throw new InvalidInputException(e.getMessage());
+		}
+		
 	}
 
 	public static void deleteBlock(int id) throws InvalidInputException {
+		if((Block223Application.getCurrentUserRole()) instanceof Admin == false) {
+			throw new InvalidInputException("Admin privileges are required to delete a block");
+		}
+		Game game = Block223Application.getCurrentGame();
+		
+		if(game == null) {
+			throw new InvalidInputException("A game must be selected to delete a block");
+		}
+		
+		if((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) {
+			throw new InvalidInputException("Only the admin who created the game can delete a block");
+		}
+		Block foundBlock = game.findBlock(id);
+		if(foundBlock != null) {
+			foundBlock.delete();
+		}	
 	}
 
 	public static void updateBlock(int id, int red, int green, int blue, int points) throws InvalidInputException {
