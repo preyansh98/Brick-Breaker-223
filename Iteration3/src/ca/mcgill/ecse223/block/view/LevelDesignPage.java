@@ -9,6 +9,8 @@ import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOBlock;
 import ca.mcgill.ecse223.block.controller.TOGame;
+import ca.mcgill.ecse223.block.model.Game;
+import ca.mcgill.ecse223.block.model.Level;
 
 /**
  * AddGame UI screen
@@ -35,8 +37,8 @@ public class LevelDesignPage {
 	JTextArea selectlevel = new JTextArea("Select Level:"); 
 	JButton cancelButton = new JButton("Cancel"); 
 	JButton saveButton = new JButton("Save"); 
-	JButton removeButton = new JButton("Remove from level");
-	JButton confirmButton = new JButton("Confirm Position");
+	JButton removeButton = new JButton("Remove");
+	JButton confirmButton = new JButton("Confirm");
 	
 	
 	JTextArea errorMsg = new JTextArea(error_msg); 
@@ -76,15 +78,16 @@ public class LevelDesignPage {
 	selectLevels.setSize(110,26);
 	selectLevels.setVisible(true);
 	selectLevels.setName("Level");
-	selectLevels.setLocation((int) (selectlevel.getLocation().x + selectlevel.getSize().getWidth() + 10)
-			, (int) selectlevel.getLocation().getY());
+	selectLevels.setLocation((int) (selectlevel.getLocation().x + selectlevel.getSize().getWidth() + 100)
+			, (int) selectlevel.getLocation().getY()+25);
+	
 	
 	selectBlocks.setEditable(false);
 	selectBlocks.setSize(110, 26);
 	selectBlocks.setVisible(true);
 	selectBlocks.setName("Block");
-	selectBlocks.setLocation((int) (selectblock.getLocation().x + selectblock.getSize().getWidth() + 10)
-			, (int) selectblock.getLocation().getY());
+	selectBlocks.setLocation((int) (selectblock.getLocation().x+20)
+			, (int) selectblock.getLocation().getY()+170);
 	
 	
 	
@@ -95,7 +98,7 @@ public class LevelDesignPage {
 	mainWindow.setLayout(null);
 	
 	//Setting attributes of components
-	mainWindow.setSize(400, 300); //this should be consistent across all features
+	mainWindow.setSize(500, 400); //this should be consistent across all features
 	
 	selectlevel.setLocation(20, 30);
 	Dimension selectleveldimension = selectlevel.getPreferredSize();
@@ -128,16 +131,16 @@ public class LevelDesignPage {
 	
 	
 	cancelButton.setSize(75, 26);
-	cancelButton.setLocation(20, 180);
+	cancelButton.setLocation(20, 250);
 	
 	saveButton.setSize(95, 26);
-	saveButton.setLocation(110, 180);
+	saveButton.setLocation(300, 250);
 	
-	confirmButton.setSize(150, 26);
-	confirmButton.setLocation(220, 180);
+	confirmButton.setSize(80, 20);
+	confirmButton.setLocation(220, 190);
 	
-	removeButton.setSize(150, 26);
-	removeButton.setLocation(220, 180);
+	removeButton.setSize(80, 20);
+	removeButton.setLocation(300, 190);
 	
 	
 	
@@ -153,6 +156,12 @@ public class LevelDesignPage {
 	mainWindow.add(inputy);
 	mainWindow.add(selectlevel);
 	mainWindow.add(selectLevels);
+	mainWindow.add(selectBlocks);
+	mainWindow.add(selectblock);
+	mainWindow.add(cancelButton);
+	mainWindow.add(saveButton);
+	mainWindow.add(removeButton);
+	mainWindow.add(confirmButton);
 //	mainWindow.add(points);
 //	mainWindow.add(cancelButton);
 //	mainWindow.add(updateButton);
@@ -264,16 +273,18 @@ public static void refreshblocks(HashMap<Integer, Integer> currentBlocks, JCombo
 	}
 }
 
+
+
 //public static void refreshlevels(HashMap<Integer, Integer> currentlevels, JComboBox<Integer> selectLevel, int levelnumber) throws InvalidInputException {
 //	
 //	
 //	currentLevels = new HashMap<Integer, Integer>();
-//	selectBlocks.removeAllItems();
-//	levelnumber = 0;
-//	for (TOLevel levels : Block223Controller.getCurrentDesignableGame().getLevels()) {
-//		currentLevels.put(levelnumber, levels.getId());
-//		selectLevels.addItem(levels.getId());
-//		levelnumber++;
+//	selectLevel.removeAllItems();
+//	int levelindex = 0;
+//	for (Level levels : Game.getWithName(Block223Controller.getCurrentDesignableGame().getName()).getLevels()) {
+//		currentLevels.put(levelindex,levelnumber);
+//		selectLevel.addItem(Game.getWithName(Block223Controller.getCurrentDesignableGame().getName()).getLevel(levelnumber));
+//		levelindex++;
 //	};
 //	selectBlocks.setSelectedIndex(-1);
 //}
