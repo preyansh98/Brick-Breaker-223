@@ -251,7 +251,7 @@ public class Block223Controller {
 				currentlevel, block, game);
 
 	}
-
+	
 	public static void moveBlock(int level, int oldGridHorizontalPosition, int oldGridVerticalPosition,
 				int newGridHorizontalPosition, int newGridVerticalPosition) throws InvalidInputException {
 		
