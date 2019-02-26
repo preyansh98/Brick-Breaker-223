@@ -104,7 +104,7 @@ public class AddGamePage {
 	private static void addGameButtonActionPerformed(java.awt.event.ActionEvent evt, JTextField textEntry) {
 		// clear error message
 		error_msg = null;
-		
+		errorMsg.setText(error_msg);
 		// call the controller
 		try {
 			Block223Controller.createGame(textEntry.getText());
