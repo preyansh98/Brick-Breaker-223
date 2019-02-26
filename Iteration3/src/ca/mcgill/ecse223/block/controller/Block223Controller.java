@@ -262,13 +262,15 @@ public class Block223Controller {
 		    if(Block223Application.getCurrentGame()==null) {
 				throw new InvalidInputException("A game must be selected to move a block.");
 			}
+		    
+            if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
+            	throw new InvalidInputException("Only the admin who created the game can move a block.");
+			}
 			
 			Game game = Block223Application.getCurrentGame();
 			Level currentlevel = game.getLevel(level);
 			BlockAssignment assignment;
 			List<BlockAssignment> assignments = currentlevel.getBlockAssignments();
-			
-			
 			
 			if(level <1 || level > game.maximumNumberOfLevels()) {
 				throw new InvalidInputException("Level " + level + " does not exist for the game.");
@@ -301,6 +303,10 @@ public class Block223Controller {
 			    
 			    if(Block223Application.getCurrentGame()==null) {
 					throw new InvalidInputException("A game must be selected to move a block.");
+				}
+			    
+			    if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
+	            	throw new InvalidInputException("Only the admin who created the game can move a block.");
 				}
 			
 			Game game = Block223Application.getCurrentGame();
