@@ -21,10 +21,9 @@ public class LevelDesignPage {
 	static JComboBox<Integer> selectLevel;
 	static JFrame mainWindow = new JFrame("Level Settings");
 	static String error_msg = null; 
-	static HashMap<Integer, Integer> currentBlocks;
 	static JComboBox<Integer> selectBlocks;
+	static HashMap<Integer, Integer> currentBlocks;
 	static HashMap<Integer, Integer> currentLevels;
-	static JComboBox<Integer> selectLevels;
 	static JTextField xentry = new JTextField();
 	static JTextField yentry = new JTextField();
 	public static void main(String[] args) {
@@ -38,6 +37,7 @@ public class LevelDesignPage {
 	JButton saveButton = new JButton("Save"); 
 	JButton removeButton = new JButton("Remove from level");
 	JButton confirmButton = new JButton("Confirm Position");
+	
 	
 	JTextArea errorMsg = new JTextArea(error_msg); 
 	inputx.setEditable(false);
@@ -61,6 +61,23 @@ public class LevelDesignPage {
 		e.printStackTrace();
 	}
 	
+
+	HashMap<Integer, Integer> currentLevels = null; 
+	JComboBox<Integer> selectLevels = new JComboBox<Integer>(new Integer[0]); 
+	int levelnumber = 0;
+	try {
+		refreshblocks(currentBlocks, selectBlocks, blockIndex);
+	} catch (InvalidInputException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	selectLevels.setEditable(false);
+	selectLevels.setSize(110,26);
+	selectLevels.setVisible(true);
+	selectLevels.setName("Level");
+	selectLevels.setLocation((int) (selectlevel.getLocation().x + selectlevel.getSize().getWidth() + 10)
+			, (int) selectlevel.getLocation().getY());
 	
 	selectBlocks.setEditable(false);
 	selectBlocks.setSize(110, 26);
@@ -70,11 +87,8 @@ public class LevelDesignPage {
 			, (int) selectblock.getLocation().getY());
 	
 	
-	selectLevels.setSize(110, 26);
-	selectLevels.setVisible(true);
-	selectLevels.setName("Level");
-	selectLevels.setLocation((int) (selectlevel.getLocation().x + selectlevel.getSize().getWidth() + 10)
-			, (int) selectlevel.getLocation().getY());
+	
+	
 	
 	//frame related
 	mainWindow.setVisible(true); 
