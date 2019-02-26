@@ -9,7 +9,6 @@ import javax.swing.*;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOGame;
-import ca.mcgill.ecse223.block.model.Game;
 
 /**
  * AdminDashboardPage UI screen
@@ -19,7 +18,7 @@ import ca.mcgill.ecse223.block.model.Game;
 public class AdminDashboardPage {
 	static String error_msg = null; 
 	static JFrame mainFrame = new JFrame("Admin DashBoard"); 
-
+	static JTextArea errorMsg; 
 	//for updating the game
 
 	public static void main(String[] args) throws InvalidInputException {
@@ -30,7 +29,7 @@ public class AdminDashboardPage {
 	JButton deleteGameButton = new JButton("Delete Game"); 
 	JButton addGameButton = new JButton("Add Game"); 
 	JButton updateGameButton = new JButton("Update Game");;
-	JTextArea errorMsg = new JTextArea(error_msg); 
+	errorMsg = new JTextArea(error_msg); 
 	
 	//frame related
 	mainFrame.setVisible(true); 
@@ -57,7 +56,7 @@ public class AdminDashboardPage {
 	orText.setBackground(mainFrame.getBackground());
 	
 	HashMap<Integer, String> currentGames = null; 
-	JComboBox selectGames = new JComboBox<String>(new String[0]); //hash map of games?
+	JComboBox<String> selectGames = new JComboBox<String>(new String[0]); //hash map of games?
 	int gameIndex = 0;
 	refreshGames(currentGames, selectGames, gameIndex);
 	
@@ -105,6 +104,17 @@ public class AdminDashboardPage {
 		}
 	});
 
+	updateGameButton.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			updateGameButtonActionPerformed(evt);
+		}
+	});
+	
+	deleteGameButton.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			deleteGameButtonActionPerformed(selectGames, evt, currentGames, gameIndex);
+		}
+	});
 	
 	//testing
 	System.out.println(selectGameText.getLocation().toString());
@@ -127,10 +137,47 @@ public class AdminDashboardPage {
 			new AddGamePage().initializeThis(); 
 		} catch (Exception e) {
 			error_msg = e.getMessage();
+			errorMsg.setText(error_msg); 
 		}
 		
 		// add method here to move on to next screen
 	}
+
+	private static void deleteGameButtonActionPerformed(JComboBox<String> selectGames, java.awt.event.ActionEvent evt,
+			HashMap<Integer, String> currentGames, int gameIndex) {
+		// clear error message
+		error_msg = null;
+		
+		// call the controller
+		try {
+			 String name = selectGames.getSelectedItem().toString(); 
+			 Block223Controller.deleteGame(name);
+			 Block223Controller.saveGame();
+			 refreshGames(currentGames, selectGames, gameIndex); 
+		} catch (Exception e) {
+			error_msg = e.getMessage();
+			errorMsg.setText(error_msg); 
+		}
+		
+		// add method here to move on to next screen
+	}
+	
+	private static void updateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		// clear error message
+		error_msg = null;
+		
+		// call the controller
+		try {
+			 mainFrame.dispose();
+			new GameSettingPage().initializeThis(); 
+		} catch (Exception e) {
+			error_msg = e.getMessage();
+			errorMsg.setText(error_msg); 
+		}
+		
+		// add method here to move on to next screen
+	}
+	
 	
 	public static void refreshGames(HashMap<Integer, String> currentGames, JComboBox<String> selectGames, int gameIndex) throws InvalidInputException {
 		
