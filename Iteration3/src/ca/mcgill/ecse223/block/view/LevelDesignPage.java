@@ -30,9 +30,10 @@ public class LevelDesignPage {
 	public static void main(String[] args) {
 	
 	//UI Elements
-	JTextArea inputx = new JTextArea("Input X: ");
+	JTextArea inputx = new JTextArea("Input X:");
 	JTextArea inputy = new JTextArea("Input Y:"); 
 	JTextArea selectblock = new JTextArea("Select Block:"); 
+	JTextArea selectlevel = new JTextArea("Select Level:"); 
 	JButton cancelButton = new JButton("Cancel"); 
 	JButton saveButton = new JButton("Save"); 
 	JButton removeButton = new JButton("Remove from level");
@@ -42,9 +43,10 @@ public class LevelDesignPage {
 	inputx.setEditable(false);
 	inputy.setEditable(false);
 	selectblock.setEditable(false);
+	selectlevel.setEditable(false);
 	
-	xentry.setLocation(30, 55);
-	yentry.setLocation(30, 80);
+	
+	
 	Dimension selectBlockDimension = selectblock.getPreferredSize();
 	selectblock.setSize(selectBlockDimension);
 	selectblock.setBackground(mainWindow.getBackground()); 
@@ -66,6 +68,14 @@ public class LevelDesignPage {
 	selectBlocks.setName("Block");
 	selectBlocks.setLocation((int) (selectblock.getLocation().x + selectblock.getSize().getWidth() + 10)
 			, (int) selectblock.getLocation().getY());
+	
+	
+	selectLevels.setSize(110, 26);
+	selectLevels.setVisible(true);
+	selectLevels.setName("Level");
+	selectLevels.setLocation((int) (selectlevel.getLocation().x + selectlevel.getSize().getWidth() + 10)
+			, (int) selectlevel.getLocation().getY());
+	
 	//frame related
 	mainWindow.setVisible(true); 
 	mainWindow.setLayout(null);
@@ -73,15 +83,19 @@ public class LevelDesignPage {
 	//Setting attributes of components
 	mainWindow.setSize(400, 300); //this should be consistent across all features
 	
+	selectlevel.setLocation(20, 30);
+	Dimension selectleveldimension = selectlevel.getPreferredSize();
+	selectlevel.setSize(selectleveldimension);
+	selectlevel.setBackground(mainWindow.getBackground());
 	
-	inputx.setLocation(20, 100);
+	inputx.setLocation(20, 70);
 	Dimension inputxdimension = inputx.getPreferredSize();
 	inputx.setSize(inputxdimension);
 	inputx.setBackground(mainWindow.getBackground()); //added this so it doesnt stand out
 	
 	Dimension inputyDimension = inputy.getPreferredSize();
 	inputy.setSize(inputyDimension);	
-	inputy.setLocation(80, 100);
+	inputy.setLocation(20, 100);
 	inputy.setBackground(mainWindow.getBackground());
 	
 	Dimension selectblockDimension = selectblock.getPreferredSize();
@@ -111,6 +125,8 @@ public class LevelDesignPage {
 	removeButton.setSize(150, 26);
 	removeButton.setLocation(220, 180);
 	
+	
+	
 	errorMsg.setEditable(false);
 	errorMsg.setSize(300,20);
 	errorMsg.setLocation(30, 20);
@@ -121,6 +137,8 @@ public class LevelDesignPage {
 	mainWindow.add(yentry);
 	mainWindow.add(inputx);
 	mainWindow.add(inputy);
+	mainWindow.add(selectlevel);
+	mainWindow.add(selectLevels);
 //	mainWindow.add(points);
 //	mainWindow.add(cancelButton);
 //	mainWindow.add(updateButton);
@@ -186,7 +204,7 @@ public class LevelDesignPage {
 		}
 		try {
 			//close the main frame
-			Block223Controller.positionBlock(currentBlocks.get(selectBlocks.getSelectedItem()), Integer.parseInt(xentry.getText()), Integer.parseInt(xentry.getText()), Integer.parseInt(yentry.getText()), Integer.parseInt(pointstextentry.getText()));
+			Block223Controller.positionBlock(currentBlocks.get(selectBlocks.getSelectedItem()), Integer.parseInt(xentry.getText()), Integer.parseInt(xentry.getText()), Integer.parseInt(yentry.getText()));
 			mainWindow.dispose(); 
 		}
 		catch(Exception e) {
@@ -227,22 +245,22 @@ public static void refreshblocks(HashMap<Integer, Integer> currentBlocks, JCombo
 		for (TOBlock blocks : Block223Controller.getBlocksOfCurrentDesignableGame()) {
 			currentBlocks.put(blockid, blocks.getId());
 			selectBlocks.addItem(blocks.getId());
-			blockid++;
 		};
 		selectBlocks.setSelectedIndex(-1);
 	}
+}
 
-public static void refreshlevels(HashMap<Integer, Integer> currentlevels, JComboBox<Integer> selectLevel, int levelnumber) throws InvalidInputException {
-	
-	
-	currentBlocks = new HashMap<Integer, Integer>();
-	selectBlocks.removeAllItems();
-	levelnumber = 0;
-	for (TOBlock levels : Block223Controller.getCurrentDesignableGame().get) {
-		currentBlocks.put(blockid, blocks.getId());
-		selectBlocks.addItem(blocks.getId());
-		blockid++;
-	};
-	selectBlocks.setSelectedIndex(-1);
-}
-}
+//public static void refreshlevels(HashMap<Integer, Integer> currentlevels, JComboBox<Integer> selectLevel, int levelnumber) throws InvalidInputException {
+//	
+//	
+//	currentLevels = new HashMap<Integer, Integer>();
+//	selectBlocks.removeAllItems();
+//	levelnumber = 0;
+//	for (TOLevel levels : Block223Controller.getCurrentDesignableGame().getLevels()) {
+//		currentLevels.put(levelnumber, levels.getId());
+//		selectLevels.addItem(levels.getId());
+//		levelnumber++;
+//	};
+//	selectBlocks.setSelectedIndex(-1);
+//}
+//}
