@@ -112,7 +112,12 @@ public class AdminDashboardPage {
 	
 	deleteGameButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
-			deleteGameButtonActionPerformed(selectGames, evt, currentGames, gameIndex);
+			try {
+				deleteGameButtonActionPerformed(selectGames, evt, currentGames, gameIndex);
+			} catch (InvalidInputException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	});
 	
@@ -144,7 +149,7 @@ public class AdminDashboardPage {
 	}
 
 	private static void deleteGameButtonActionPerformed(JComboBox<String> selectGames, java.awt.event.ActionEvent evt,
-			HashMap<Integer, String> currentGames, int gameIndex) {
+			HashMap<Integer, String> currentGames, int gameIndex) throws InvalidInputException {
 		// clear error message
 		error_msg = null;
 		
@@ -152,13 +157,12 @@ public class AdminDashboardPage {
 		try {
 			 String name = selectGames.getSelectedItem().toString(); 
 			 Block223Controller.deleteGame(name);
-			 Block223Controller.saveGame();
-			 refreshGames(currentGames, selectGames, gameIndex); 
 		} catch (Exception e) {
 			error_msg = e.getMessage();
 			errorMsg.setText(error_msg); 
 		}
-		
+
+		 refreshGames(currentGames, selectGames, gameIndex); 
 		// add method here to move on to next screen
 	}
 	
