@@ -16,6 +16,7 @@ import ca.mcgill.ecse223.block.controller.InvalidInputException;
 public class AddGamePage {
 	static String error_msg = null; 
 	static JFrame mainFrame = new JFrame("Add a Game"); 
+	static JTextArea errorMsg; 
 	
 	public static void main(String[] args) {
 		
@@ -26,7 +27,7 @@ public class AddGamePage {
 	JButton addGameButton = new JButton("Add Game"); 
 	JTextField addGameTextEntry = new JTextField();
 	JTextField levelTextEntry = new JTextField(); 
-	JTextArea errorMsg = new JTextArea(error_msg); 
+	errorMsg = new JTextArea(error_msg); 
 	
 	//frame related
 	mainFrame.setVisible(true); 
@@ -94,11 +95,6 @@ public class AddGamePage {
 	});
 
 	
-	//testing
-	System.out.println(addGameText.getLocation().toString());
-	System.out.println(levelText.getLocation().toString());
-	System.out.println(cancelButton.getPreferredSize().toString());
-	System.out.println(addGameButton.getPreferredSize().toString());
 	}
 	
 	/**
@@ -108,13 +104,15 @@ public class AddGamePage {
 	private static void addGameButtonActionPerformed(java.awt.event.ActionEvent evt, JTextField textEntry) {
 		// clear error message
 		error_msg = null;
-		
+		errorMsg.setText(error_msg);
 		// call the controller
 		try {
 			Block223Controller.createGame(textEntry.getText());
+			Block223Controller.saveGame();
 		} 
 		catch (InvalidInputException e) {
 			error_msg = e.getMessage();
+			errorMsg.setText(error_msg);
 		}
 		
 		// add method here to move on to next screen

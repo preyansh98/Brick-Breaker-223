@@ -1,6 +1,7 @@
 package ca.mcgill.ecse223.block.view;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -28,7 +29,47 @@ public class LevelDesignPage {
 	static HashMap<Integer, Integer> currentLevels;
 	static JTextField xentry = new JTextField();
 	static JTextField yentry = new JTextField();
+	
 	public static void main(String[] args) {
+		
+		JButton button00 = new JButton("0");
+		JButton button01 = new JButton("1");
+		JButton button02 = new JButton("2");
+		JButton button03 = new JButton("3");
+		JButton button11 = new JButton("4");
+		JButton button21 = new JButton("");
+		JButton button22 = new JButton("");
+		JButton button23 = new JButton("");
+		JButton button24 = new JButton("");
+		JButton button25 = new JButton("");
+		
+		mainWindow.setVisible(true);
+		mainWindow.setLayout(null);
+		mainWindow.setSize(400, 300);
+	   
+	      JPanel grid = new JPanel();
+	        grid.setLayout(new GridLayout(3,3));
+	        grid.setBounds(190, 20, 150, 200);
+	        grid.setBackground(Color.BLUE);
+	       
+	        //Constructor for grid, populated with buttons
+	     
+	            grid.add(button00);
+	            grid.add(button01);
+	            grid.add(button02);
+	            grid.add(button03);
+	            grid.add(button11);
+	            grid.add(button21);
+	            grid.add(button22);
+	            grid.add(button23);
+	            grid.add(button24);
+	            grid.add(button25);
+	          
+	        grid.setVisible(true);
+	       
+	        //Adding all the objects to the mainFrame
+	        mainWindow.add(grid);
+		
 	
 	//UI Elements
 	JTextArea inputx = new JTextArea("Input X:");
