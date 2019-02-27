@@ -2,7 +2,9 @@ package ca.mcgill.ecse223.block.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -10,6 +12,7 @@ import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOBlock;
 import ca.mcgill.ecse223.block.controller.TOGame;
+import ca.mcgill.ecse223.block.model.BlockAssignment;
 import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.Level;
 
@@ -32,48 +35,32 @@ public class LevelDesignPage {
 	static int blockid=0;
 	
 	
-	public static void main(String[] args) {
-		
-		JButton button00 = new JButton("0");
-		JButton button01 = new JButton("1");
-		JButton button02 = new JButton("2");
-		JButton button03 = new JButton("3");
-		JButton button11 = new JButton("4");
-		JButton button21 = new JButton("");
-		JButton button22 = new JButton("");
-		JButton button23 = new JButton("");
-		JButton button24 = new JButton("");
-		JButton button25 = new JButton("");
+	
+	public static void main(String[] args) throws InvalidInputException {
 		
 		mainWindow.setVisible(true);
 		mainWindow.setLayout(null);
 		mainWindow.setSize(400, 300);
-	   
-	      JPanel grid = new JPanel();
-	        grid.setLayout(new GridLayout(3,3));
-	        grid.setBounds(190, 20, 150, 200);
-	        grid.setBackground(Color.BLUE);
-	       
-	        //Constructor for grid, populated with buttons
-	     
-	            grid.add(button00);
-	            grid.add(button01);
-	            grid.add(button02);
-	            grid.add(button03);
-	            grid.add(button11);
-	            grid.add(button21);
-	            grid.add(button22);
-	            grid.add(button23);
-	            grid.add(button24);
-	            grid.add(button25);
-	          
-	        grid.setVisible(true);
-	       
-	        //Adding all the objects to the mainFrame
-	        mainWindow.add(grid);
 		
 	
 	//UI Elements
+	int y=0;
+	int x =0;
+	int blockid=0;
+	List<BlockAssignment> listof = null; 
+	try {
+	listof = Game.getWithName(Block223Controller.getCurrentDesignableGame().getName()).getBlockAssignments();
+	}catch(InvalidInputException e) {
+		e.printStackTrace();
+	}
+	String assignmentrepresentation = "";
+	for (BlockAssignment thisassignment : listof) {
+		y=thisassignment.getGridVerticalPosition();
+		x = thisassignment.getGridHorizontalPosition();
+		blockid = thisassignment.getBlock().getId();
+		assignmentrepresentation+= +blockid+ " " + "X:"+x+"Y:"+y+ "\n"; 
+	}
+	JTextArea listofblockassignments = new JTextArea("List of current Block Assignments: " + "\n" + assignmentrepresentation);
 	JTextArea inputx = new JTextArea("Input X:");
 	JTextArea inputy = new JTextArea("Input Y:"); 
 	JTextArea selectblock = new JTextArea("Select Block:"); 
@@ -82,6 +69,7 @@ public class LevelDesignPage {
 	JButton saveButton = new JButton("Save"); 
 	JButton removeButton = new JButton("Remove");
 	JButton confirmButton = new JButton("Confirm");
+	listofblockassignments.setLocation(200,50);
 	
 	
 	JTextArea errorMsg = new JTextArea(error_msg); 
@@ -89,6 +77,11 @@ public class LevelDesignPage {
 	inputy.setEditable(false);
 	selectblock.setEditable(false);
 	selectlevel.setEditable(false);
+	listofblockassignments.setEditable(false);
+	
+	Dimension listassignmentsize = listofblockassignments.getPreferredSize();
+	listofblockassignments.setSize(listassignmentsize);
+	listofblockassignments.setBackground(mainWindow.getBackground());
 	
 	
 	
@@ -196,6 +189,7 @@ public class LevelDesignPage {
 	mainWindow.add(saveButton);
 	mainWindow.add(removeButton);
 	mainWindow.add(confirmButton);
+	mainWindow.add(listofblockassignments);
 	mainWindow.setBackground(Color.gray); //could probably do some rgb
 	
 	
