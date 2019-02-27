@@ -19,77 +19,27 @@ public class GameSettingPage {
 	
 	public static void main(String[] args) {
 		
-		
-		//Texts
-		JTextArea newGameNameText = new JTextArea("Enter new name: "); 
-		JTextArea BallMinSpeedYText = new JTextArea("Enter Ball's minimum Speed Y: "); 
-		JTextArea BallMinSpeedXText = new JTextArea("Enter Ball's minimum Speed X: ");
-		JTextArea BallSpeedFactorText = new JTextArea("Enter Ball's Speed increase factor: ");
-		JTextArea PaddleMinText = new JTextArea("Enter Paddle minimum length: ");
-		JTextArea PaddleMaxText = new JTextArea("Enter Paddle maximum length: ");
-		//Buttons
-		JButton goBackButton = new JButton("Go Back"); 
-		JButton updateGameButton = new JButton("Updte"); 
-		//Redirected Buttons
-		JButton blockSettingsButton = new JButton("Block Settings"); 
-		JButton levelSettingsButton = new JButton("Level Settings"); 
-		JButton addBlockButton = new JButton("Add a Block"); 
+		JTextArea newGameName = new JTextArea("Enter new name: "); 
+		JTextArea BallMinSpeedY = new JTextArea("Enter Ball's minimum Speed Y: "); 
+		JTextArea BallMinSpeedX = new JTextArea("Enter Ball's minimum Speed X: ");
+		JTextArea BallSpeedFactor = new JTextArea("Enter Ball's Speed increase factor: ");
+		JTextArea PaddleMin = new JTextArea("Enter Paddle minimum length: ");
+		JTextArea PaddleMax = new JTextArea("Enter Paddle maximum length: ");
+		JButton goBack = new JButton("Go Back"); 
+		JButton updateGame = new JButton("Updte"); 
+		//Dont know about this:
+		JButton blockSettings = new JButton("Block Settings"); 
+		JButton levelSettings = new JButton("Level Settings"); 
+		JButton addBlock = new JButton("Add a Block"); 
 		//PlayArea is Constant now
 		
-		//Layout
 		mainFrame.setSize(400, 300); //constant across all features
 		mainFrame.setLayout(null);
 		mainFrame.setVisible(true);
 		
-		//Design
-		mainFrame.setBackground(Color.gray); //Not set
-		
-		//newGame Text Style
-		newGameNameText.setLocation(30, 60);
-		Dimension newGameNameDimension = newGameNameText.getPreferredSize();
-		newGameNameText.setSize(newGameNameDimension);
-		newGameNameText.setBackground(mainFrame.getBackground()); 
-
 		
 		
-		newGameNameText.setEditable(false);
-		BallMinSpeedXText.setEditable(false);
-		BallMinSpeedYText.setEditable(false);
-		BallSpeedFactorText.setEditable(false);
-		PaddleMaxText.setEditable(false);
-		PaddleMinText.setEditable(false);
-		
-		//BallMinSpeedX Text Style
-				BallMinSpeedXText.setLocation(30, 70);
-				Dimension BallMinSpeedXDimension = BallMinSpeedXText.getPreferredSize();
-				BallMinSpeedXText.setSize(BallMinSpeedXDimension);
-				BallMinSpeedXText.setBackground(mainFrame.getBackground()); 
-		//BallMinSpeedY Text Style
-				BallMinSpeedYText.setLocation(30, 70);
-				Dimension BallMinSpeedYDimension = BallMinSpeedYText.getPreferredSize();
-				BallMinSpeedYText.setSize(BallMinSpeedYDimension);
-				BallMinSpeedYText.setBackground(mainFrame.getBackground()); 
-		//Paddle Min Style
-				PaddleMinText.setLocation(30, 60);
-				Dimension PaddleMinDimension = PaddleMinText.getPreferredSize();
-				PaddleMinText.setSize(PaddleMinDimension);
-				PaddleMinText.setBackground(mainFrame.getBackground()); 
-		//Paddle Max Style
-				PaddleMaxText.setLocation(30, 60);
-				Dimension PaddleMaxDimension = PaddleMaxText.getPreferredSize();
-				PaddleMaxText.setSize(PaddleMaxDimension);
-				PaddleMaxText.setBackground(mainFrame.getBackground()); 
-
-		//Buttons
-				goBackButton.setSize(75, 26);
-				updateGameButton.setLocation(20, 180);
-				blockSettingsButton.setLocation(20, 180);
-				levelSettingsButton.setLocation(20, 180);
-				addBlockButton.setLocation(20, 180);
-		
-		
-		
-		goBackButton.addActionListener(new java.awt.event.ActionListener() {
+		goBack.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				goBackActionPerformed(evt);
 			}

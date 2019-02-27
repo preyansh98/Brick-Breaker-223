@@ -17,25 +17,38 @@ import ca.mcgill.ecse223.block.controller.InvalidInputException;
 
 public class NewBlockPage {
 	
-	static JFrame mainWindow = new JFrame("Add a Block");
-	static String error_msg = null; 
-	static JTextField redTextEntry = new JTextField();
-	static JTextField greenTextEntry = new JTextField();
-	static JTextField blueTextEntry = new JTextField();
-	static JTextField pointsTextEntry = new JTextField();
-		
+	private static JFrame mainWindow = new JFrame("Add a Block");
+	private static String error_msg = null; 
+	private static JTextField redTextEntry = new JTextField();
+	private static JTextField greenTextEntry = new JTextField();
+	private static JTextField blueTextEntry = new JTextField();
+	private static JTextField pointsTextEntry = new JTextField();
 	
+	private static JTextArea colourTextArea = new JTextArea("Colour:"); 
+	private static JTextArea redTextArea = new JTextArea("R"); 
+	private static JTextArea greenTextArea = new JTextArea("G"); 
+	private static JTextArea blueTextArea = new JTextArea("B");
+	private static JTextArea pointsTextArea = new JTextArea("Points");
+	private static JButton cancelButton = new JButton("Cancel"); 
+	private static JButton addButton = new JButton("Add"); 
+	private static JTextArea errorMsg = new JTextArea(error_msg); 
+	//for refreshing the other window to add the new block
+	private static HashMap<Integer, String> currentBlocks = new HashMap<Integer, String>();
+	private static JComboBox<Integer> selectBlocks;
+	
+	
+	public NewBlockPage() {
+		initComponents();
+		
+		//refreshData();
+	}
+	
+	//main method to test
 	public static void main(String[] args) {
-		
-		JTextArea colourTextArea = new JTextArea("Colour:"); 
-		JTextArea redTextArea = new JTextArea("R"); 
-		JTextArea greenTextArea = new JTextArea("G"); 
-		JTextArea blueTextArea = new JTextArea("B");
-		JTextArea pointsTextArea = new JTextArea("Points");
-		JButton cancelButton = new JButton("Cancel"); 
-		JButton addButton = new JButton("Add"); 
-		JTextArea errorMsg = new JTextArea(error_msg); 
-		
+		initComponents();
+	}
+	
+	private static void initComponents() {
 		//frame related
 		mainWindow.setVisible(true); 
 		mainWindow.setLayout(null);
@@ -156,7 +169,8 @@ public class NewBlockPage {
 			mainWindow.dispose(); 
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			error_msg = e.getMessage();
+			errorMsg.setText(error_msg);
 		}
 	}
 	
@@ -168,7 +182,28 @@ public class NewBlockPage {
 	private static void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		// clear error message
 		error_msg = null; 
-	
+		if(redTextEntry.getText() == null || redTextEntry.getText().length() == 0) {
+			error_msg = "Please enter a value for red";
+			errorMsg.setText(error_msg);
+			return;
+		}
+		if(greenTextEntry.getText() == null || greenTextEntry.getText().length() == 0) {
+			error_msg = "Please enter a value for green";
+			errorMsg.setText(error_msg);
+			return;
+		}
+		if(blueTextEntry.getText() == null || blueTextEntry.getText().length() == 0) {
+			error_msg = "Please enter a value for blue";
+			errorMsg.setText(error_msg);
+			return;
+		}
+		
+		if(pointsTextEntry.getText() == null || pointsTextEntry.getText().length() == 0) {
+			error_msg = "Please enter a value for points";
+			errorMsg.setText(error_msg);
+			return;
+		}
+		
 		try {
 			Integer.parseInt(redTextEntry.getText());
 		}
@@ -179,14 +214,14 @@ public class NewBlockPage {
 		try {
 			Integer.parseInt(greenTextEntry.getText());
 		}
-		catch(Exception e) {
+		catch(InputMismatchException e) {
 			e.printStackTrace();
 		}
 		
 		try {
 			Integer.parseInt(blueTextEntry.getText());
 		}
-		catch(Exception e) {
+		catch(InputMismatchException e) {
 			e.printStackTrace();
 		}
 		try {
@@ -207,10 +242,15 @@ public class NewBlockPage {
 			mainWindow.dispose(); 
 			//constructor call for game settings
 		}
-		catch(Exception e) {
-			e.printStackTrace();
+		catch(InvalidInputException e) {
+			error_msg = e.getMessage();
+			errorMsg.setText(error_msg);
 		}
+	
 	}
 	
+	private void refreshData() {
+		
+	}
 	
 }
