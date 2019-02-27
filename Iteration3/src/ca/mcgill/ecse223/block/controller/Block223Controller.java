@@ -168,22 +168,24 @@ public class Block223Controller {
 			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException 
 	{
 		
+		//CHECKS
 		if (Block223Application.getCurrentGame() == null) 
 		{
 			throw new InvalidInputException("A game must be selected to define game settings");
-			}
+		}
 		
 		Game game =  Block223Application.getCurrentGame();
 		String currentName = game.getName();
 		
-		if((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) 
+		if ((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) 
 	    {
 			throw new InvalidInputException("Admin privileges are required to define game settings. ");
 	    }
 		
-		if(!game.setName(name)) 
+		//Add a for loop and loop through each name of the game?
+		if(!game.getName()) 
 		{
-			//NOT SURE
+			
 			throw new InvalidInputException("The name of the game must be unique");
 		}
 		
@@ -191,6 +193,7 @@ public class Block223Controller {
 		{
 			game.setName(name);
 		}
+		
 		Block223Controller.setGameDetails(nrLevels, nrBlocksPerLevel, minBallSpeedX, minBallSpeedY, ballSpeedIncreaseFactor, maxPaddleLength, minPaddleLength);
 		//END
 	}
