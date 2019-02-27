@@ -88,6 +88,21 @@ public class GameSettingPage {
 				addBlockButton.setLocation(20, 180);
 		
 		
+
+		//Adding elements into the main frame
+				//Texts
+				mainFrame.add(newGameNameText);
+				mainFrame.add(BallMinSpeedYText);
+				mainFrame.add(BallMinSpeedXText);
+				mainFrame.add(PaddleMaxText);
+				mainFrame.add(PaddleMinText);
+				mainFrame.add(BallSpeedFactorText);
+				//Buttons
+				mainFrame.add(goBackButton);
+				mainFrame.add(updateGameButton);
+				mainFrame.add(addBlockButton);
+				mainFrame.add(levelSettingsButton);
+				mainFrame.add(blockSettingsButton);
 		
 		goBackButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
