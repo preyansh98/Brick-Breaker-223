@@ -51,7 +51,7 @@ public class BlockDesignPage {
 	selectBlockText.setBackground(mainWindow.getBackground()); 
 	
 	HashMap<Integer, Integer> currentBlocks = null; 
-	JComboBox<Integer> selectBlocks = new JComboBox<Integer>(new Integer[0]); 
+	JComboBox<String> selectBlocks = new JComboBox<String>(new String[0]); 
 	int blockIndex = 0;
 	try {
 		refreshblocks(currentBlocks, selectBlocks, blockIndex);
@@ -208,7 +208,7 @@ public class BlockDesignPage {
 			e.printStackTrace();
 		}
 	}
-	private static void updateButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<Integer, Integer> currentBlocks, JComboBox<Integer> selectBlocks) {
+	private static void updateButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<Integer, Integer> currentBlocks, JComboBox<String> selectBlocks) {
 		// clear error message
 		error_msg = null; 
 		try {
@@ -269,16 +269,16 @@ public class BlockDesignPage {
 			e.printStackTrace();
 		}
 	}
-public static void refreshblocks(HashMap<Integer, Integer> currentBlocks, JComboBox<Integer> selectBlocks, int blockid) throws InvalidInputException {
+public static void refreshblocks(HashMap<Integer, Integer> currentBlocks, JComboBox<String> selectBlocks, int blockid) throws InvalidInputException {
 	
 		
 		currentBlocks = new HashMap<Integer, Integer>();
 		selectBlocks.removeAllItems();
 		blockid = 0;
-		for (TOBlock blocks : Block223Controller.getBlocksOfCurrentDesignableGame()) {
-			currentBlocks.put(blockid, blocks.getId());
-			String RGBPoints = "R:"+blocks.getRed()+ "G:" + blocks.getGreen() + "B:"+ blocks.getBlue() + "P:" +blocks.getPoints();
-			selectBlocks.addItem(blocks.getId());
+		for (TOBlock block : Block223Controller.getBlocksOfCurrentDesignableGame()) {
+			currentBlocks.put(blockid, block.getId());
+			String RGBPoints = "R:"+block.getRed()+ "G:" + block.getGreen() + "B:"+ block.getBlue() + "P:" +block.getPoints();
+			selectBlocks.addItem(RGBPoints);
 			blockid++;
 		};
 		selectBlocks.setSelectedIndex(-1);
