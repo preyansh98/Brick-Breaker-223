@@ -24,12 +24,13 @@ public class LevelDesignPage {
 	static JComboBox<Integer> selectLevel;
 	static JFrame mainWindow = new JFrame("Level Settings");
 	static String error_msg = null; 
-	static JComboBox<Integer> selectBlocks;
+	static JComboBox<String> selectBlocks;
 	static HashMap<Integer, Integer> currentBlocks;
 	static HashMap<Integer, Integer> currentLevels;
 	static JTextField xentry = new JTextField();
 	static JTextField yentry = new JTextField();
 	static int blockid=0;
+	
 	
 	public static void main(String[] args) {
 		
@@ -95,22 +96,13 @@ public class LevelDesignPage {
 	selectblock.setSize(selectBlockDimension);
 	selectblock.setBackground(mainWindow.getBackground()); 
 	
-	HashMap<Integer, Integer> currentBlocks = null; 
-	JComboBox<String> selectBlocks = new JComboBox<String>(new String[0]); 
-	int blockIndex = 0;
-	try {
-		refreshblocks(currentBlocks, selectBlocks, blockIndex);
-	} catch (InvalidInputException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
 	
 
 	HashMap<Integer, Integer> currentLevels = null; 
-	JComboBox<Integer> selectLevels = new JComboBox<Integer>(new Integer[0]); 
+	JComboBox<String> selectLevels = new JComboBox<String>(new String[0]); 
 	int levelnumber = 0;
 	try {
-		refreshblocks(currentBlocks, selectBlocks, blockIndex);
+		refreshlevels(currentlevels, selectLevels, levelnumber);
 	} catch (InvalidInputException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
