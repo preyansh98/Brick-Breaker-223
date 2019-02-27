@@ -29,7 +29,7 @@ public class GameSettingPage {
 		JTextArea PaddleMaxText = new JTextArea("Enter Paddle maximum length: ");
 		//Buttons
 		JButton goBackButton = new JButton("Go Back"); 
-		JButton updateGameButton = new JButton("Updte"); 
+		JButton updateGameButton = new JButton("Update"); 
 		//Redirected Buttons
 		JButton blockSettingsButton = new JButton("Block Settings"); 
 		JButton levelSettingsButton = new JButton("Level Settings"); 
