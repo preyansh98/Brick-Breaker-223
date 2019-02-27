@@ -24,7 +24,7 @@ import ca.mcgill.ecse223.block.model.Level;
 
 public class LevelDesignPage {
 	static HashMap<Integer, Integer> currentlevels;
-	static JComboBox<Integer> selectLevel;
+	static JComboBox<String> selectLevel;
 	static JFrame mainWindow = new JFrame("Level Settings");
 	static String error_msg = null; 
 	static JComboBox<String> selectBlocks;
@@ -33,34 +33,20 @@ public class LevelDesignPage {
 	static JTextField xentry = new JTextField();
 	static JTextField yentry = new JTextField();
 	static int blockid=0;
+	static int levelindex=0;
 	
 	
 	
 	public static void main(String[] args) throws InvalidInputException {
-		
+		refreshlevels(currentlevels, selectLevel,levelindex);
 		mainWindow.setVisible(true);
 		mainWindow.setLayout(null);
 		mainWindow.setSize(400, 300);
 		
 	
 	//UI Elements
-	int y=0;
-	int x =0;
-	int blockid=0;
-	List<BlockAssignment> listof = null; 
-	try {
-	listof = Game.getWithName(Block223Controller.getCurrentDesignableGame().getName()).getBlockAssignments();
-	}catch(InvalidInputException e) {
-		e.printStackTrace();
-	}
-	String assignmentrepresentation = "";
-	for (BlockAssignment thisassignment : listof) {
-		y=thisassignment.getGridVerticalPosition();
-		x = thisassignment.getGridHorizontalPosition();
-		blockid = thisassignment.getBlock().getId();
-		assignmentrepresentation+= +blockid+ " " + "X:"+x+"Y:"+y+ "\n"; 
-	}
-	JTextArea listofblockassignments = new JTextArea("List of current Block Assignments: " + "\n" + assignmentrepresentation);
+	
+	JTextArea listofblockassignments = new JTextArea("List of current Block Assignments: " + "\n" + refreshspecificlevel());
 	JTextArea inputx = new JTextArea("Input X:");
 	JTextArea inputy = new JTextArea("Input Y:"); 
 	JTextArea selectblock = new JTextArea("Select Block:"); 
@@ -200,6 +186,16 @@ public class LevelDesignPage {
 //		}
 //	});
 
+	selectBlocks.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			try {
+				selectBlocksActionPerformed(evt);
+			} catch (InvalidInputException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	});
 	cancelButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
 			cancelButtonActionPerformed(evt);
@@ -302,5 +298,37 @@ public static void refreshlevels(HashMap<Integer, Integer> currentlevels, JCombo
 	};
 	selectBlocks.setSelectedIndex(-1);
 	refreshblocks(currentBlocks,selectBlocks,blockid);
+}
+public static String refreshspecificlevel () throws InvalidInputException {
+	Level currentlevel = (Level) selectLevel.getSelectedItem();
+	
+	int y=0;
+	int x =0;
+	int blockid=0;
+	List<BlockAssignment> listof = null; 
+	listof = currentlevel.getBlockAssignments();
+	String assignmentrepresentation = "";
+	for (BlockAssignment thisassignment : listof) {
+		y=thisassignment.getGridVerticalPosition();
+		x = thisassignment.getGridHorizontalPosition();
+		blockid = thisassignment.getBlock().getId();
+		assignmentrepresentation+= +blockid+ " " + "X:"+x+"Y:"+y+ "\n"; 
+	}
+	return assignmentrepresentation;
+}
+
+public static void refreshspecificblock () throws InvalidInputException {
+	TOBlock currentblock = Block223Controller.getBlockOfCurrentDesignableGame(selectBlocks.getSelectedIndex());
+	
+	
+	}
+
+private static void selectBlocksActionPerformed(java.awt.event.ActionEvent evt) throws InvalidInputException {
+	try {
+	refreshspecificblock();
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
 }
 }
