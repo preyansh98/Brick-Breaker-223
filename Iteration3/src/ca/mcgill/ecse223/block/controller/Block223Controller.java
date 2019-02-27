@@ -120,8 +120,6 @@ public class Block223Controller {
 	}
 
 
-	
-
 	public static void deleteGame(String name) throws InvalidInputException {
 		if(Block223Application.getCurrentUserRole() instanceof Admin == false) {
 			throw new InvalidInputException("Admin privileges are required to delete a game"); 
