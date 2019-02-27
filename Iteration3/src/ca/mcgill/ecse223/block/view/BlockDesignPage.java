@@ -9,6 +9,7 @@ import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOBlock;
 import ca.mcgill.ecse223.block.controller.TOGame;
+import ca.mcgill.ecse223.block.model.Block;
 
 /**
  * AddGame UI screen
@@ -159,7 +160,16 @@ public class BlockDesignPage {
 //			updateButtonActionPerformed(evt, updatetextentry);
 //		}
 //	});
-
+	selectBlocks.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			try {
+				selectBlocksActionPerformed(evt);
+			} catch (InvalidInputException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	});
 	cancelButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
 			cancelButtonActionPerformed(evt);
@@ -188,7 +198,16 @@ public class BlockDesignPage {
 	/**
 	 * Specification for addGame event when listener activated
 	 * @param evt
+	 * @throws InvalidInputException 
 	 */
+	private static void selectBlocksActionPerformed(java.awt.event.ActionEvent evt) throws InvalidInputException {
+		try {
+		refreshspecificblock();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	private static void updateButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<Integer, Integer> currentBlocks, JComboBox<Integer> selectBlocks) {
 		// clear error message
 		error_msg = null; 
@@ -258,9 +277,22 @@ public static void refreshblocks(HashMap<Integer, Integer> currentBlocks, JCombo
 		blockid = 0;
 		for (TOBlock blocks : Block223Controller.getBlocksOfCurrentDesignableGame()) {
 			currentBlocks.put(blockid, blocks.getId());
+			String RGBPoints = "R:"+blocks.getRed()+ "G:" + blocks.getGreen() + "B:"+ blocks.getBlue() + "P:" +blocks.getPoints();
 			selectBlocks.addItem(blocks.getId());
 			blockid++;
 		};
 		selectBlocks.setSelectedIndex(-1);
 	}
+
+
+public static void refreshspecificblock () throws InvalidInputException {
+	TOBlock currentblock = Block223Controller.getBlockOfCurrentDesignableGame(selectBlocks.getSelectedIndex());
+	redtextentry.setText("" + currentblock.getRed());
+	bluetextentry.setText("" +currentblock.getBlue());
+	greentextentry.setText("" +currentblock.getGreen());
+	pointstextentry.setText("" +currentblock.getPoints());
+	
+	
+	}
 }
+

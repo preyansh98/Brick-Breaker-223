@@ -203,19 +203,6 @@ public class LevelDesignPage {
 	mainWindow.add(saveButton);
 	mainWindow.add(removeButton);
 	mainWindow.add(confirmButton);
-//	mainWindow.add(points);
-//	mainWindow.add(cancelButton);
-//	mainWindow.add(updateButton);
-//	mainWindow.add(deleteButton);
-//	mainWindow.add(redtextentry);
-//	mainWindow.add(greentextentry);
-//	mainWindow.add(bluetextentry);
-//	mainWindow.add(pointstextentry);
-//	mainWindow.add(errorMsg); 
-//	mainWindow.add(selectBlocks);
-//	mainWindow.add(selectBlockText);
-
-	//Design here:
 	mainWindow.setBackground(Color.gray); //could probably do some rgb
 	
 	
