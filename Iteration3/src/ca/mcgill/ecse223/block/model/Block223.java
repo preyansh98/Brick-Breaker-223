@@ -367,6 +367,16 @@ public class Block223 implements Serializable
     Game.reinitializeUniqueName(this.getGames());
 	User.reinitializeUniqueUsername(this.getUsers());
   }
+
+  // line 11 "../../../../../Block223 v2.ump"
+   public Game findGame(String name){
+    for(Game game: games){
+   			if(game.getName().equals(name)){
+   				return game;
+   			}
+   		}
+   		return null;
+  }
   
   //------------------------
   // DEVELOPER CODE - PROVIDED AS-IS

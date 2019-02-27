@@ -19,18 +19,18 @@ public class Block223Controller {
 		}
 		
 		Block223 block223 = Block223Application.getBlock223();
-		
+			
 		Admin admin = (Admin) Block223Application.getCurrentUserRole();
 		
 		Game game = null; 
 		try {
-			if(game.getName() == null || game.getName().isEmpty()) {
-				throw new InvalidInputException("name can not be empty or null"); 
-			}
-			else {
+//			if(game.getName() == null || game.getName().isEmpty()) {
+//				throw new InvalidInputException("name can not be empty or null"); 
+//			}
+//			else {
 			game = new Game(name, 1, admin, 1,1,1,10,10,block223);
 			Block223Application.setCurrentGame(game); //this is temporary for testing. 
-		}}
+		}
 		catch (RuntimeException e) {
 		}
 	}
@@ -151,7 +151,7 @@ public class Block223Controller {
 	}
 
 	public static void selectGame(String name) throws InvalidInputException {
-	Game game = Game.getWithName(name);
+	Game game = Block223Application.getBlock223().findGame(name); 
 	//Use findGame due to bug in Umple
 	
 	
@@ -255,7 +255,7 @@ public class Block223Controller {
 		Level currentlevel = game.getLevel(level);
 
 		// findBlock has to be implemented
-		Block block = game.getBlock(Id);
+		Block block = game.findBlock(Id);
 
 		BlockAssignment blockassignment = new BlockAssignment(gridHorizontalPosition, gridVerticalPosition,
 				currentlevel, block, game);

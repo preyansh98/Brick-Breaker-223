@@ -6,6 +6,15 @@ class Block223 {
    1 <@>- * User users;
    1 <@>- * UserRole roles;
    1 <@>- * Game games;
+   
+         public Game findGame(String name){
+    for(Game game: games){
+   			if(game.getName().equals(name)){
+   				return game;
+   			}
+   		}
+   		return null;
+  }		
 }
 
 class User {
@@ -86,7 +95,7 @@ class Block {
    	if(aPoints < 1 || aPoints > 1000){
    		throw new RuntimeException("Points must be between 1 and 1000");
    	}
-   }						
+   }				
 }
 
 // random attribute not needed anymore

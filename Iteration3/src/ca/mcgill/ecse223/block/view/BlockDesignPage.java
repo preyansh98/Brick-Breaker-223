@@ -5,11 +5,14 @@ import java.util.HashMap;
 
 import javax.swing.*;
 
+import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOBlock;
 import ca.mcgill.ecse223.block.controller.TOGame;
 import ca.mcgill.ecse223.block.model.Block;
+import ca.mcgill.ecse223.block.model.Block223;
+import ca.mcgill.ecse223.block.model.Game;
 
 /**
  * AddGame UI screen
@@ -246,7 +249,7 @@ public class BlockDesignPage {
 	}
 	
 	private static void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		// clear error message
+		// clear error messages
 		error_msg = null; 
 		
 		try {
