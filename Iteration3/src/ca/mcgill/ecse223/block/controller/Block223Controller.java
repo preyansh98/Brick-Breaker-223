@@ -576,25 +576,5 @@ public class Block223Controller {
 		}
 		return to;
 	}
-	public static BlockAssignment findBlockAssignment(int gridHorizontalPosition, int gridVerticalPosition){
-			
-			Game thisgame = Block223Application.getCurrentGame();
-			List<BlockAssignment> assignments = thisgame.getBlockAssignments();
-			
-			
-			for(BlockAssignment assignment: assignments) {
-				
-				int h= assignment.getGridHorizontalPosition();
-				int v= assignment.getGridVerticalPosition();
-				
-				if(h==gridHorizontalPosition && v==gridVerticalPosition) {
-					return assignment;
-				}else {
-					return null;
-				}
-			}
-			
-			return null;
-		}
-
+	
 }
