@@ -69,7 +69,7 @@ public class Block223Controller {
     	throw new InvalidInputException("The number of blocks per level must be greater than zero.");
     }
     game.setNrBlocksPerLevel(nrBlocksPerLevel);
-//get ball
+    //get ball
     Ball ball = game.getBall();
     //change ball settings
     if (minBallSpeedX <= 0) {
@@ -87,7 +87,7 @@ public class Block223Controller {
     	throw new InvalidInputException("The speed increase factor of the ball must be greater than zero");
     }
     ball.setBallSpeedIncreaseFactor(ballSpeedIncreaseFactor);
-//get paddle
+    //get paddle
     Paddle paddle = game.getPaddle();
     //change paddle settings
     if(maxPaddleLength <=0 || maxPaddleLength >400) {
@@ -187,12 +187,20 @@ public class Block223Controller {
 		if((Block223Application.getCurrentUserRole()) instanceof Admin == false) {
 			throw new InvalidInputException("Admin privileges are required to add a block");
 		}
+		//getting the currentGame
 		Game game = Block223Application.getCurrentGame();
 		if(game == null) {
 			throw new InvalidInputException("A game must be selected to add a block");
 		}
 		if((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) {
 			throw new InvalidInputException("Only the admin who created the game can add a block");
+		}
+		//getting the list of blocks to checks for RGB duplication
+		List<Block> blocks = game.getBlocks();
+		for(Block block : blocks) {
+			if(red == block.getRed() && green == block.getGreen() && blue == block.getBlue()) {
+				throw new InvalidInputException("A block with the same color already exists for the game.");
+			}
 		}
 		try {
 			Block block = new Block(red, green, blue, points,game);
