@@ -38,6 +38,8 @@ public class Block223Controller {
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
 			Double ballSpeedIncreaseFactor, int maxPaddleLength, int minPaddleLength) throws InvalidInputException 
 	{
+		//Osman Warsi
+		//Variables
 		String error = "";
 		Admin admin = (Admin) Block223Application.getCurrentUserRole();
 		Game game = Block223Application.getCurrentGame();
@@ -48,57 +50,69 @@ public class Block223Controller {
     	throw new InvalidInputException("A Game must be selected to define game settings");
     }
     
-    if((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) 
+    if ((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) 
     {
 		throw new InvalidInputException("Admin privileges are required to define game settings. ");
-    
     }
-		
-	//Only the admin who created
-    //the game can define its game
-    //settings.	
-		
-		
-    if(nrLevels < 1 || nrLevels >99) {
+	
+    if ((game.getAdmin().equals(admin))) 
+    {
+		throw new InvalidInputException("Only the admin who created the game can define its game features.");
+    }
+
+    if(nrLevels < 1 || nrLevels >99) 
+    {
     	throw new InvalidInputException("The number of levels must be between 1 and 99.");
     }
     
-   //setting number of blocks
+   
     if (nrBlocksPerLevel <= 0) 
     {
     	throw new InvalidInputException("The number of blocks per level must be greater than zero.");
     }
+    
     game.setNrBlocksPerLevel(nrBlocksPerLevel);
-//get ball
+
+    //Ball Settings
     Ball ball = game.getBall();
-    //change ball settings
-    if (minBallSpeedX <= 0) {
+
+    if (minBallSpeedX <= 0) 
+    {
     	throw new InvalidInputException("The minimum speed of the ball must be greater than zero");
     }
-    ball.setMinBallSpeedX(minBallSpeedX);
+    	ball.setMinBallSpeedX(minBallSpeedX);
     
-    if (minBallSpeedY <= 0) {
+    if (minBallSpeedY <= 0) 
+    {
     	throw new InvalidInputException("The minimum speed of the ball must be greater than zero");
-    	
     }
-    ball.setMinBallSpeedY(minBallSpeedY);
+    	ball.setMinBallSpeedY(minBallSpeedY);
     
-    if(ballSpeedIncreaseFactor <= 0) {
+    if(ballSpeedIncreaseFactor <= 0) 
+    {
     	throw new InvalidInputException("The speed increase factor of the ball must be greater than zero");
     }
-    ball.setBallSpeedIncreaseFactor(ballSpeedIncreaseFactor);
-//get paddle
+    	ball.setBallSpeedIncreaseFactor(ballSpeedIncreaseFactor);
+
+    //Paddle Settings
     Paddle paddle = game.getPaddle();
-    //change paddle settings
-    if(maxPaddleLength <=0 || maxPaddleLength >400) {
+    
+    if(maxPaddleLength <=0 || maxPaddleLength >400) 
+    {
     	throw new InvalidInputException("The maximum length of the paddle must be greater than zero or less than or equal to 400.");
     }
-    paddle.setMaxPaddleLength(maxPaddleLength);
-    if (minPaddleLength <= 0) {
+    	paddle.setMaxPaddleLength(maxPaddleLength);
+    
+    if (minPaddleLength <= 0) 
+    {
     	throw new InvalidInputException("The minimum length of the paddle must be greater than zero.");
     }
+    
     paddle.setMinPaddleLength(minPaddleLength);
-    //get levels
+    
+    
+    //ASK GUNTER ABOUT THIS STUFF
+    //Level Settings
     List<Level> level = game.getLevels();
     
     //level.size();
@@ -115,8 +129,6 @@ public class Block223Controller {
     	//NOT SURE ABOUT 'size = size() ' method
     }
     
-	//END
-	
 	}
 
 
