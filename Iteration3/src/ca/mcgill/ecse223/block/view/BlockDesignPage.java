@@ -9,6 +9,7 @@ import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOBlock;
 import ca.mcgill.ecse223.block.controller.TOGame;
+import ca.mcgill.ecse223.block.model.Block;
 
 /**
  * AddGame UI screen
@@ -50,7 +51,7 @@ public class BlockDesignPage {
 	selectBlockText.setBackground(mainWindow.getBackground()); 
 	
 	HashMap<Integer, Integer> currentBlocks = null; 
-	JComboBox<Integer> selectBlocks = new JComboBox<Integer>(new Integer[0]); 
+	JComboBox<String> selectBlocks = new JComboBox<String>(new String[0]); 
 	int blockIndex = 0;
 	try {
 		refreshblocks(currentBlocks, selectBlocks, blockIndex);
@@ -159,7 +160,16 @@ public class BlockDesignPage {
 //			updateButtonActionPerformed(evt, updatetextentry);
 //		}
 //	});
-
+	selectBlocks.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			try {
+				selectBlocksActionPerformed(evt);
+			} catch (InvalidInputException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	});
 	cancelButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
 			cancelButtonActionPerformed(evt);
@@ -188,8 +198,17 @@ public class BlockDesignPage {
 	/**
 	 * Specification for addGame event when listener activated
 	 * @param evt
+	 * @throws InvalidInputException 
 	 */
-	private static void updateButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<Integer, Integer> currentBlocks, JComboBox<Integer> selectBlocks) {
+	private static void selectBlocksActionPerformed(java.awt.event.ActionEvent evt) throws InvalidInputException {
+		try {
+		refreshspecificblock();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private static void updateButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<Integer, Integer> currentBlocks, JComboBox<String> selectBlocks) {
 		// clear error message
 		error_msg = null; 
 		try {
@@ -250,17 +269,30 @@ public class BlockDesignPage {
 			e.printStackTrace();
 		}
 	}
-public static void refreshblocks(HashMap<Integer, Integer> currentBlocks, JComboBox<Integer> selectBlocks, int blockid) throws InvalidInputException {
+public static void refreshblocks(HashMap<Integer, Integer> currentBlocks, JComboBox<String> selectBlocks, int blockid) throws InvalidInputException {
 	
 		
 		currentBlocks = new HashMap<Integer, Integer>();
 		selectBlocks.removeAllItems();
 		blockid = 0;
-		for (TOBlock blocks : Block223Controller.getBlocksOfCurrentDesignableGame()) {
-			currentBlocks.put(blockid, blocks.getId());
-			selectBlocks.addItem(blocks.getId());
+		for (TOBlock block : Block223Controller.getBlocksOfCurrentDesignableGame()) {
+			currentBlocks.put(blockid, block.getId());
+			String RGBPoints = "R:"+block.getRed()+ "G:" + block.getGreen() + "B:"+ block.getBlue() + "P:" +block.getPoints();
+			selectBlocks.addItem(RGBPoints);
 			blockid++;
 		};
 		selectBlocks.setSelectedIndex(-1);
 	}
+
+
+public static void refreshspecificblock () throws InvalidInputException {
+	TOBlock currentblock = Block223Controller.getBlockOfCurrentDesignableGame(selectBlocks.getSelectedIndex());
+	redtextentry.setText("" + currentblock.getRed());
+	bluetextentry.setText("" +currentblock.getBlue());
+	greentextentry.setText("" +currentblock.getGreen());
+	pointstextentry.setText("" +currentblock.getPoints());
+	
+	
+	}
 }
+

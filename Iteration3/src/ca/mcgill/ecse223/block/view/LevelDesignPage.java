@@ -29,6 +29,7 @@ public class LevelDesignPage {
 	static HashMap<Integer, Integer> currentLevels;
 	static JTextField xentry = new JTextField();
 	static JTextField yentry = new JTextField();
+	static int blockid=0;
 	
 	
 	public static void main(String[] args) {
@@ -95,18 +96,6 @@ public class LevelDesignPage {
 	selectblock.setSize(selectBlockDimension);
 	selectblock.setBackground(mainWindow.getBackground()); 
 	
-<<<<<<< HEAD
-=======
-	HashMap<Integer, Integer> currentBlocks = null; 
-	JComboBox<Integer> selectBlocks = new JComboBox<Integer>(new Integer[0]); 
-	int blockIndex = 0;
-	try {
-		refreshblocks(currentBlocks, selectBlocks, blockIndex);
-	} catch (InvalidInputException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
->>>>>>> 8fbc2469588178ba0477daf184b4a30b78373d86
 	
 
 	HashMap<Integer, Integer> currentLevels = null; 
@@ -207,19 +196,6 @@ public class LevelDesignPage {
 	mainWindow.add(saveButton);
 	mainWindow.add(removeButton);
 	mainWindow.add(confirmButton);
-//	mainWindow.add(points);
-//	mainWindow.add(cancelButton);
-//	mainWindow.add(updateButton);
-//	mainWindow.add(deleteButton);
-//	mainWindow.add(redtextentry);
-//	mainWindow.add(greentextentry);
-//	mainWindow.add(bluetextentry);
-//	mainWindow.add(pointstextentry);
-//	mainWindow.add(errorMsg); 
-//	mainWindow.add(selectBlocks);
-//	mainWindow.add(selectBlockText);
-
-	//Design here:
 	mainWindow.setBackground(Color.gray); //could probably do some rgb
 	
 	
@@ -255,7 +231,7 @@ public class LevelDesignPage {
 	 * Specification for addGame event when listener activated
 	 * @param evt
 	 */
-	private static void saveButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<Integer, Integer> currentBlocks, JComboBox<Integer> selectBlocks) {
+	private static void saveButtonActionPerformed(java.awt.event.ActionEvent evt, HashMap<Integer, Integer> currentBlocks, JComboBox<String> selectBlocks) {
 		// clear error message
 		error_msg = null; 
 		try {
@@ -304,33 +280,33 @@ public class LevelDesignPage {
 			e.printStackTrace();
 		}
 	}
-public static void refreshblocks(HashMap<Integer, Integer> currentBlocks, JComboBox<Integer> selectBlocks, int blockid) throws InvalidInputException {
+public static void refreshblocks(HashMap<Integer, Integer> currentBlocks, JComboBox<String> selectBlocks, int blockid) throws InvalidInputException {
 	
 		
 		currentBlocks = new HashMap<Integer, Integer>();
 		selectBlocks.removeAllItems();
 		blockid = 0;
-		for (TOBlock blocks : Block223Controller.getBlocksOfCurrentDesignableGame()) {
-			currentBlocks.put(blockid, blocks.getId());
-			selectBlocks.addItem(blocks.getId());
+		for (TOBlock block : Block223Controller.getBlocksOfCurrentDesignableGame()) {
+			currentBlocks.put(blockid, block.getId());
+			String RGBPoints = "R:"+block.getRed()+ "G:" + block.getGreen() + "B:"+ block.getBlue() + "P:" +block.getPoints();
+			selectBlocks.addItem(RGBPoints);
+			blockid++;
 		};
 		selectBlocks.setSelectedIndex(-1);
 	}
+
+public static void refreshlevels(HashMap<Integer, Integer> currentlevels, JComboBox<String> selectLevel, int levelindex) throws InvalidInputException {
+	
+	
+	currentLevels = new HashMap<Integer, Integer>();
+	selectLevel.removeAllItems();
+	levelindex = 0;
+	for (Level level : Game.getWithName(Block223Controller.getCurrentDesignableGame().getName()).getLevels()) {
+		currentLevels.put(levelindex,levelindex+1);
+		selectLevel.addItem("Level:" + (levelindex+1));
+		levelindex++;
+	};
+	selectBlocks.setSelectedIndex(-1);
+	refreshblocks(currentBlocks,selectBlocks,blockid);
 }
-
-
-
-//public static void refreshlevels(HashMap<Integer, Integer> currentlevels, JComboBox<Integer> selectLevel, int levelnumber) throws InvalidInputException {
-//	
-//	
-//	currentLevels = new HashMap<Integer, Integer>();
-//	selectLevel.removeAllItems();
-//	int levelindex = 0;
-//	for (Level levels : Game.getWithName(Block223Controller.getCurrentDesignableGame().getName()).getLevels()) {
-//		currentLevels.put(levelindex,levelnumber);
-//		selectLevel.addItem(Game.getWithName(Block223Controller.getCurrentDesignableGame().getName()).getLevel(levelnumber));
-//		levelindex++;
-//	};
-//	selectBlocks.setSelectedIndex(-1);
-//}
-//}
+}
