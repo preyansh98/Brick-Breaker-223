@@ -26,6 +26,11 @@ public class moveBlockPage {
 	static JFrame mainWindow = new JFrame("move block Settings");
 	
 	public static void main(String[] args) {
+		
+		JButton confirmButton = new JButton("Confirm");
+		confirmButton.setSize(80, 20);
+		confirmButton.setLocation(220, 190);
+		
 	
 	//old x and y
 		
@@ -84,7 +89,7 @@ public class moveBlockPage {
 	mainWindow.add(newyentry);
 	mainWindow.add(newInputx);
 	mainWindow.add(newInputy);
-	
+	mainWindow.add(confirmButton);
 	
 	
 	}
