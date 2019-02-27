@@ -21,7 +21,7 @@ public class AdminDashboardPage {
 	static JTextArea errorMsg; 
 	//for updating the game
 
-	public static void main(String[] args) throws InvalidInputException {
+	public static void init() throws InvalidInputException {
 		
 	//UI Elements
 	JTextArea selectGameText = new JTextArea("Select a game: "); 

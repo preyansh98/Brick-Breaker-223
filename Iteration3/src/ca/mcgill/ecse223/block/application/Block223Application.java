@@ -8,12 +8,16 @@ import ca.mcgill.ecse223.block.model.Level;
 import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 
+import ca.mcgill.ecse223.block.view.SignInUI;
+
 public class Block223Application {
 	
 	private static Block223 block223; 
 	private static Game currentGame;
 	private static UserRole currentUserRole; 
-	
+	public static void main(String [] args) {
+		SignInUI.init();
+	}
 	public static Game getCurrentGame() {
 		return currentGame;
 	}

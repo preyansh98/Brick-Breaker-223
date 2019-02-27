@@ -38,7 +38,7 @@ public class LevelDesignPage {
 	
 	
 	public static void main(String[] args) throws InvalidInputException {
-		refreshlevels(currentlevels, selectLevel,levelindex);
+		
 		mainWindow.setVisible(true);
 		mainWindow.setLayout(null);
 		mainWindow.setSize(400, 300);
@@ -46,7 +46,7 @@ public class LevelDesignPage {
 	
 	//UI Elements
 	
-	JTextArea listofblockassignments = new JTextArea("List of current Block Assignments: " + "\n" + refreshspecificlevel());
+	
 	JTextArea inputx = new JTextArea("Input X:");
 	JTextArea inputy = new JTextArea("Input Y:"); 
 	JTextArea selectblock = new JTextArea("Select Block:"); 
@@ -55,7 +55,7 @@ public class LevelDesignPage {
 	JButton saveButton = new JButton("Save"); 
 	JButton removeButton = new JButton("Remove");
 	JButton confirmButton = new JButton("Confirm");
-	listofblockassignments.setLocation(200,50);
+	
 	
 	
 	JTextArea errorMsg = new JTextArea(error_msg); 
@@ -63,11 +63,7 @@ public class LevelDesignPage {
 	inputy.setEditable(false);
 	selectblock.setEditable(false);
 	selectlevel.setEditable(false);
-	listofblockassignments.setEditable(false);
 	
-	Dimension listassignmentsize = listofblockassignments.getPreferredSize();
-	listofblockassignments.setSize(listassignmentsize);
-	listofblockassignments.setBackground(mainWindow.getBackground());
 	
 	
 	
@@ -94,7 +90,7 @@ public class LevelDesignPage {
 	selectLevels.setLocation((int) (selectlevel.getLocation().x + selectlevel.getSize().getWidth() + 100)
 			, (int) selectlevel.getLocation().getY()+25);
 	
-	
+	refreshlevels(currentlevels, selectLevel,levelindex);
 	selectBlocks.setEditable(false);
 	selectBlocks.setSize(110, 26);
 	selectBlocks.setVisible(true);
@@ -102,8 +98,12 @@ public class LevelDesignPage {
 	selectBlocks.setLocation((int) (selectblock.getLocation().x+20)
 			, (int) selectblock.getLocation().getY()+170);
 	
-	
-	
+	JTextArea listofblockassignments = new JTextArea("List of current Block Assignments: " + "\n" + refreshspecificlevel());
+listofblockassignments.setEditable(false);
+listofblockassignments.setLocation(200,50);
+	Dimension listassignmentsize = listofblockassignments.getPreferredSize();
+	listofblockassignments.setSize(listassignmentsize);
+	listofblockassignments.setBackground(mainWindow.getBackground());
 	
 	
 	//frame related
