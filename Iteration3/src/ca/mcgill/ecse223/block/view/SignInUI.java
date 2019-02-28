@@ -140,7 +140,7 @@ public class SignInUI {
 				PlayerUI.init();
 			}else if(Block223Controller.getUserMode().getMode()==Mode.Design){
 				delete();
-				AdminDashboardPage.init();
+				AdminDashBoardUI.init();
 			}
 		}catch(InvalidInputException e) {
 			errorMsg.setText(e.getMessage());

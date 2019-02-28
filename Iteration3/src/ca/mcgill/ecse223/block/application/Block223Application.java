@@ -7,7 +7,7 @@ import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.Level;
 import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
-
+import ca.mcgill.ecse223.block.view.NewBlockUI;
 import ca.mcgill.ecse223.block.view.SignInUI;
 
 public class Block223Application {
