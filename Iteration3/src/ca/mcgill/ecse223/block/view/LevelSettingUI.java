@@ -3,6 +3,8 @@ package ca.mcgill.ecse223.block.view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class LevelSettingUI {
 
@@ -38,6 +40,15 @@ public class LevelSettingUI {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 976, 761);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 958, Short.MAX_VALUE)
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 714, Short.MAX_VALUE)
+		);
+		frame.getContentPane().setLayout(groupLayout);
 	}
-
 }
