@@ -23,8 +23,8 @@ import java.awt.Color;
 public class RegistrationUI {
 
 	private static JFrame frame;
-	private static JTextField playerTXT;
 	private static JTextField usernameTXT;
+	private static JTextField playerTXT;
 	private static JTextField adminTXT;
 	private static JButton btnCancel;
 	private static JLabel errorMsg;
@@ -32,6 +32,7 @@ public class RegistrationUI {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	public static void init() {
 		frame = new JFrame();
@@ -48,11 +49,11 @@ public class RegistrationUI {
 		JLabel lblAdminPassword = new JLabel("Admin password: ");
 		lblAdminPassword.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		
-		playerTXT = new JTextField();
-		playerTXT.setColumns(10);
-		
 		usernameTXT = new JTextField();
 		usernameTXT.setColumns(10);
+		
+		playerTXT = new JTextField();
+		playerTXT.setColumns(10);
 		
 		adminTXT = new JTextField();
 		adminTXT.setColumns(10);
@@ -87,8 +88,8 @@ public class RegistrationUI {
 							.addGap(57)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(adminTXT)
-								.addComponent(usernameTXT)
-								.addComponent(playerTXT, GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)))
+								.addComponent(playerTXT)
+								.addComponent(usernameTXT, GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(285)
 							.addComponent(btnRegister))
@@ -108,11 +109,11 @@ public class RegistrationUI {
 					.addGap(62)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblUsername)
-						.addComponent(playerTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(usernameTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(51)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblPlayerPassword)
-						.addComponent(usernameTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(playerTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(61)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblAdminPassword)

@@ -27,6 +27,7 @@ public class GameSettingUI {
 	private static JTextField minLegthTXT;
 	private static JTextField MaxLengthTXT;
 	private static JLabel errorMsg;
+	private static JTextField numLevelsTXT;
 
 	/**
 	 * Initialize the contents of the frame.
@@ -118,6 +119,12 @@ public class GameSettingUI {
 		errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
 		refresh();
+		
+		JLabel lblNumberOfLevels = new JLabel("Number of levels (1..99) :");
+		lblNumberOfLevels.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		
+		numLevelsTXT = new JTextField();
+		numLevelsTXT.setColumns(10);
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -160,7 +167,11 @@ public class GameSettingUI {
 										.addGroup(groupLayout.createSequentialGroup()
 											.addComponent(lblSpeedIncreaseFactor)
 											.addGap(47)
-											.addComponent(speedFactorTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+											.addComponent(speedFactorTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(lblNumberOfLevels)
+											.addGap(18)
+											.addComponent(numLevelsTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 									.addGap(25))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(btnGoBack)
@@ -170,7 +181,7 @@ public class GameSettingUI {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(56)
 							.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 574, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(25, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -181,7 +192,11 @@ public class GameSettingUI {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblGameName)
 						.addComponent(nameTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(49)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNumberOfLevels)
+						.addComponent(numLevelsTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(15)
 					.addComponent(lblBallParameters)
 					.addGap(28)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
@@ -206,7 +221,7 @@ public class GameSettingUI {
 						.addComponent(btnAddNewBlock)
 						.addComponent(btnUpdateOldBlocks)
 						.addComponent(btnLevelDesign))
-					.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnGoBack)
 						.addComponent(btnSave))

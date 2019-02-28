@@ -245,8 +245,8 @@ public class Block223Controller {
 	
 	public static void updateBlock(int id, int red, int green, int blue, int points) throws InvalidInputException {
 		Game game = Block223Application.getCurrentGame();
-		Block block = game.getBlock(id);
-
+		Block block = game.findBlock(id);
+		
 		block.setRed(red);
 		block.setGreen(green);
 		block.setBlue(blue);
@@ -413,7 +413,7 @@ public class Block223Controller {
 		if(currentRole!=null) {
 			error="Cannot login a user while a user is already logged in.";
 		}else if(user==null) {
-			error="The username and password do not match.";
+			error="User not found.";
 		}else {
 			List<UserRole> roles=user.getRoles();
 			for(UserRole role:roles) {

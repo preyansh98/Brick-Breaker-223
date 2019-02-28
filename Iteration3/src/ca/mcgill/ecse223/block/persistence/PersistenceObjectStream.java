@@ -12,6 +12,7 @@ public class PersistenceObjectStream {
 	public static void serialize(Object object) {
 		FileOutputStream fileOut;
 		try {
+			
 			fileOut = new FileOutputStream(filename);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(object);
@@ -33,7 +34,9 @@ public class PersistenceObjectStream {
 			in.close();
 			fileIn.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			o = null;
+			
 		}
 		return o;
 	}

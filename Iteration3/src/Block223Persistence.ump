@@ -56,7 +56,7 @@ class Player {
 class Admin {
   depend java.io.Serializable;
   isA Serializable;
-  private static final long serialVersionUID = 2045406856025012133L;
+  private static final long serialVersionUID = 20454068025012133L;
 }
 
 class Level {
