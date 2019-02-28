@@ -27,7 +27,7 @@ public class AdminDashBoardUI {
 	private static JTextField textField;
 	private static JComboBox<String> games;
 //	private static HashMap<Integer, String> currentGames;
-
+	private static JLabel errorMsg;
 	/**
 	 * Initialize the contents of the frame.
 	 * @wbp.parser.entryPoint
@@ -90,7 +90,7 @@ public class AdminDashBoardUI {
 				logout();
 			}
 		});
-		JLabel errorMsg = new JLabel("");
+		 errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -186,11 +186,9 @@ public class AdminDashBoardUI {
 			 String name = games.getSelectedItem().toString(); 
 			 Block223Controller.deleteGame(name);
 			 refreshGames();
-		} catch (Exception e) {
-			
-		}
-
-		 refreshGames(); 
+		} catch (InvalidInputException e) {
+			errorMsg.setText(e.getMessage());
+		} 
 		// add method here to move on to next screen
 	}
 	
@@ -202,8 +200,8 @@ public class AdminDashBoardUI {
 			String name = games.getSelectedItem().toString();
 			Block223Controller.selectGame(name);
 			GameSettingUI.init();
-		} catch (Exception e) {
-			
+		} catch (InvalidInputException e) {
+			errorMsg.setText(e.getMessage());
 		}
 		
 		// add method here to move on to next screen

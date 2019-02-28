@@ -8,6 +8,7 @@ class Block223 {
   public void reinitialize() {
 	Game.reinitializeUniqueName(this.getGames());
 	User.reinitializeUniqueUsername(this.getUsers());
+	Block.reinitializeAutouniqueID(this.getGames());
   }
   
 }
@@ -68,6 +69,17 @@ class Block {
   depend java.io.Serializable;
   isA Serializable;
   private static final long serialVersionUID = -7403802774454234836L;
+  public static void reinitializeAutouniqueID(List<Game> games){
+  	nextId=0;
+  	for(Game game: games){
+  		for(Block block: game.getBlocks()){
+  			if(block.getId()>nextId){
+  				nextId=block.getId();
+  			}
+  		}
+  	}
+  	nextId++;
+  }
 }
 
 class BlockAssignment {

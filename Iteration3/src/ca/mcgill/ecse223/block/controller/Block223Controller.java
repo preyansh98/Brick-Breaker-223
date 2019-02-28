@@ -133,20 +133,25 @@ public class Block223Controller {
 
 
 	public static void deleteGame(String name) throws InvalidInputException {
+		System.out.println("game not deleted "+ name+"hi");
 		if(Block223Application.getCurrentUserRole() instanceof Admin == false) {
 			throw new InvalidInputException("Admin privileges are required to delete a game"); 
 		}
+		System.out.println("game not deleted "+ name+"hi");
 		if(Block223Application.getCurrentUserRole().
-				equals(Block223Application.getCurrentGame().getAdmin())) {
+				equals(Game.getWithName(name).getAdmin())) {
 			throw new InvalidInputException("Only the admin who created the game can delete the game"); 
 		}
 		
 		Game game = Game.getWithName(name);
 		
 		if (game != null) {
-			Block223 block223 = game.getBlock223();
+			//Block223 block223 = game.getBlock223();
 			game.delete();
-			Block223Persistence.save(block223);
+			System.out.println("game deleted "+ name);
+			Block223Persistence.save(Block223Application.getBlock223());
+		}else {
+			System.out.println("game not found "+ name);
 		}
 	}
 

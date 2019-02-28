@@ -15,11 +15,12 @@ import ca.mcgill.ecse223.block.controller.Block223Controller;
 
 import javax.swing.JSlider;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class NewBlockUI {
 
 	private static JFrame frame;
-
+	private static JLabel errorMsg;
 
 	/**
 	 * Initialize the contents of the frame.
@@ -115,30 +116,33 @@ public class NewBlockUI {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
-				Rchange(Rvalue.getValue(),label_8);
+				change(Rvalue.getValue(),label_8);
 			}
 		}));
 		Gvalue.addChangeListener((new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
-				Rchange(Gvalue.getValue(),label_9);
+				change(Gvalue.getValue(),label_9);
 			}
 		}));
 		Bvalue.addChangeListener((new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
-				Rchange(Bvalue.getValue(),label_10);
+				change(Bvalue.getValue(),label_10);
 			}
 		}));
 		point.addChangeListener((new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
-				Rchange(point.getValue(),label_11);
+				change(point.getValue(),label_11);
 			}
 		}));
+		
+		 errorMsg = new JLabel("");
+		errorMsg.setForeground(Color.RED);
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -173,31 +177,34 @@ public class NewBlockUI {
 								.addComponent(label))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(btnAddBlock)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(point, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(label_6, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-												.addComponent(label_7, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-												.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-												.addComponent(label_4)))))
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addComponent(btnAddBlock)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(point, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addComponent(label_6, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+											.addComponent(label_7, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+											.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+											.addComponent(label_4))))
 								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 									.addComponent(Bvalue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(Gvalue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(Rvalue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(90)
-							.addComponent(lblPleaseEnterThe)))
-					.addGap(63))
+							.addComponent(lblPleaseEnterThe))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(55)
+							.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)))
+					.addGap(10))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(41)
+					.addGap(18)
+					.addComponent(errorMsg)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblPleaseEnterThe)
 					.addGap(28)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -247,21 +254,14 @@ public class NewBlockUI {
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
-	private static void Rchange(int value, JLabel label) {
+	private static void change(int value, JLabel label) {
 		label.setText(value+"");
 	}
-	private static void Gchange(int value, JLabel label) {
-		label.setText(value+"");
-	}
-	private static void Bchange(int value, JLabel label) {
-		label.setText(value+"");
-	}
-	private static void Pointchange(int value, JLabel label) {
-		label.setText(value+"");
-	}
+
 	private static void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		// clear error message
-		
+		frame.dispose();
+		GameSettingUI.init();
 	}
 	
 	/**
@@ -275,10 +275,12 @@ public class NewBlockUI {
 			//close the main frame
 			Block223Controller.addBlock(R.getValue(), G.getValue(), B.getValue(), point.getValue());
 			frame.dispose(); 
+			GameSettingUI.init();
 			//constructor call for game settings
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			errorMsg.setText(e.getMessage());
 		}
 	}
+
 }

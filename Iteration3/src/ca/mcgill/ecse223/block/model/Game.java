@@ -5,7 +5,7 @@ package ca.mcgill.ecse223.block.model;
 import java.io.Serializable;
 import java.util.*;
 
-// line 15 "../../../../../Block223Persistence.ump"
+// line 16 "../../../../../Block223Persistence.ump"
 // line 38 "../../../../../Block223 v2.ump"
 public class Game implements Serializable
 {
@@ -24,7 +24,7 @@ public class Game implements Serializable
   /**
    * play area is now constant
    */
-  public static final int PLAY_AREA_SIDE = 400;
+  public static final int PLAY_AREA_SIDE = 390;
   public static final int WALL_PADDING = 10;
   public static final int COLUMNS_PADDING = 5;
   public static final int ROW_PADDING = 2;
@@ -602,7 +602,7 @@ public class Game implements Serializable
     }
   }
 
-  // line 21 "../../../../../Block223Persistence.ump"
+  // line 22 "../../../../../Block223Persistence.ump"
    public static  void reinitializeUniqueName(List<Game> games){
     gamesByName = new HashMap<String, Game>();
     for (Game game : games) {
@@ -635,7 +635,7 @@ public class Game implements Serializable
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 18 "../../../../../Block223Persistence.ump"
+  // line 19 "../../../../../Block223Persistence.ump"
   private static final long serialVersionUID = 2315072607928790501L ;
 
   

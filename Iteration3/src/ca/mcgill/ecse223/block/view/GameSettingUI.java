@@ -225,7 +225,8 @@ public class GameSettingUI {
 	}
 	protected static void updateOldBlocks() {
 		// TODO Auto-generated method stub
-		
+		frame.dispose();
+		UpdateBlockUI.init();
 	}
 	private static void goBack() {
 		frame.dispose();
