@@ -258,6 +258,18 @@ public class Block223Controller {
 			throws InvalidInputException {
 
 		Game game = Block223Application.getCurrentGame();
+		
+		  if(Block223Application.getCurrentUserRole() instanceof Admin ==false) {
+		    	throw new InvalidInputException("Admin privileges are required to position a block.");
+		    }
+		    
+		    if(Block223Application.getCurrentGame()==null) {
+				throw new InvalidInputException("A game must be selected to position a block.");
+			}
+		    
+          if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
+          	throw new InvalidInputException("Only the admin who created the game can position a block.");
+			}
 
 		Level currentlevel = game.getLevel(level);
 

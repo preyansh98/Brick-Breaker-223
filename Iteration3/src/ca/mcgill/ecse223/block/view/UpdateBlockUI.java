@@ -304,7 +304,11 @@ public class UpdateBlockUI {
 
 	private static void removeBlock() {
 		// TODO Auto-generated method stub
-		if (blocks.getSelectedIndex() >= 0) {
+		if(blocks.getSelectedIndex() < 0) {
+			errorMsg.setText("A block must be selected to be deleted");
+			return;
+		}
+			
 			TOBlock block = map.get(blocks.getSelectedIndex());
 			try {
 				Block223Controller.deleteBlock(block.getId());
@@ -312,7 +316,7 @@ public class UpdateBlockUI {
 				errorMsg.setText(e.getMessage());
 			}
 			refresh();
-		}
+		
 	}
 
 	private static void newItemSelected() {
@@ -356,6 +360,10 @@ public class UpdateBlockUI {
 
 	private static void updateButtonActionPerformed(JSlider R, JSlider G, JSlider B, JSlider point) {
 		errorMsg.setText("");
+		if(blocks.getSelectedIndex() < 0) {
+			errorMsg.setText("A block must be selected to be updated");
+			return;
+		}
 		try {
 			// close the main frame
 
