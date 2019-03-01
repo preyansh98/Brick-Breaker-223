@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
@@ -19,6 +21,22 @@ public class Grid extends JLayeredPane{
 	public Grid () {
 		super();
 		this.setSize(390,390);
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				for(int row=0; row<15;row++) {
+					for(int column=0;column<15;column++) {
+					if (rectangles[row][column].contains(x, y)) {
+						LevelSettingUI.displayBlockInfo( column+1,  row+1);
+						break;
+					}
+				}
+				}
+				repaint();
+			}
+		});
 
 	}
 	

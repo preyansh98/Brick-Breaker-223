@@ -52,6 +52,8 @@ public class LevelSettingUI {
 	private static HashMap<Integer, TOBlock> map;
 	private static Rectangle2D[][] rectangles;
 	private static Grid layeredPane;
+	
+	private static JLabel lblSelectBlockInfo;
 	/**
 	 * @wbp.parser.entryPoint
 	 */
@@ -160,12 +162,15 @@ public class LevelSettingUI {
 		
 		 errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
+		
+		lblSelectBlockInfo = new JLabel("Select Block info:");
+		lblSelectBlockInfo.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(21)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 721, GroupLayout.PREFERRED_SIZE)
@@ -179,17 +184,17 @@ public class LevelSettingUI {
 									.addComponent(blocks, GroupLayout.PREFERRED_SIZE, 277, GroupLayout.PREFERRED_SIZE)
 									.addGap(85)))
 							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addComponent(btnSave)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-											.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addGroup(groupLayout.createSequentialGroup()
 												.addComponent(lblXPosition_1)
 												.addGap(18)
 												.addComponent(oldXmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-											.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+											.addGroup(groupLayout.createSequentialGroup()
 												.addComponent(lblNewY)
 												.addPreferredGap(ComponentPlacement.UNRELATED)
 												.addComponent(newYmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -227,8 +232,10 @@ public class LevelSettingUI {
 													.addComponent(btnPosition)
 													.addComponent(btnMove))))
 										.addComponent(lblDeleteABlock))
-									.addPreferredGap(ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
-									.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 391, GroupLayout.PREFERRED_SIZE)))
+									.addGap(47)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 391, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblSelectBlockInfo, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE))))
 							.addGap(111))))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
@@ -253,8 +260,8 @@ public class LevelSettingUI {
 					.addGap(18)
 					.addComponent(lblEnterValuesBetween)
 					.addGap(24)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(lblPositionANew)
@@ -307,8 +314,11 @@ public class LevelSettingUI {
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(67)
 									.addComponent(btnDelete))))
-						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 418, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblSelectBlockInfo)
+							.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+							.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 418, GroupLayout.PREFERRED_SIZE)))
+					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnGoBack)
 						.addComponent(btnSave))
@@ -485,5 +495,24 @@ public class LevelSettingUI {
 			}
 		}
 		return to;
+	}
+	
+	public static void displayBlockInfo(int x, int y) {
+		List<TOGridCell> cells;
+		try {
+			cells = Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(levels.getSelectedIndex());
+			for(TOGridCell cell: cells) {
+				if(cell.getGridHorizontalPosition()==y && cell.getGridVerticalPosition()==x) {
+					lblSelectBlockInfo.setText("Select Block info: R: "+ cell.getRed()+  " , G: " + cell.getGreen() + " , B: " + cell.getBlue()
+						+ " , P: " + cell.getPoints());
+					return;
+				}
+			}
+			
+		} catch (InvalidInputException e) {
+			errorMsg.setText(e.getMessage());
+		}
+		
+		lblSelectBlockInfo.setText("Select Block info: empty slot");
 	}
 }
