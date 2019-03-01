@@ -27,7 +27,7 @@ public class NewBlockUI {
 	 * @wbp.parser.entryPoint
 	 */
 	public static void init() {
-		frame = new JFrame();
+		frame = new JFrame("New Block");
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 535, 466);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

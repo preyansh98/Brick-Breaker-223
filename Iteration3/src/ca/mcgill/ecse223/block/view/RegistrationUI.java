@@ -35,7 +35,7 @@ public class RegistrationUI {
 	 * @wbp.parser.entryPoint
 	 */
 	public static void init() {
-		frame = new JFrame();
+		frame = new JFrame("Sign Up");
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 742, 621);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

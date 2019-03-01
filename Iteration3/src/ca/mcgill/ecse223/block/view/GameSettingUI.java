@@ -35,7 +35,7 @@ public class GameSettingUI {
 	 * @wbp.parser.entryPoint
 	 */
 	public static void init() {
-		frame = new JFrame();
+		frame = new JFrame("Game Settings");
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 795, 647);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -253,6 +253,7 @@ public class GameSettingUI {
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
+	
 	protected static void updateGame() {
 		// TODO Auto-generated method stub
 		int levels;
@@ -270,7 +271,7 @@ public class GameSettingUI {
 		 speedFactor=Double.parseDouble(speedFactorTXT.getText());
 		 minLength=Integer.parseInt(minLengthTXT.getText());
 		 maxLength=Integer.parseInt(maxLengthTXT.getText());
-		}catch(Exception e) {
+		}catch(NumberFormatException e) {
 			errorMsg.setText("Please enter number only in the fields other than name");
 			return;
 		}
@@ -281,8 +282,11 @@ public class GameSettingUI {
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
 			errorMsg.setText(e.getMessage());
+			return;
 		}
+		errorMsg.setText("");
 	}
+
 	protected static void levelDesign() {
 		// TODO Auto-generated method stub
 		frame.dispose();
@@ -320,8 +324,7 @@ public class GameSettingUI {
 			 numBlockTXT.setText(temp.getNrBlocksPerLevel()+"");
 		} catch (InvalidInputException e) {
 			errorMsg.setText(e.getMessage());
-		}
-		
+		}		
 	}
 	private static void save() {
 		try {

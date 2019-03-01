@@ -33,7 +33,7 @@ public class AdminDashBoardUI {
 	 * @wbp.parser.entryPoint
 	 */
 	public static void init() {
-		frame = new JFrame();
+		frame = new JFrame("Admin DashBoard");
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 648, 569);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

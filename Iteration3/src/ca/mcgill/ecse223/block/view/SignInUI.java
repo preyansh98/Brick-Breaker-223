@@ -31,7 +31,7 @@ public class SignInUI {
 	 * Initialize the contents of the frame.
 	 */
 	public static void init() {
-		frame = new JFrame();
+		frame = new JFrame("Sign in");
 		frame.setVisible(true);
 		frame.getContentPane().setForeground(Color.RED);
 		frame.getContentPane().setFont(new Font("Arial", Font.PLAIN, 15));

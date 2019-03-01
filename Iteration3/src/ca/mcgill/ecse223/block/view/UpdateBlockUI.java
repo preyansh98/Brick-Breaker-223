@@ -42,7 +42,7 @@ public class UpdateBlockUI {
 	 * @wbp.parser.entryPoint
 	 */
 	public static void init() {
-		frame = new JFrame();
+		frame = new JFrame("Block Settings");
 		frame.setBounds(100, 100, 610, 524);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -165,7 +165,7 @@ public class UpdateBlockUI {
 		btnDeleteBlock.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		btnDeleteBlock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				removeBlock();
+				deleteBlock();
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -302,20 +302,22 @@ public class UpdateBlockUI {
 		});
 	}
 
-	private static void removeBlock() {
+	private static void deleteBlock() {
 		// TODO Auto-generated method stub
+		errorMsg.setText("");
 		if(blocks.getSelectedIndex() < 0) {
 			errorMsg.setText("A block must be selected to be deleted");
 			return;
 		}
-			
-			TOBlock block = map.get(blocks.getSelectedIndex());
-			try {
-				Block223Controller.deleteBlock(block.getId());
-			} catch (InvalidInputException e) {
-				errorMsg.setText(e.getMessage());
-			}
-			refresh();
+		
+		
+		TOBlock block = map.get(blocks.getSelectedIndex());
+		try {
+			Block223Controller.deleteBlock(block.getId());
+		} catch (InvalidInputException e) {
+			errorMsg.setText(e.getMessage());
+		}
+		refresh();
 		
 	}
 
@@ -370,13 +372,41 @@ public class UpdateBlockUI {
 			int id = map.get(blocks.getSelectedIndex()).getId();
 			errorMsg.setText(blocks.getSelectedIndex() + " : " + id);
 			Block223Controller.updateBlock(id, R.getValue(), G.getValue(), B.getValue(), point.getValue());
-			refresh();
+			refresh(blocks.getSelectedIndex());
+			newItemSelected();
 			// constructor call for game settings
 		} catch (Exception e) {
 			errorMsg.setText(e.getMessage());
 		}
 	}
+	
+	//refresh for update block
+	private static void refresh(int index) {
 
+		blocks.removeAllItems();
+		map = new HashMap<Integer, TOBlock>();
+		int blockid = 0;
+		errorMsg.setText("");
+		try {
+			for (TOBlock block : Block223Controller.getBlocksOfCurrentDesignableGame()) {
+				map.put(blockid, block);
+				String RGBPoints = "R: " + block.getRed() + " , G: " + block.getGreen() + " , B: " + block.getBlue()
+						+ " , P: " + block.getPoints();
+				blocks.addItem(RGBPoints);
+				blockid++;
+			}
+		} catch (InvalidInputException e) {
+			// TODO Auto-generated catch block
+			errorMsg.setText(e.getMessage());
+		}
+		Rvalue.setValue(50);
+		Gvalue.setValue(50);
+		Bvalue.setValue(50);
+		point.setValue(50);
+		blocks.setSelectedIndex(index);
+	}
+	
+	//refresh for deleteButton (overloading)
 	private static void refresh() {
 
 		blocks.removeAllItems();

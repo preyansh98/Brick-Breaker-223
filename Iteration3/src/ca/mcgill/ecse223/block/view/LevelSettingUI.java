@@ -58,7 +58,7 @@ public class LevelSettingUI {
 	 * @wbp.parser.entryPoint
 	 */
 	public static void init() {
-		frame = new JFrame();
+		frame = new JFrame("Level Settings");
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 845, 714);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
