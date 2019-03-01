@@ -55,7 +55,7 @@ public class Block223Controller {
 		throw new InvalidInputException("Admin privileges are required to define game settings. ");
     }
 	
-    if ((game.getAdmin().equals(admin))) 
+    if (game.getAdmin()!=admin) 
     {
 		throw new InvalidInputException("Only the admin who created the game can define its game features.");
     }
@@ -113,20 +113,19 @@ public class Block223Controller {
     
     //ASK GUNTER ABOUT THIS STUFF
     //Level Settings
-    List<Level> level = game.getLevels();
+    List<Level> levels = game.getLevels();
     
     //level.size();
     //game.numberOfLevels();
-    while (game.numberOfLevels() > level.size()) {
+    while (nrLevels > levels.size()) {
     	game.addLevel();
-    level.size(); //MIGHT BE WRONG	
+    
     	
     }
-    while (game.numberOfLevels() < level.size()) {
-    	level.get(level.size() - 1);
-    	level.remove(level.size());
-    	level.size(); //MIGHT BE WRONG
-    	//NOT SURE ABOUT 'size = size() ' method
+    while (nrLevels < levels.size()) {
+    	Level level=levels.get(levels.size() - 1);
+    	level.delete();
+    	
     }
     
 	}
@@ -188,15 +187,15 @@ public class Block223Controller {
 	    }
 		
 		//Add a for loop and loop through each name of the game?
-		if(!game.getName()) 
+	
+		if (!currentName.equals(name)) 
 		{
+			if(!game.setName(name)) 
+			{
+				
+				throw new InvalidInputException("The name of the game must be unique");
+			}
 			
-			throw new InvalidInputException("The name of the game must be unique");
-		}
-		
-		if (currentName != name) 
-		{
-			game.setName(name);
 		}
 		
 		Block223Controller.setGameDetails(nrLevels, nrBlocksPerLevel, minBallSpeedX, minBallSpeedY, ballSpeedIncreaseFactor, maxPaddleLength, minPaddleLength);
@@ -286,7 +285,7 @@ public class Block223Controller {
 			}
 			
 			Game game = Block223Application.getCurrentGame();
-			Level currentlevel = game.getLevel(level);
+			Level currentlevel = game.getLevel(level-1);
 			BlockAssignment assignment;
 			List<BlockAssignment> assignments = currentlevel.getBlockAssignments();
 			
@@ -294,21 +293,19 @@ public class Block223Controller {
 				throw new InvalidInputException("Level " + level + " does not exist for the game.");
 			}
 			
-			if(findBlockAssignment(oldGridHorizontalPosition, oldGridVerticalPosition)==null) {
+			if(currentlevel.findBlockAssignment(oldGridHorizontalPosition, oldGridVerticalPosition)==null) {
 				throw new InvalidInputException("A block does not exist at location" + oldGridHorizontalPosition + "/" + oldGridVerticalPosition + ".");
 			}else {
-				assignment= findBlockAssignment(oldGridHorizontalPosition, oldGridVerticalPosition);
-			}
-			
-			for(BlockAssignment assign: assignments) {
-				
-				int h= assign.getGridHorizontalPosition();
-				int v= assign.getGridVerticalPosition();
-				
-				if(h==newGridHorizontalPosition && v==newGridVerticalPosition) {
+				assignment= currentlevel.findBlockAssignment(oldGridHorizontalPosition, oldGridVerticalPosition);
+				if(currentlevel.findBlockAssignment(newGridHorizontalPosition, newGridVerticalPosition)!=null) {
 					throw new InvalidInputException("A block already exists at location" + newGridHorizontalPosition + "/" + newGridVerticalPosition + ".");
 				}
+				assignment.setGridHorizontalPosition(newGridHorizontalPosition);
+				assignment.setGridVerticalPosition(newGridVerticalPosition);
 			}
+			
+		
+				
 			
 		}
 
@@ -330,21 +327,12 @@ public class Block223Controller {
 			Game game = Block223Application.getCurrentGame();
 			Level currentlevel = game.getLevel(level);
 			BlockAssignment assignment;
-			List<BlockAssignment> assignments = currentlevel.getBlockAssignments();
 			
-			assignment= findBlockAssignment(gridHorizontalPosition, gridVerticalPosition);
+			assignment= currentlevel.findBlockAssignment(gridHorizontalPosition, gridVerticalPosition);
 			
 			if(assignment != null) {
-				
-				for(BlockAssignment assign: assignments) {
-					
-					int h= assign.getGridHorizontalPosition();
-					int v= assign.getGridVerticalPosition();
-					
-					if(h==gridHorizontalPosition && v==gridVerticalPosition) {
-						 assign.delete();
-					}
-				}
+				System.out.println("found");
+				assignment.delete();
 				
 			}
 
@@ -538,7 +526,7 @@ public class Block223Controller {
 		return to;
 	}
 
-	public List<TOGridCell> getBlocksAtLevelOfCurrentDesignableGame(int level) throws InvalidInputException {
+	public static List<TOGridCell> getBlocksAtLevelOfCurrentDesignableGame(int level) throws InvalidInputException {
 		if(Block223Application.getCurrentUserRole() instanceof Admin == false) {
 			throw new InvalidInputException("Admin privileges are required to access game information");
 		}

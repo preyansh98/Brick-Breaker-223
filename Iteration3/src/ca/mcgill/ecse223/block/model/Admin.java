@@ -148,7 +148,7 @@ public class Admin extends UserRole implements Serializable
   //------------------------
   
   // line 59 "../../../../../Block223Persistence.ump"
-  private static final long serialVersionUID = 2045406856025012133L ;
+  private static final long serialVersionUID = 20454068025012133L ;
 
   
 }

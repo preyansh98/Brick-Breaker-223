@@ -24,10 +24,11 @@ public class GameSettingUI {
 	private static JTextField XSpeedTXT;
 	private static JTextField YSpeedTXT;
 	private static JTextField speedFactorTXT;
-	private static JTextField minLegthTXT;
-	private static JTextField MaxLengthTXT;
+	private static JTextField minLengthTXT;
+	private static JTextField maxLengthTXT;
 	private static JLabel errorMsg;
 	private static JTextField numLevelsTXT;
+	private static JTextField numBlockTXT;
 
 	/**
 	 * Initialize the contents of the frame.
@@ -36,7 +37,7 @@ public class GameSettingUI {
 	public static void init() {
 		frame = new JFrame();
 		frame.setVisible(true);
-		frame.setBounds(100, 100, 709, 616);
+		frame.setBounds(100, 100, 795, 647);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblGameName = new JLabel("Game Name :");
@@ -72,14 +73,14 @@ public class GameSettingUI {
 		JLabel lblMin = new JLabel("Min: ");
 		lblMin.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		
-		minLegthTXT = new JTextField();
-		minLegthTXT.setColumns(10);
+		minLengthTXT = new JTextField();
+		minLengthTXT.setColumns(10);
 		
 		JLabel lblMax = new JLabel("Max:");
 		lblMax.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		
-		MaxLengthTXT = new JTextField();
-		MaxLengthTXT.setColumns(10);
+		maxLengthTXT = new JTextField();
+		maxLengthTXT.setColumns(10);
 		
 		JButton btnAddNewBlock = new JButton("Add New Block");
 		btnAddNewBlock.setFont(new Font("Arial Black", Font.PLAIN, 15));
@@ -118,13 +119,28 @@ public class GameSettingUI {
 		});
 		errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
-		refresh();
 		
 		JLabel lblNumberOfLevels = new JLabel("Number of levels (1..99) :");
 		lblNumberOfLevels.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		
 		numLevelsTXT = new JTextField();
 		numLevelsTXT.setColumns(10);
+		
+		JLabel lblNumberOfBlocks = new JLabel("Number of Blocks per Level:");
+		lblNumberOfBlocks.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		
+		numBlockTXT = new JTextField();
+		numBlockTXT.setColumns(10);
+		
+		JButton btnUpdateGame = new JButton("Update Game");
+		btnUpdateGame.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnUpdateGame.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				updateGame();
+			}
+		});
+		refresh();
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -132,56 +148,61 @@ public class GameSettingUI {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(29)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblMin)
+									.addGap(75)
+									.addComponent(minLengthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(99)
+									.addComponent(lblMax)
+									.addGap(68)
+									.addComponent(maxLengthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lblPaddleLength)
+								.addComponent(lblBallParameters)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblMinSpeed)
+										.addComponent(lblGameName))
+									.addGap(18)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(btnAddNewBlock)
-											.addGap(49)
-											.addComponent(btnUpdateOldBlocks)
-											.addGap(57)
-											.addComponent(btnLevelDesign))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblMin)
-											.addGap(75)
-											.addComponent(minLegthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-											.addGap(99)
-											.addComponent(lblMax)
-											.addGap(68)
-											.addComponent(MaxLengthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addComponent(lblPaddleLength)
-										.addComponent(lblBallParameters)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblMinSpeed)
-												.addComponent(lblGameName))
-											.addGap(18)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addGroup(groupLayout.createSequentialGroup()
-													.addComponent(XSpeedTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-													.addGap(74)
-													.addComponent(lblMinSpeedIn)
-													.addGap(44)
-													.addComponent(YSpeedTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-												.addComponent(nameTXT, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblSpeedIncreaseFactor)
-											.addGap(47)
-											.addComponent(speedFactorTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblNumberOfLevels)
-											.addGap(18)
-											.addComponent(numLevelsTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-									.addGap(25))
+											.addComponent(XSpeedTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addGap(74)
+											.addComponent(lblMinSpeedIn)
+											.addGap(44)
+											.addComponent(YSpeedTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addComponent(nameTXT, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnGoBack)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(btnSave)
-									.addGap(82))))
+									.addComponent(lblSpeedIncreaseFactor)
+									.addGap(47)
+									.addComponent(speedFactorTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(btnGoBack)
+											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(btnLevelDesign))
+										.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+											.addComponent(btnAddNewBlock)
+											.addGap(101)
+											.addComponent(btnUpdateOldBlocks)))
+									.addPreferredGap(ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(btnUpdateGame)
+										.addComponent(btnSave))
+									.addGap(48))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblNumberOfLevels)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(numLevelsTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(lblNumberOfBlocks)
+									.addGap(18)
+									.addComponent(numBlockTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(56)
 							.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 574, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -195,7 +216,9 @@ public class GameSettingUI {
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNumberOfLevels)
-						.addComponent(numLevelsTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(numLevelsTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNumberOfBlocks)
+						.addComponent(numBlockTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(15)
 					.addComponent(lblBallParameters)
 					.addGap(28)
@@ -213,24 +236,57 @@ public class GameSettingUI {
 					.addGap(37)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblMin)
-						.addComponent(minLegthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(minLengthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblMax)
-						.addComponent(MaxLengthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(maxLengthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(44)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnAddNewBlock)
 						.addComponent(btnUpdateOldBlocks)
-						.addComponent(btnLevelDesign))
-					.addPreferredGap(ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnUpdateGame))
+					.addPreferredGap(ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnGoBack)
+						.addComponent(btnLevelDesign)
 						.addComponent(btnSave))
 					.addGap(34))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
+	protected static void updateGame() {
+		// TODO Auto-generated method stub
+		int levels;
+		int numBlocks;
+		int xspeed;
+		int yspeed;
+		double speedFactor;
+		int minLength;
+		int maxLength;
+		try {
+		 levels=Integer.parseInt(numLevelsTXT.getText());
+		 numBlocks=Integer.parseInt(numBlockTXT.getText());
+		 xspeed=Integer.parseInt(XSpeedTXT.getText());
+		 yspeed=Integer.parseInt(YSpeedTXT.getText());
+		 speedFactor=Double.parseDouble(speedFactorTXT.getText());
+		 minLength=Integer.parseInt(minLengthTXT.getText());
+		 maxLength=Integer.parseInt(maxLengthTXT.getText());
+		}catch(Exception e) {
+			errorMsg.setText("Please enter number only in the fields other than name");
+			return;
+		}
+		try {
+			
+			Block223Controller.updateGame(nameTXT.getText(),levels,numBlocks,xspeed,yspeed,
+					speedFactor,minLength,maxLength);
+		} catch (InvalidInputException e) {
+			// TODO Auto-generated catch block
+			errorMsg.setText(e.getMessage());
+		}
+	}
 	protected static void levelDesign() {
 		// TODO Auto-generated method stub
+		frame.dispose();
+		LevelSettingUI.init();
 		
 	}
 	protected static void addNewBlocks() {
@@ -238,9 +294,12 @@ public class GameSettingUI {
 		frame.dispose();
 		NewBlockUI.init();
 	}
+
+
 	protected static void updateOldBlocks() {
 		// TODO Auto-generated method stub
 		frame.dispose();
+		
 		UpdateBlockUI.init();
 	}
 	private static void goBack() {
@@ -255,8 +314,10 @@ public class GameSettingUI {
 			 XSpeedTXT.setText(temp.getMinBallSpeedX()+"");
 			YSpeedTXT.setText(temp.getMinBallSpeedY()+"");
 			speedFactorTXT.setText(temp.getBallSpeedIncreaseFactor()+"");
-			minLegthTXT.setText(temp.getMinPaddleLength()+"");
-			 MaxLengthTXT.setText(temp.getMaxPaddleLength()+"");
+			minLengthTXT.setText(temp.getMinPaddleLength()+"");
+			 maxLengthTXT.setText(temp.getMaxPaddleLength()+"");
+			 numLevelsTXT.setText(temp.getNrLevels()+"");
+			 numBlockTXT.setText(temp.getNrBlocksPerLevel()+"");
 		} catch (InvalidInputException e) {
 			errorMsg.setText(e.getMessage());
 		}
