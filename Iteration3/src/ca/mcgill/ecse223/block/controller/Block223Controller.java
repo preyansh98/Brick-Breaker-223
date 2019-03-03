@@ -349,7 +349,7 @@ public class Block223Controller {
 			Game game = Block223Application.getCurrentGame();
 			Level currentlevel = game.getLevel(level-1);
 			BlockAssignment assignment;
-			List<BlockAssignment> assignments = currentlevel.getBlockAssignments();
+			
 			
 			if(level <1 || level > game.maximumNumberOfLevels()) {
 				throw new InvalidInputException("Level " + level + " does not exist for the game.");
