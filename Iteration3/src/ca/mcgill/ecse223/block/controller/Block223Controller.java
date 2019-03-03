@@ -305,12 +305,22 @@ public class Block223Controller {
           if(Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
           	throw new InvalidInputException("Only the admin who created the game can position a block.");
 			}
-
-
-		Level currentlevel = game.getLevel(level);
+         
+          if(level <1 || level > game.getLevels().size()) {
+  			throw new InvalidInputException("Level " + level + " does not exist for the game.");
+  		}
+        try {
+		Level currentlevel = game.getLevel(level-1);
+        }
+        catch(IndexOutOfBoundsException e){
+        	throw new IndexOutOfBoundsException(e.getMessage());
+        	}
 		
-		if(level <1 || level > game.maximumNumberOfLevels()) {
-			throw new InvalidInputException("Level " + level + " does not exist for the game.");
+		Level currentlevel = game.getLevel(level-1);
+		int nrBlocksPerLevel = game.maximumNumberOfLevels();
+		if (currentlevel.getBlockAssignments().size() > nrBlocksPerLevel) {
+			throw new InvalidInputException("The number of blocks has reached the maximum number ("+ nrBlocksPerLevel +") allowed for this game.");
+			
 		}
 		List<BlockAssignment> assignments = currentlevel.getBlockAssignments();
 		for (BlockAssignment thisassignment : assignments) {
@@ -318,8 +328,6 @@ public class Block223Controller {
 				throw new InvalidInputException("A  block  already  exists  at  location"  + gridHorizontalPosition+   "/"   +   gridVerticalPosition + ".");
 			}
 		}
-
-		// findBlock has to be implemented
 		Block block = game.findBlock(Id);
 		if (block == null) {
 			throw new InvalidInputException("The block does not exist.");
