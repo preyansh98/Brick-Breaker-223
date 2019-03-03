@@ -355,6 +355,13 @@ public class Block223Controller {
 				throw new InvalidInputException("Level " + level + " does not exist for the game.");
 			}
 			
+			if(newGridHorizontalPosition <= 0 || newGridHorizontalPosition>15) {
+				throw new InvalidInputException("The horizontal position must be between 1 and " + 15 + ".");
+			}
+			if(newGridVerticalPosition <= 0 || newGridVerticalPosition>15) {
+				throw new InvalidInputException("The vertical position must be between 1 and " + 15 + ".");
+			}
+			
 			if(currentlevel.findBlockAssignment(oldGridHorizontalPosition, oldGridVerticalPosition)==null) {
 				throw new InvalidInputException("A block does not exist at location" + oldGridHorizontalPosition + "/" + oldGridVerticalPosition + ".");
 			}else {
