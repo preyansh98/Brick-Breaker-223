@@ -357,10 +357,17 @@ public class Block223Controller {
 			Game game = Block223Application.getCurrentGame();
 			Level currentlevel = game.getLevel(level-1);
 			BlockAssignment assignment;
-			List<BlockAssignment> assignments = currentlevel.getBlockAssignments();
+			
 			
 			if(level <1 || level > game.maximumNumberOfLevels()) {
 				throw new InvalidInputException("Level " + level + " does not exist for the game.");
+			}
+			
+			if(newGridHorizontalPosition <= 0 || newGridHorizontalPosition>15) {
+				throw new InvalidInputException("The horizontal position must be between 1 and " + 15 + ".");
+			}
+			if(newGridVerticalPosition <= 0 || newGridVerticalPosition>15) {
+				throw new InvalidInputException("The vertical position must be between 1 and " + 15 + ".");
 			}
 			
 			if(currentlevel.findBlockAssignment(oldGridHorizontalPosition, oldGridVerticalPosition)==null) {
