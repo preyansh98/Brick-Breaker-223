@@ -420,7 +420,7 @@ public class LevelSettingUI {
 				return;
 			}
 			try {
-				Block223Controller.positionBlock(block.getId(), levels.getSelectedIndex(), y, x);
+				Block223Controller.positionBlock(block.getId(), levels.getSelectedIndex()+1, y, x);
 				
 				layeredPane.repaint();
 			} catch (InvalidInputException e) {

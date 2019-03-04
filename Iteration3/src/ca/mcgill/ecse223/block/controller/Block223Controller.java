@@ -471,9 +471,20 @@ public class Block223Controller {
 				}
 				Block223Persistence.save(block223);
 			} catch (RuntimeException e) {
-				if(player!=null)player.delete();
-				if(admin!=null)admin.delete();
-				throw new InvalidInputException(e.getMessage());
+				if (player != null)
+					player.delete();
+				if (admin != null)
+					admin.delete();
+				if (e.getMessage().equals("The username must be specified.")) {
+					throw new InvalidInputException("The username must be specified.");
+				} else if (e.getMessage().equals("The password must be specified.")) {
+					throw new InvalidInputException("The player password must be specified.");
+				} else if(e.getMessage().equals("Cannot create due to duplicate username")){
+					throw new InvalidInputException("The username has already been taken");
+				}else {
+					throw new InvalidInputException(e.getMessage());
+				}
+
 			}
 		} else {
 			throw new InvalidInputException(error);
@@ -488,7 +499,7 @@ public class Block223Controller {
 		if(currentRole!=null) {
 			error="Cannot login a user while a user is already logged in.";
 		}else if(user==null) {
-			error="User not found.";
+			error= "The username and password do not match.";
 		}else {
 			List<UserRole> roles=user.getRoles();
 			for(UserRole role:roles) {
