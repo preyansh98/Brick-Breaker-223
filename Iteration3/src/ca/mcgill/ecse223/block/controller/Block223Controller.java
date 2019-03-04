@@ -480,7 +480,7 @@ public class Block223Controller {
 				} else if (e.getMessage().equals("The password must be specified.")) {
 					throw new InvalidInputException("The player password must be specified.");
 				} else if(e.getMessage().equals("Cannot create due to duplicate username")){
-					throw new InvalidInputException("The username has already been taken");
+					throw new InvalidInputException("The username has already been taken.");
 				}else {
 					throw new InvalidInputException(e.getMessage());
 				}
