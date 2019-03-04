@@ -208,6 +208,12 @@ public class Block223Controller {
 			throw new InvalidInputException("Admin privileges are required to add a block");
 		}
 		Game game = Block223Application.getCurrentGame();
+		List<Block> listofblocks = game.getBlocks();
+		for (Block thisblock : listofblocks) {
+			if (thisblock.getRed() == red && thisblock.getBlue()==blue && thisblock.getGreen()==green) {
+				throw new InvalidInputException("A block with the same color already exists for the game.");
+			}
+		}
 		if(game == null) {
 			throw new InvalidInputException("A game must be selected to add a block");
 		}
