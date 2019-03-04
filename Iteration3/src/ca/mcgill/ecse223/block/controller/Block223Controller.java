@@ -36,6 +36,8 @@ public class Block223Controller {
 		catch(RuntimeException e) {
 			throw new InvalidInputException("The name of a game must be specified."); 
 		}
+		
+
 	}
 
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
