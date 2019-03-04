@@ -28,6 +28,14 @@ public class BlockAssignment implements Serializable
 
   public BlockAssignment(int aGridHorizontalPosition, int aGridVerticalPosition, Level aLevel, Block aBlock, Game aGame)
   {
+    // line 134 "../../../../../Block223 v2.ump"
+    if (aGridHorizontalPosition <=0 || aGridHorizontalPosition > maxNrHorizontalBlocks()){
+       throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrHorizontalBlocks() + ".");
+    }
+    	if (aGridVerticalPosition <=0 || aGridVerticalPosition > maxNrVerticalBlocks()){
+    	throw new RuntimeException ("The vertical position must be between 1 and " +maxNrVerticalBlocks() + ".");
+    }
+    // END OF UMPLE BEFORE INJECTION
     gridHorizontalPosition = aGridHorizontalPosition;
     gridVerticalPosition = aGridVerticalPosition;
     boolean didAddLevel = setLevel(aLevel);
@@ -54,6 +62,11 @@ public class BlockAssignment implements Serializable
   public boolean setGridHorizontalPosition(int aGridHorizontalPosition)
   {
     boolean wasSet = false;
+    // line 142 "../../../../../Block223 v2.ump"
+    if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > maxNrHorizontalBlocks()){
+    throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrHorizontalBlocks() + ".");
+    }
+    // END OF UMPLE BEFORE INJECTION
     gridHorizontalPosition = aGridHorizontalPosition;
     wasSet = true;
     return wasSet;
@@ -62,6 +75,11 @@ public class BlockAssignment implements Serializable
   public boolean setGridVerticalPosition(int aGridVerticalPosition)
   {
     boolean wasSet = false;
+    // line 147 "../../../../../Block223 v2.ump"
+    if (aGridVerticalPosition <= 0 || aGridVerticalPosition > maxNrVerticalBlocks()){
+    throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrVerticalBlocks() + ".");
+    }
+    // END OF UMPLE BEFORE INJECTION
     gridVerticalPosition = aGridVerticalPosition;
     wasSet = true;
     return wasSet;
@@ -169,6 +187,18 @@ public class BlockAssignment implements Serializable
     {
       placeholderGame.removeBlockAssignment(this);
     }
+  }
+
+  // line 152 "../../../../../Block223 v2.ump"
+   public static  int maxNrHorizontalBlocks(){
+    int maxnumber = (390-20+5)/25;
+return maxnumber;
+  }
+
+  // line 156 "../../../../../Block223 v2.ump"
+   public static  int maxNrVerticalBlocks(){
+    int maxnumber = (390-30-5-10-10+2) / 22;
+return maxnumber;
   }
 
 
