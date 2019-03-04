@@ -347,7 +347,8 @@ public class Block223Controller {
 		int maxNumberOfHorizontalBlocks = 15;
 		int maxNumberOfVerticalBlocks = 15;
 		
-		if (gridHorizontalPosition !=0 && gridHorizontalPosition > 0 && gridHorizontalPosition <= maxNumberOfHorizontalBlocks) {
+		if (gridHorizontalPosition > 0 && gridVerticalPosition > 0 && gridHorizontalPosition <= maxNumberOfHorizontalBlocks
+				&& gridVerticalPosition <= maxNumberOfVerticalBlocks) {
 			try {
 		BlockAssignment blockassignment = new BlockAssignment(gridHorizontalPosition, gridVerticalPosition,
 				currentlevel, block, game);
