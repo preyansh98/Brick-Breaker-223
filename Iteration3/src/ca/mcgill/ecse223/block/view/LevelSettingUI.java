@@ -363,6 +363,7 @@ public class LevelSettingUI {
 
 	protected static void moveButtonActionPerformed() {
 		// TODO Auto-generated method stub
+		errorMsg.setText("");
 		if(blocks.getSelectedIndex()==-1) {
 			errorMsg.setText("Please select the block to position");
 			return;
@@ -455,7 +456,7 @@ public class LevelSettingUI {
 		try {
 			for (TOBlock block : Block223Controller.getBlocksOfCurrentDesignableGame()) {
 				map.put(blockid, block);
-				String RGBPoints = "R: " + block.getRed() + " , G: " + block.getGreen() + " , B: " + block.getBlue()
+				String RGBPoints = (blockid+1) +") R: " + block.getRed() + " , G: " + block.getGreen() + " , B: " + block.getBlue()
 						+ " , P: " + block.getPoints();
 				blocks.addItem(RGBPoints);
 				blockid++;

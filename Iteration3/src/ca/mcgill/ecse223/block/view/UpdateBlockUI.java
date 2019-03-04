@@ -165,7 +165,7 @@ public class UpdateBlockUI {
 		btnDeleteBlock.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		btnDeleteBlock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				deleteBlock();
+				deleteBlockActionPerformed();
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -302,22 +302,20 @@ public class UpdateBlockUI {
 		});
 	}
 
-	private static void deleteBlock() {
+	private static void deleteBlockActionPerformed() {
 		// TODO Auto-generated method stub
 		errorMsg.setText("");
 		if(blocks.getSelectedIndex() < 0) {
 			errorMsg.setText("A block must be selected to be deleted");
 			return;
 		}
-		
-		
-		TOBlock block = map.get(blocks.getSelectedIndex());
 		try {
+			TOBlock block = map.get(blocks.getSelectedIndex());
 			Block223Controller.deleteBlock(block.getId());
 		} catch (InvalidInputException e) {
 			errorMsg.setText(e.getMessage());
 		}
-		refresh();
+		refresh(blocks.getSelectedIndex() - 1);
 		
 	}
 
@@ -336,7 +334,7 @@ public class UpdateBlockUI {
 				if (point != null)
 					point.setValue(block.getPoints());
 			}
-		}else {
+		} else {
 			Rvalue.setValue(50);
 			Gvalue.setValue(50);
 			Bvalue.setValue(50);
@@ -380,7 +378,7 @@ public class UpdateBlockUI {
 		}
 	}
 	
-	//refresh for update block
+	//refresh for update and delete block
 	private static void refresh(int index) {
 
 		blocks.removeAllItems();
@@ -390,7 +388,7 @@ public class UpdateBlockUI {
 		try {
 			for (TOBlock block : Block223Controller.getBlocksOfCurrentDesignableGame()) {
 				map.put(blockid, block);
-				String RGBPoints = "R: " + block.getRed() + " , G: " + block.getGreen() + " , B: " + block.getBlue()
+				String RGBPoints = (blockid + 1) + ") R: " + block.getRed() + " , G: " + block.getGreen() + " , B: " + block.getBlue()
 						+ " , P: " + block.getPoints();
 				blocks.addItem(RGBPoints);
 				blockid++;
@@ -416,7 +414,7 @@ public class UpdateBlockUI {
 		try {
 			for (TOBlock block : Block223Controller.getBlocksOfCurrentDesignableGame()) {
 				map.put(blockid, block);
-				String RGBPoints = "R: " + block.getRed() + " , G: " + block.getGreen() + " , B: " + block.getBlue()
+				String RGBPoints = (blockid + 1) + ") R: " + block.getRed() + " , G: " + block.getGreen() + " , B: " + block.getBlue()
 						+ " , P: " + block.getPoints();
 				blocks.addItem(RGBPoints);
 				blockid++;

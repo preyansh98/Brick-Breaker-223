@@ -95,7 +95,8 @@ class Block {
    	if(aPoints < 1 || aPoints > 1000){
    		throw new RuntimeException("Points must be between 1 and 1000");
    	}
-   }				
+   }
+   				
 }
 
 // random attribute not needed anymore

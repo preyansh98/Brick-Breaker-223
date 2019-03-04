@@ -213,6 +213,13 @@ public class Block223Controller {
 		if((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) {
 			throw new InvalidInputException("Only the admin who created the game can add a block");
 		}
+		List<Block> gameBlocks = game.getBlocks();
+		for(Block block: game.getBlocks()) {
+			if(red == block.getRed() && green == block.getGreen() && blue == block.getBlue() &&
+					points == block.getPoints()) {
+				throw new InvalidInputException("A block with the same values already exists");
+			}
+		}
 		try {
 			Block block = new Block(red, green, blue, points,game);
 		} catch (RuntimeException e) {
