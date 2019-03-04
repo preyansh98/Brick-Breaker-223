@@ -129,7 +129,35 @@ class BlockAssignment {
    Integer gridVerticalPosition;
    * -- 1 Level level;
    * -- 1 Block block;
+   
+   before constructor{
+   if (aGridHorizontalPosition <=0 || aGridHorizontalPosition > maxNrHorizontalBlocks()){
+   throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrHorizontalBlocks() + ".");
 }
+	if (aGridVerticalPosition <=0 || aGridVerticalPosition > maxNrVerticalBlocks()){
+	throw new RuntimeException ("The vertical position must be between 1 and " +maxNrVerticalBlocks() + ".");
+}
+}
+before setGridHorizontalPosition{
+if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > maxNrHorizontalBlocks()){
+throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrHorizontalBlocks() + ".");
+}
+}
+before setGridVerticalPosition{
+if (aGridVerticalPosition <= 0 || aGridVerticalPosition > maxNrVerticalBlocks()){
+throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrVerticalBlocks() + ".");
+}
+}
+public static int maxNrHorizontalBlocks(){
+int maxnumber = (390-20+5)/25;
+return maxnumber;
+}
+public static int maxNrVerticalBlocks(){
+int maxnumber = (390-30-5-10-10+2) / 22;
+return maxnumber;
+}
+}
+
 
 class Ball {
    const Integer BALL_DIAMETER = 10;
