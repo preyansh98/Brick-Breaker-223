@@ -1,19 +1,14 @@
 package ca.mcgill.ecse223.block.view;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.util.HashMap;
-import java.awt.Component;
-import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOGame;
@@ -62,7 +57,6 @@ public class AdminDashBoardUI {
 		try {
 			refreshGames();
 		} catch (InvalidInputException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		JButton btnUpdateGame = new JButton("Update Game");
@@ -79,7 +73,6 @@ public class AdminDashBoardUI {
 				try {
 					deleteGameButtonActionPerformed();
 				} catch (InvalidInputException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -158,7 +151,6 @@ public class AdminDashBoardUI {
 	}
 
 	protected static void logout() {
-		// TODO Auto-generated method stub
 		Block223Controller.logout();
 		frame.dispose();
 		SignInUI.init();

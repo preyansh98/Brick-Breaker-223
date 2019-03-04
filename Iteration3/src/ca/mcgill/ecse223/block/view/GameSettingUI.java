@@ -1,6 +1,5 @@
 package ca.mcgill.ecse223.block.view;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.GroupLayout;
@@ -255,7 +254,6 @@ public class GameSettingUI {
 	}
 	
 	protected static void updateGame() {
-		// TODO Auto-generated method stub
 		int levels;
 		int numBlocks;
 		int xspeed;
@@ -280,7 +278,6 @@ public class GameSettingUI {
 			Block223Controller.updateGame(nameTXT.getText(),levels,numBlocks,xspeed,yspeed,
 					speedFactor,minLength,maxLength);
 		} catch (InvalidInputException e) {
-			// TODO Auto-generated catch block
 			errorMsg.setText(e.getMessage());
 			return;
 		}
