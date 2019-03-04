@@ -128,7 +128,7 @@ public class Block223Controller {
     	
     }
     
-	}
+}
 
 
 	public static void deleteGame(String name) throws InvalidInputException {
@@ -215,9 +215,8 @@ public class Block223Controller {
 		}
 		List<Block> gameBlocks = game.getBlocks();
 		for(Block block: game.getBlocks()) {
-			if(red == block.getRed() && green == block.getGreen() && blue == block.getBlue() &&
-					points == block.getPoints()) {
-				throw new InvalidInputException("A block with the same values already exists");
+			if(red == block.getRed() && green == block.getGreen() && blue == block.getBlue()) {
+				throw new InvalidInputException("A block with the same RGB values already exists");
 			}
 		}
 		try {
