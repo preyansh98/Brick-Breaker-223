@@ -51,7 +51,7 @@ public class Block223Controller {
     	throw new InvalidInputException("A Game must be selected to define game settings");
     }
     
-    if ((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) 
+    if (! (Block223Application.getCurrentUserRole() instanceof Admin)) 
     {
 		throw new InvalidInputException("Admin privileges are required to define game settings. ");
     }
@@ -182,10 +182,10 @@ public class Block223Controller {
 		Game game =  Block223Application.getCurrentGame();
 		String currentName = game.getName();
 		
-		if ((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) 
-	    {
-			throw new InvalidInputException("Admin privileges are required to define game settings. ");
-	    }
+		if (! (Block223Application.getCurrentUserRole() instanceof Admin)) 
+    {
+		throw new InvalidInputException("Admin privileges are required to define game settings. ");
+    }
 		
 		//Add a for loop and loop through each name of the game?
 	
