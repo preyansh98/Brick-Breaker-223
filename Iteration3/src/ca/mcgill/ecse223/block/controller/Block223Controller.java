@@ -322,13 +322,13 @@ public class Block223Controller {
   			throw new InvalidInputException("Level " + level + " does not exist for the game.");
   		}
         try {
-		Level currentlevel = game.getLevel(level);
+		Level currentlevel = game.getLevel(level-1);
         }
         catch(IndexOutOfBoundsException e){
         	throw new IndexOutOfBoundsException(e.getMessage());
         	}
 		
-		Level currentlevel = game.getLevel(level);
+		Level currentlevel = game.getLevel(level-1);
 		int nrBlocksPerLevel = game.maximumNumberOfLevels();
 		if (currentlevel.getBlockAssignments().size() > nrBlocksPerLevel) {
 			throw new InvalidInputException("The number of blocks has reached the maximum number ("+ nrBlocksPerLevel +") allowed for this game.");
