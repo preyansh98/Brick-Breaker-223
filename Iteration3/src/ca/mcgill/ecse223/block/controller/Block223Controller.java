@@ -10,6 +10,7 @@ import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 
 public class Block223Controller {
 
+	
 	// ****************************
 	// Modifier methods
 	// ****************************
@@ -306,6 +307,7 @@ public class Block223Controller {
           	throw new InvalidInputException("Only the admin who created the game can position a block.");
 			}
          
+          
           if(level <1 || level > game.getLevels().size()) {
   			throw new InvalidInputException("Level " + level + " does not exist for the game.");
   		}
@@ -332,10 +334,18 @@ public class Block223Controller {
 		if (block == null) {
 			throw new InvalidInputException("The block does not exist.");
 		}
+		int maxNumberOfHorizontalBlocks = 15;
+		int maxNumberOfVerticalBlocks = 15;
 		
-
+		if (gridHorizontalPosition !=0 && gridHorizontalPosition > 0 && gridHorizontalPosition <= maxNumberOfHorizontalBlocks) {
+			try {
 		BlockAssignment blockassignment = new BlockAssignment(gridHorizontalPosition, gridVerticalPosition,
 				currentlevel, block, game);
+			}
+		catch(RuntimeException e) {
+        	throw new RuntimeException("The horizontal position must be between 1 and " + maxNumberOfHorizontalBlocks + ".");
+        	}
+}
 
 	}
 	
