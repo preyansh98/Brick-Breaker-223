@@ -204,23 +204,21 @@ public class Block223Controller {
 	}
 
 	public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
+		//first check
 		if((Block223Application.getCurrentUserRole()) instanceof Admin == false) {
 			throw new InvalidInputException("Admin privileges are required to add a block");
 		}
+		
 		Game game = Block223Application.getCurrentGame();
-		List<Block> listofblocks = game.getBlocks();
-		for (Block thisblock : listofblocks) {
-			if (thisblock.getRed() == red && thisblock.getBlue()==blue && thisblock.getGreen()==green) {
-				throw new InvalidInputException("A block with the same color already exists for the game.");
-			}
-		}
+		//second check
 		if(game == null) {
 			throw new InvalidInputException("A game must be selected to add a block");
 		}
+		//third check
 		if((game.getAdmin().equals(Block223Application.getCurrentUserRole()) == false)) {
 			throw new InvalidInputException("Only the admin who created the game can add a block");
 		}
-		List<Block> gameBlocks = game.getBlocks();
+		//fourth check
 		for(Block block: game.getBlocks()) {
 			if(red == block.getRed() && green == block.getGreen() && blue == block.getBlue()) {
 				throw new InvalidInputException("A block with the same RGB values already exists");
