@@ -61,6 +61,13 @@ class Game {
    1 <@>- 1 Ball ball;
    1 <@>- 1 Paddle paddle;
    
+   before constructor, setName {
+   	if(aName == null || aName.isEmpty() == true){
+   		throw new RuntimeException("The name of the game must be unique"); 
+   	}
+   }
+   
+   
    public Block findBlock(int id){
    		for(Block block: blocks){
    			if(id == block.getId()){

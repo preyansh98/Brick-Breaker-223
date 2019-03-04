@@ -5,7 +5,7 @@ package ca.mcgill.ecse223.block.model;
 import java.io.Serializable;
 
 // line 85 "../../../../../Block223Persistence.ump"
-// line 127 "../../../../../Block223 v2.ump"
+// line 134 "../../../../../Block223 v2.ump"
 public class BlockAssignment implements Serializable
 {
 
@@ -28,6 +28,14 @@ public class BlockAssignment implements Serializable
 
   public BlockAssignment(int aGridHorizontalPosition, int aGridVerticalPosition, Level aLevel, Block aBlock, Game aGame)
   {
+    // line 141 "../../../../../Block223 v2.ump"
+    if (aGridHorizontalPosition <=0 || aGridHorizontalPosition > maxNrHorizontalBlocks()){
+       throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrHorizontalBlocks() + ".");
+    }
+    	if (aGridVerticalPosition <=0 || aGridVerticalPosition > maxNrVerticalBlocks()){
+    	throw new RuntimeException ("The vertical position must be between 1 and " +maxNrVerticalBlocks() + ".");
+    }
+    // END OF UMPLE BEFORE INJECTION
     gridHorizontalPosition = aGridHorizontalPosition;
     gridVerticalPosition = aGridVerticalPosition;
     boolean didAddLevel = setLevel(aLevel);
@@ -54,6 +62,11 @@ public class BlockAssignment implements Serializable
   public boolean setGridHorizontalPosition(int aGridHorizontalPosition)
   {
     boolean wasSet = false;
+    // line 149 "../../../../../Block223 v2.ump"
+    if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > maxNrHorizontalBlocks()){
+    throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrHorizontalBlocks() + ".");
+    }
+    // END OF UMPLE BEFORE INJECTION
     gridHorizontalPosition = aGridHorizontalPosition;
     wasSet = true;
     return wasSet;
@@ -62,6 +75,11 @@ public class BlockAssignment implements Serializable
   public boolean setGridVerticalPosition(int aGridVerticalPosition)
   {
     boolean wasSet = false;
+    // line 154 "../../../../../Block223 v2.ump"
+    if (aGridVerticalPosition <= 0 || aGridVerticalPosition > maxNrVerticalBlocks()){
+    throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrVerticalBlocks() + ".");
+    }
+    // END OF UMPLE BEFORE INJECTION
     gridVerticalPosition = aGridVerticalPosition;
     wasSet = true;
     return wasSet;
@@ -169,6 +187,18 @@ public class BlockAssignment implements Serializable
     {
       placeholderGame.removeBlockAssignment(this);
     }
+  }
+
+  // line 159 "../../../../../Block223 v2.ump"
+   public static  int maxNrHorizontalBlocks(){
+    int maxnumber = (390-20+5)/25;
+return maxnumber;
+  }
+
+  // line 163 "../../../../../Block223 v2.ump"
+   public static  int maxNrVerticalBlocks(){
+    int maxnumber = (390-30-5-10-10+2) / 22;
+return maxnumber;
   }
 
 

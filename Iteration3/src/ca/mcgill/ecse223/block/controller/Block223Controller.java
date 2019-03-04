@@ -16,24 +16,29 @@ public class Block223Controller {
 	// ****************************
 	public static void createGame(String name) throws InvalidInputException {
 		if(Block223Application.getCurrentUserRole() instanceof Admin == false) {
-			throw new InvalidInputException("Admin privileges are required to create a game"); 
+			throw new InvalidInputException("Admin privileges are required to create a game."); 
 		}
 		
 		Block223 block223 = Block223Application.getBlock223();
 			
 		Admin admin = (Admin) Block223Application.getCurrentUserRole();
-		
 		Game game = null; 
+		
+		if(Block223Application.getBlock223().findGame(name) != null) {
+			//a duplicate game exists
+			throw new InvalidInputException("The name of a game must be unique.");
+		}
+		
+		
 		try {
-//			if(game.getName() == null || game.getName().isEmpty()) {
-//				throw new InvalidInputException("name can not be empty or null"); 
-//			}
-//			else {
-			game = new Game(name, 1, admin, 1,1,1,10,10,block223);
-			Block223Application.setCurrentGame(game); //this is temporary for testing. 
+		game = new Game(name, 1, admin, 1,1,1,10,10,block223);
 		}
-		catch (RuntimeException e) {
+		catch(RuntimeException e) {
+			throw new InvalidInputException("The name of a game must be specified."); 
 		}
+		
+		Block223Application.setCurrentGame(game);
+
 	}
 
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
