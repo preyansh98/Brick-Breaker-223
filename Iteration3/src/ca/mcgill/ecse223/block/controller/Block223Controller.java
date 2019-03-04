@@ -329,7 +329,7 @@ public class Block223Controller {
         	}
 		
 		Level currentlevel = game.getLevel(level-1);
-		int nrBlocksPerLevel = game.numberOfBlocks();
+		int nrBlocksPerLevel = currentlevel.numberOfBlockAssignments();
 		if (currentlevel.getBlockAssignments().size() > nrBlocksPerLevel) {
 			throw new InvalidInputException("The number of blocks has reached the maximum number ("+ nrBlocksPerLevel +") allowed for this game.");
 			
