@@ -37,7 +37,6 @@ public class Block223Controller {
 			throw new InvalidInputException("The name of a game must be specified."); 
 		}
 		
-		Block223Application.setCurrentGame(game);
 
 	}
 
@@ -162,16 +161,18 @@ public class Block223Controller {
 
 	public static void selectGame(String name) throws InvalidInputException {
 	Game game = Block223Application.getBlock223().findGame(name); 
-	//Use findGame due to bug in Umple
-	
-	
-	//Block223Application.getCurrentUserRole()
-	
 	
 	if (game == null) {
 		throw new InvalidInputException("A game with name "+name+" does not exist");
 	}
+	
 	Block223Application.setCurrentGame(game);
+	if(Block223Application.getCurrentUserRole().equals(game.getAdmin()) == false)
+	{
+		throw new InvalidInputException("Only the admin who created this game can access it's information"); 
+	}
+	
+	
 	}
 
 	public static void updateGame(String name, int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
