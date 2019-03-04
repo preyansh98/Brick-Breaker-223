@@ -53,11 +53,6 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, Ball aBall, Paddle aPaddle, Block223 aBlock223)
   {
-    // line 65 "../../../../../Block223 v2.ump"
-    if(aName == null || aName.isEmpty() == true){
-       		throw new RuntimeException("The name of the game must be unique"); 
-       	}
-    // END OF UMPLE BEFORE INJECTION
     nrBlocksPerLevel = aNrBlocksPerLevel;
     if (!setName(aName))
     {
@@ -90,11 +85,6 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, int aMinBallSpeedXForBall, int aMinBallSpeedYForBall, double aBallSpeedIncreaseFactorForBall, int aMaxPaddleLengthForPaddle, int aMinPaddleLengthForPaddle, Block223 aBlock223)
   {
-    // line 65 "../../../../../Block223 v2.ump"
-    if(aName == null || aName.isEmpty() == true){
-       		throw new RuntimeException("The name of the game must be unique"); 
-       	}
-    // END OF UMPLE BEFORE INJECTION
     name = aName;
     nrBlocksPerLevel = aNrBlocksPerLevel;
     boolean didAddAdmin = setAdmin(aAdmin);
@@ -121,11 +111,6 @@ public class Game implements Serializable
   public boolean setName(String aName)
   {
     boolean wasSet = false;
-    // line 65 "../../../../../Block223 v2.ump"
-    if(aName == null || aName.isEmpty() == true){
-       		throw new RuntimeException("The name of the game must be unique"); 
-       	}
-    // END OF UMPLE BEFORE INJECTION
     String anOldName = getName();
     if (hasWithName(aName)) {
       return wasSet;
@@ -625,7 +610,7 @@ public class Game implements Serializable
     }
   }
 
-  // line 72 "../../../../../Block223 v2.ump"
+  // line 65 "../../../../../Block223 v2.ump"
    public Block findBlock(int id){
     for(Block block: blocks){
    			if(id == block.getId()){

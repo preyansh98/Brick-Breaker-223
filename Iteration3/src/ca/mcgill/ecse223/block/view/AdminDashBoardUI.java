@@ -174,8 +174,7 @@ public class AdminDashBoardUI {
 			 frame.dispose();
 			GameSettingUI.init();
 		} catch (Exception e) {
-			String error = e.getMessage(); 
-			errorMsg.setText(error);
+			e.printStackTrace();
 		}
 		
 		// add method here to move on to next screen

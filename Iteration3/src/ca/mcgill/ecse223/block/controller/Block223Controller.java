@@ -36,8 +36,6 @@ public class Block223Controller {
 		catch(RuntimeException e) {
 			throw new InvalidInputException("The name of a game must be specified."); 
 		}
-		
-
 	}
 
 	public static void setGameDetails(int nrLevels, int nrBlocksPerLevel, int minBallSpeedX, int minBallSpeedY,
@@ -208,6 +206,12 @@ public class Block223Controller {
 			throw new InvalidInputException("Admin privileges are required to add a block");
 		}
 		Game game = Block223Application.getCurrentGame();
+		List<Block> listofblocks = game.getBlocks();
+		for (Block thisblock : listofblocks) {
+			if (thisblock.getRed() == red && thisblock.getBlue()==blue && thisblock.getGreen()==green) {
+				throw new InvalidInputException("A block with the same color already exists for the game.");
+			}
+		}
 		if(game == null) {
 			throw new InvalidInputException("A game must be selected to add a block");
 		}
@@ -312,13 +316,13 @@ public class Block223Controller {
   			throw new InvalidInputException("Level " + level + " does not exist for the game.");
   		}
         try {
-		Level currentlevel = game.getLevel(level-1);
+		Level currentlevel = game.getLevel(level);
         }
         catch(IndexOutOfBoundsException e){
         	throw new IndexOutOfBoundsException(e.getMessage());
         	}
 		
-		Level currentlevel = game.getLevel(level-1);
+		Level currentlevel = game.getLevel(level);
 		int nrBlocksPerLevel = game.maximumNumberOfLevels();
 		if (currentlevel.getBlockAssignments().size() > nrBlocksPerLevel) {
 			throw new InvalidInputException("The number of blocks has reached the maximum number ("+ nrBlocksPerLevel +") allowed for this game.");
@@ -343,7 +347,7 @@ public class Block223Controller {
 				currentlevel, block, game);
 			}
 		catch(RuntimeException e) {
-        	throw new RuntimeException("The horizontal position must be between 1 and " + maxNumberOfHorizontalBlocks + ".");
+        	throw new RuntimeException(e.getMessage());
         	}
 }
 
