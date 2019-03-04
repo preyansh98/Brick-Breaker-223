@@ -20,11 +20,21 @@ class Block223 {
 class User {
    unique username;
    1 -> 1..2 UserRole roles;
+   before constructor, setUsername{
+   		if(aUsername ==null || aUsername.length()==0){
+   			throw new RuntimeException("The username must be specified.");
+   		}
+   } 
 }
 
 class UserRole {
    abstract;
    password;
+   before constructor, setPassword{
+   		if(aPassword ==null || aPassword.length()==0){
+   			throw new RuntimeException("The password must be specified.");
+   		}
+   } 
 }
 
 class Admin {

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 16 "../../../../../Block223Persistence.ump"
-// line 38 "../../../../../Block223 v2.ump"
+// line 48 "../../../../../Block223 v2.ump"
 public class Game implements Serializable
 {
 
@@ -610,7 +610,7 @@ public class Game implements Serializable
     }
   }
 
-  // line 55 "../../../../../Block223 v2.ump"
+  // line 65 "../../../../../Block223 v2.ump"
    public Block findBlock(int id){
     for(Block block: blocks){
    			if(id == block.getId()){
