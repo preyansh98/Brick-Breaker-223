@@ -347,20 +347,39 @@ public class Block223Controller {
 			}
 			
 			Game game = Block223Application.getCurrentGame();
-			Level currentlevel = game.getLevel(level-1);
+			Level currentlevel;
 			BlockAssignment assignment;
 			
 			
-			if(level <1 || level > game.maximumNumberOfLevels()) {
-				throw new InvalidInputException("Level " + level + " does not exist for the game.");
+			if(level <1 || level > game.getLevels().size()) {
+	  			throw new InvalidInputException("Level " + level + " does not exist for the game.");
 			}
+	        try {
+			currentlevel = game.getLevel(level-1);
+	        }
+	        catch(IndexOutOfBoundsException e){
+	        	throw new IndexOutOfBoundsException(e.getMessage());
+	        }
 			
-			if(newGridHorizontalPosition <= 0 || newGridHorizontalPosition>15) {
-				throw new InvalidInputException("The horizontal position must be between 1 and " + 15 + ".");
-			}
-			if(newGridVerticalPosition <= 0 || newGridVerticalPosition>15) {
-				throw new InvalidInputException("The vertical position must be between 1 and " + 15 + ".");
-			}
+	        
+	        if (newGridHorizontalPosition <= 0 || newGridHorizontalPosition>15) {
+				try {
+					assignment= currentlevel.findBlockAssignment(newGridHorizontalPosition, newGridVerticalPosition);
+				}
+			catch(RuntimeException e) {
+	        	throw new RuntimeException("The horizontal position must be between 1 and " + 15 + ".");
+	        	}
+	        }
+	        
+	        if (newGridVerticalPosition <= 0 || newGridVerticalPosition>15) {
+				try {
+					assignment= currentlevel.findBlockAssignment(newGridHorizontalPosition, newGridVerticalPosition);
+				}
+			catch(RuntimeException e) {
+	        	throw new RuntimeException("The vertical position must be between 1 and " + 15 + ".");
+	        	}
+	        }
+	        
 			
 			if(currentlevel.findBlockAssignment(oldGridHorizontalPosition, oldGridVerticalPosition)==null) {
 				throw new InvalidInputException("A block does not exist at location" + oldGridHorizontalPosition + "/" + oldGridVerticalPosition + ".");
@@ -394,7 +413,7 @@ public class Block223Controller {
 				}
 			
 			Game game = Block223Application.getCurrentGame();
-			Level currentlevel = game.getLevel(level);
+			Level currentlevel = game.getLevel(level-1);
 			BlockAssignment assignment;
 			
 			assignment= currentlevel.findBlockAssignment(gridHorizontalPosition, gridVerticalPosition);
