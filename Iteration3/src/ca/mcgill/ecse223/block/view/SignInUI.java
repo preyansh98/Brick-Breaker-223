@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +26,7 @@ public class SignInUI {
 
 	private static JFrame frame;
 	private static JTextField usernameTXT;
-	private static JTextField passwordTXT;
+	private static JPasswordField passwordTXT;
 
 
 	/**
@@ -50,7 +52,7 @@ public class SignInUI {
 		usernameTXT = new JTextField();
 		usernameTXT.setColumns(10);
 		
-		passwordTXT = new JTextField();
+		passwordTXT = new JPasswordField();
 		passwordTXT.setColumns(10);
 		
 		JButton btnSignin = new JButton("Sign-In");

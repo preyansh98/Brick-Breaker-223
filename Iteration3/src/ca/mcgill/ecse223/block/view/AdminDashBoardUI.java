@@ -13,6 +13,7 @@ import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOGame;
@@ -169,6 +170,7 @@ public class AdminDashBoardUI {
 		try {
 			
 			 Block223Controller.createGame(textField.getText());
+			 Block223Controller.selectGame(textField.getText());
 			 frame.dispose();
 			GameSettingUI.init();
 		} catch (Exception e) {
@@ -180,8 +182,10 @@ public class AdminDashBoardUI {
 
 	private static void deleteGameButtonActionPerformed() throws InvalidInputException {
 		
-		
-		// call the controller
+		if(games.getSelectedIndex() < 0) {
+			errorMsg.setText("A game must be selected to delete it.");
+			return;
+		}
 		try {
 			 String name = games.getSelectedItem().toString(); 
 			 Block223Controller.deleteGame(name);
@@ -195,10 +199,15 @@ public class AdminDashBoardUI {
 	private static void updateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		
 		// call the controller
+		errorMsg.setText("");
+		if(games.getSelectedIndex() < 0) {
+			errorMsg.setText("A game must be selected to update it.");
+			return;
+		}
 		try {
-			frame.dispose();
 			String name = games.getSelectedItem().toString();
 			Block223Controller.selectGame(name);
+			frame.dispose();
 			GameSettingUI.init();
 		} catch (InvalidInputException e) {
 			errorMsg.setText(e.getMessage());
