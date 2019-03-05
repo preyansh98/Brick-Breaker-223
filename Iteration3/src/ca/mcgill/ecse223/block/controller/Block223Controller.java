@@ -123,10 +123,9 @@ public class Block223Controller {
     //level.size();
     //game.numberOfLevels();
     while (nrLevels > levels.size()) {
-    	game.addLevel();
-    
-    	
+    	game.addLevel();   	
     }
+    
     while (nrLevels < levels.size()) {
     	Level level=levels.get(levels.size() - 1);
     	level.delete();
@@ -181,28 +180,31 @@ public class Block223Controller {
 		
 		Game game =  Block223Application.getCurrentGame();
 		String currentName = game.getName();
-		
+		Admin admin = (Admin) Block223Application.getCurrentUserRole();
+
+        if(!(admin.equals(game.getAdmin()))) 
+        {
+        	throw new InvalidInputException("Only the admin who created the game can define its game settings.");
+        }    
+
+//Admin check
 		if (! (Block223Application.getCurrentUserRole() instanceof Admin)) 
     {
 		throw new InvalidInputException("Admin privileges are required to define game settings. ");
     }
 		
-		//Add a for loop and loop through each name of the game?
-	
-		if (!currentName.equals(name)) 
-		{
-			if(!game.setName(name)) 
-			{
-				
-				throw new InvalidInputException("The name of the game must be unique");
+//Name Check
+		if(!currentName.equals(name)) {
+			Boolean result = game.setName(name);
+			if(result == false) {
+	        	throw new InvalidInputException("The name of a game must be unique. ");
 			}
-			
 		}
 		
-		Block223Controller.setGameDetails(nrLevels, nrBlocksPerLevel, minBallSpeedX, minBallSpeedY, ballSpeedIncreaseFactor, maxPaddleLength, minPaddleLength);
+		setGameDetails(nrLevels, nrBlocksPerLevel, minBallSpeedX, minBallSpeedY, ballSpeedIncreaseFactor, maxPaddleLength, minPaddleLength);
 		//END
 	}
-
+	
 	public static void addBlock(int red, int green, int blue, int points) throws InvalidInputException {
 		//first check
 		if((Block223Application.getCurrentUserRole()) instanceof Admin == false) {
@@ -390,6 +392,7 @@ public class Block223Controller {
 
 	}
 	
+	
 	public static void moveBlock(int level, int oldGridHorizontalPosition, int oldGridVerticalPosition,
 				int newGridHorizontalPosition, int newGridVerticalPosition) throws InvalidInputException {
 		
@@ -451,9 +454,7 @@ public class Block223Controller {
 				assignment.setGridVerticalPosition(newGridVerticalPosition);
 			}
 			
-		
-				
-			
+	
 		}
 
 		public static void removeBlock(int level, int gridHorizontalPosition, int gridVerticalPosition)
