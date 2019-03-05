@@ -380,15 +380,7 @@ public class Block223Controller {
         	}
 }
 		
-		if (gridVerticalPosition !=0 && gridVerticalPosition > 0 && gridVerticalPosition <= maxNumberOfVerticalBlocks) {
-			try {
-		BlockAssignment blockassignment = new BlockAssignment(gridHorizontalPosition, gridVerticalPosition,
-				currentlevel, block, game);
-			}
-		catch(RuntimeException e) {
-        	throw new RuntimeException(e.getMessage());
-        	}
-}
+
 
 	}
 	
