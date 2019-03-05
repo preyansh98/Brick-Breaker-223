@@ -353,7 +353,7 @@ public class LevelSettingUI {
 				return;
 			}
 			try {
-				Block223Controller.removeBlock(levels.getSelectedIndex(), y, x);
+				Block223Controller.removeBlock(levels.getSelectedIndex()+1, y, x);
 				layeredPane.repaint();
 			} catch (InvalidInputException e) {
 				errorMsg.setText(e.getMessage());
