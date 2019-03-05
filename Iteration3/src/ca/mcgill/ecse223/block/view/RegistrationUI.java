@@ -1,31 +1,27 @@
 package ca.mcgill.ecse223.block.view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JTextField;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 
-import java.awt.Color;
-
 public class RegistrationUI {
 
 	private static JFrame frame;
 	private static JTextField usernameTXT;
-	private static JTextField playerTXT;
-	private static JTextField adminTXT;
+	private static JPasswordField playerTXT;
+	private static JPasswordField adminTXT;
 	private static JButton btnCancel;
 	private static JLabel errorMsg;
 
@@ -52,10 +48,10 @@ public class RegistrationUI {
 		usernameTXT = new JTextField();
 		usernameTXT.setColumns(10);
 		
-		playerTXT = new JTextField();
+		playerTXT = new JPasswordField();
 		playerTXT.setColumns(10);
 		
-		adminTXT = new JTextField();
+		adminTXT = new JPasswordField();
 		adminTXT.setColumns(10);
 		
 		JButton btnRegister = new JButton("Register");

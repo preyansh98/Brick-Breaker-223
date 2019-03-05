@@ -1,21 +1,19 @@
 package ca.mcgill.ecse223.block.view;
 
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
 
-import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.Font;
+import javax.swing.JSlider;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
-
-import javax.swing.JSlider;
-import javax.swing.JButton;
-import java.awt.Color;
 
 public class NewBlockUI {
 

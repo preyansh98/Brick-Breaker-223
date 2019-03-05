@@ -3,11 +3,10 @@ package ca.mcgill.ecse223.block.view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;

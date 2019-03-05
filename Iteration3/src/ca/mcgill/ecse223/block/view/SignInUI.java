@@ -1,26 +1,22 @@
 package ca.mcgill.ecse223.block.view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JTextField;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
-
-import java.awt.Color;
 
 public class SignInUI {
 
@@ -134,7 +130,6 @@ public class SignInUI {
 	}
 	private static  void signinButtonActionPerformed(JTextField usernameTextEntry,
 			JTextField passwordTextEntry, JLabel errorMsg) {
-		// TODO Auto-generated method stub
 		try {
 			Block223Controller.login(usernameTextEntry.getText(), passwordTextEntry.getText());
 			if(Block223Controller.getUserMode().getMode()==Mode.Play) {
