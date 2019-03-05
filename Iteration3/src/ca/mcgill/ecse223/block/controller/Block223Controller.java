@@ -701,7 +701,7 @@ public class Block223Controller {
 		
 		Level thislevel = null;
 		try {
-			thislevel = thisgame.getLevel(level);
+			thislevel = thisgame.getLevel(level-1);
 		}
 		catch(IndexOutOfBoundsException e) {
 			throw new InvalidInputException("Level " + thislevel + " does not exist for the game.");

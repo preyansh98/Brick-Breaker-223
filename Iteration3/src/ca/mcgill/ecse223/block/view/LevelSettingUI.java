@@ -484,7 +484,7 @@ public class LevelSettingUI {
 		TOGridCell [][] to=new TOGridCell [15][15];
 		if(levels!=null && levels.getSelectedIndex()!=-1) {
 			try {
-				List<TOGridCell> cells=Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(levels.getSelectedIndex());
+				List<TOGridCell> cells=Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(levels.getSelectedIndex()+1);
 				
 				for(TOGridCell cell: cells) {
 					to[cell.getGridHorizontalPosition()-1][cell.getGridVerticalPosition()-1]=cell;
@@ -501,7 +501,7 @@ public class LevelSettingUI {
 	public static void displayBlockInfo(int x, int y) {
 		List<TOGridCell> cells;
 		try {
-			cells = Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(levels.getSelectedIndex());
+			cells = Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(levels.getSelectedIndex()+1);
 			for(TOGridCell cell: cells) {
 				if(cell.getGridHorizontalPosition()==y && cell.getGridVerticalPosition()==x) {
 					lblSelectBlockInfo.setText("Select Block info: R: "+ cell.getRed()+  " , G: " + cell.getGreen() + " , B: " + cell.getBlue()
