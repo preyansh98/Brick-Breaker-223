@@ -292,10 +292,30 @@ public class Block223Controller {
 				throw new InvalidInputException("A block with the same color already exists for the game.");
 			}
 		}
+		try {
 		block.setRed(red);
+		}
+		catch(RuntimeException e) {
+        	throw new RuntimeException(e.getMessage());
+        	}
+		try {
 		block.setGreen(green);
+		}
+		catch(RuntimeException e) {
+        	throw new RuntimeException(e.getMessage());
+        	}
+		try {
 		block.setBlue(blue);
+		}
+		catch(RuntimeException e) {
+        	throw new RuntimeException(e.getMessage());
+        	}
+		try {
 		block.setPoints(points);
+		}
+		catch(RuntimeException e) {
+        	throw new RuntimeException(e.getMessage());
+        	}
 
 	}
 
