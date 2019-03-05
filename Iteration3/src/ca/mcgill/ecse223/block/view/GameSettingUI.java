@@ -274,10 +274,9 @@ public class GameSettingUI {
 			return;
 		}
 		try {
-			
 			Block223Controller.updateGame(nameTXT.getText(),levels,numBlocks,xspeed,yspeed,
 					speedFactor,minLength,maxLength);
-		} catch (InvalidInputException e) {
+		} catch (Exception e) {
 			errorMsg.setText(e.getMessage());
 			return;
 		}
