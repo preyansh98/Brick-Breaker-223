@@ -46,22 +46,22 @@ public class Block implements Serializable
   {
     // line 93 "../../../../../Block223 v2.ump"
     if(aRed < 0 || aRed > 255){
-       		throw new RuntimeException("Red must be between 0 and 255");
+       		throw new RuntimeException("Red must be between 0 and 255.");
        	}
     // END OF UMPLE BEFORE INJECTION
     // line 99 "../../../../../Block223 v2.ump"
     if(aGreen < 0 || aGreen > 255){
-       		throw new RuntimeException("Green must be between 0 and 255");
+       		throw new RuntimeException("Green must be between 0 and 255.");
        	}
     // END OF UMPLE BEFORE INJECTION
     // line 105 "../../../../../Block223 v2.ump"
     if(aBlue < 0 || aBlue > 255){
-       		throw new RuntimeException("Blue must be between 0 and 255");
+       		throw new RuntimeException("Blue must be between 0 and 255.");
        	}
     // END OF UMPLE BEFORE INJECTION
     // line 111 "../../../../../Block223 v2.ump"
     if(aPoints < 1 || aPoints > 1000){
-       		throw new RuntimeException("Points must be between 1 and 1000");
+       		throw new RuntimeException("Points must be between 1 and 1000.");
        	}
     // END OF UMPLE BEFORE INJECTION
     red = aRed;
@@ -86,7 +86,7 @@ public class Block implements Serializable
     boolean wasSet = false;
     // line 93 "../../../../../Block223 v2.ump"
     if(aRed < 0 || aRed > 255){
-       		throw new RuntimeException("Red must be between 0 and 255");
+       		throw new RuntimeException("Red must be between 0 and 255.");
        	}
     // END OF UMPLE BEFORE INJECTION
     red = aRed;
@@ -99,7 +99,7 @@ public class Block implements Serializable
     boolean wasSet = false;
     // line 99 "../../../../../Block223 v2.ump"
     if(aGreen < 0 || aGreen > 255){
-       		throw new RuntimeException("Green must be between 0 and 255");
+       		throw new RuntimeException("Green must be between 0 and 255.");
        	}
     // END OF UMPLE BEFORE INJECTION
     green = aGreen;
@@ -112,7 +112,7 @@ public class Block implements Serializable
     boolean wasSet = false;
     // line 105 "../../../../../Block223 v2.ump"
     if(aBlue < 0 || aBlue > 255){
-       		throw new RuntimeException("Blue must be between 0 and 255");
+       		throw new RuntimeException("Blue must be between 0 and 255.");
        	}
     // END OF UMPLE BEFORE INJECTION
     blue = aBlue;
@@ -125,7 +125,7 @@ public class Block implements Serializable
     boolean wasSet = false;
     // line 111 "../../../../../Block223 v2.ump"
     if(aPoints < 1 || aPoints > 1000){
-       		throw new RuntimeException("Points must be between 1 and 1000");
+       		throw new RuntimeException("Points must be between 1 and 1000.");
        	}
     // END OF UMPLE BEFORE INJECTION
     points = aPoints;

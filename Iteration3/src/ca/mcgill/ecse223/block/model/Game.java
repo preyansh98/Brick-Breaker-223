@@ -55,7 +55,7 @@ public class Game implements Serializable
   {
     // line 65 "../../../../../Block223 v2.ump"
     if(aName == null || aName.isEmpty() == true){
-       		throw new RuntimeException("The name of the game must be unique"); 
+       		throw new RuntimeException("The name of the game must be unique."); 
        	}
     // END OF UMPLE BEFORE INJECTION
     nrBlocksPerLevel = aNrBlocksPerLevel;
@@ -92,7 +92,7 @@ public class Game implements Serializable
   {
     // line 65 "../../../../../Block223 v2.ump"
     if(aName == null || aName.isEmpty() == true){
-       		throw new RuntimeException("The name of the game must be unique"); 
+       		throw new RuntimeException("The name of the game must be unique."); 
        	}
     // END OF UMPLE BEFORE INJECTION
     name = aName;
@@ -123,7 +123,7 @@ public class Game implements Serializable
     boolean wasSet = false;
     // line 65 "../../../../../Block223 v2.ump"
     if(aName == null || aName.isEmpty() == true){
-       		throw new RuntimeException("The name of the game must be unique"); 
+       		throw new RuntimeException("The name of the game must be unique."); 
        	}
     // END OF UMPLE BEFORE INJECTION
     String anOldName = getName();
