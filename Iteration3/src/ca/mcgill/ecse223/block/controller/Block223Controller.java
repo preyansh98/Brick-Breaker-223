@@ -162,12 +162,15 @@ public class Block223Controller {
 		throw new InvalidInputException("A game with name "+name+" does not exist.");
 	}
 	
-	Block223Application.setCurrentGame(game);
-	if(Block223Application.getCurrentUserRole().equals(game.getAdmin()) == false)
+	if(!(Block223Application.getCurrentUserRole() instanceof Admin))
 	{
 		throw new InvalidInputException("Admin privileges are required to select a game."); 
 	}
-	
+	if(Block223Application.getCurrentUserRole().equals(game.getAdmin()) == false)
+	{
+		throw new InvalidInputException("Only the admin who created the game can select the game."); 
+	}
+	Block223Application.setCurrentGame(game);
 	
 	}
 
@@ -201,9 +204,11 @@ public class Block223Controller {
         	throw new InvalidInputException("The name of a game must be specified.");
 		}
 		if(!currentName.equals(name)) {
-			Boolean result = game.setName(name);
-			if(result == false) {
+			Boolean result = Block223Application.getBlock223().findGame(name)!=null;
+			if(result ) {
 	        	throw new InvalidInputException("The name of a game must be unique.");
+			}else {
+				game.setName(name);
 			}
 		}
 		
