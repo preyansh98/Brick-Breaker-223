@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 16 "../../../../../Block223Persistence.ump"
-// line 48 "../../../../../Block223 v2.ump"
+// line 46 "../../../../../Block223Update.ump"
+// line 50 "../../../../../Block223 v2.ump"
 public class Game implements Serializable
 {
 
@@ -35,6 +36,7 @@ public class Game implements Serializable
   //------------------------
 
   //Game Attributes
+  private boolean isPublished;
   private String name;
   private int nrBlocksPerLevel;
 
@@ -45,7 +47,12 @@ public class Game implements Serializable
   private List<BlockAssignment> blockAssignments;
   private Ball ball;
   private Paddle paddle;
+  private List<GameSession> gameSessions;
+  private List<Score> scores;
   private Block223 block223;
+
+  //Helper Variables
+  private boolean canSetIsPublished;
 
   //------------------------
   // CONSTRUCTOR
@@ -53,11 +60,12 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, Ball aBall, Paddle aPaddle, Block223 aBlock223)
   {
-    // line 65 "../../../../../Block223 v2.ump"
+    // line 67 "../../../../../Block223 v2.ump"
     if(aName == null || aName.isEmpty() == true){
        		throw new RuntimeException("The name of the game must be unique."); 
        	}
     // END OF UMPLE BEFORE INJECTION
+    canSetIsPublished = true;
     nrBlocksPerLevel = aNrBlocksPerLevel;
     if (!setName(aName))
     {
@@ -81,6 +89,8 @@ public class Game implements Serializable
       throw new RuntimeException("Unable to create Game due to aPaddle");
     }
     paddle = aPaddle;
+    gameSessions = new ArrayList<GameSession>();
+    scores = new ArrayList<Score>();
     boolean didAddBlock223 = setBlock223(aBlock223);
     if (!didAddBlock223)
     {
@@ -90,11 +100,12 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, int aMinBallSpeedXForBall, int aMinBallSpeedYForBall, double aBallSpeedIncreaseFactorForBall, int aMaxPaddleLengthForPaddle, int aMinPaddleLengthForPaddle, Block223 aBlock223)
   {
-    // line 65 "../../../../../Block223 v2.ump"
+    // line 67 "../../../../../Block223 v2.ump"
     if(aName == null || aName.isEmpty() == true){
        		throw new RuntimeException("The name of the game must be unique."); 
        	}
     // END OF UMPLE BEFORE INJECTION
+    isPublished = false;
     name = aName;
     nrBlocksPerLevel = aNrBlocksPerLevel;
     boolean didAddAdmin = setAdmin(aAdmin);
@@ -107,6 +118,8 @@ public class Game implements Serializable
     blockAssignments = new ArrayList<BlockAssignment>();
     ball = new Ball(aMinBallSpeedXForBall, aMinBallSpeedYForBall, aBallSpeedIncreaseFactorForBall, this);
     paddle = new Paddle(aMaxPaddleLengthForPaddle, aMinPaddleLengthForPaddle, this);
+    gameSessions = new ArrayList<GameSession>();
+    scores = new ArrayList<Score>();
     boolean didAddBlock223 = setBlock223(aBlock223);
     if (!didAddBlock223)
     {
@@ -117,11 +130,21 @@ public class Game implements Serializable
   //------------------------
   // INTERFACE
   //------------------------
+  /* Code from template attribute_SetImmutable */
+  public boolean setIsPublished(boolean aIsPublished)
+  {
+    boolean wasSet = false;
+    if (!canSetIsPublished) { return false; }
+    canSetIsPublished = false;
+    isPublished = aIsPublished;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setName(String aName)
   {
     boolean wasSet = false;
-    // line 65 "../../../../../Block223 v2.ump"
+    // line 67 "../../../../../Block223 v2.ump"
     if(aName == null || aName.isEmpty() == true){
        		throw new RuntimeException("The name of the game must be unique."); 
        	}
@@ -147,6 +170,11 @@ public class Game implements Serializable
     return wasSet;
   }
 
+  public boolean getIsPublished()
+  {
+    return isPublished;
+  }
+
   public String getName()
   {
     return name;
@@ -165,6 +193,11 @@ public class Game implements Serializable
   public int getNrBlocksPerLevel()
   {
     return nrBlocksPerLevel;
+  }
+  /* Code from template attribute_IsBoolean */
+  public boolean isIsPublished()
+  {
+    return isPublished;
   }
   /* Code from template association_GetOne */
   public Admin getAdmin()
@@ -270,6 +303,66 @@ public class Game implements Serializable
   public Paddle getPaddle()
   {
     return paddle;
+  }
+  /* Code from template association_GetMany */
+  public GameSession getGameSession(int index)
+  {
+    GameSession aGameSession = gameSessions.get(index);
+    return aGameSession;
+  }
+
+  public List<GameSession> getGameSessions()
+  {
+    List<GameSession> newGameSessions = Collections.unmodifiableList(gameSessions);
+    return newGameSessions;
+  }
+
+  public int numberOfGameSessions()
+  {
+    int number = gameSessions.size();
+    return number;
+  }
+
+  public boolean hasGameSessions()
+  {
+    boolean has = gameSessions.size() > 0;
+    return has;
+  }
+
+  public int indexOfGameSession(GameSession aGameSession)
+  {
+    int index = gameSessions.indexOf(aGameSession);
+    return index;
+  }
+  /* Code from template association_GetMany */
+  public Score getScore(int index)
+  {
+    Score aScore = scores.get(index);
+    return aScore;
+  }
+
+  public List<Score> getScores()
+  {
+    List<Score> newScores = Collections.unmodifiableList(scores);
+    return newScores;
+  }
+
+  public int numberOfScores()
+  {
+    int number = scores.size();
+    return number;
+  }
+
+  public boolean hasScores()
+  {
+    boolean has = scores.size() > 0;
+    return has;
+  }
+
+  public int indexOfScore(Score aScore)
+  {
+    int index = scores.indexOf(aScore);
+    return index;
   }
   /* Code from template association_GetOne */
   public Block223 getBlock223()
@@ -547,6 +640,150 @@ public class Game implements Serializable
     }
     return wasAdded;
   }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfGameSessions()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public GameSession addGameSession(int aNumOfLives, int aCurrentLevel, int aScore, int aPaddlePosition)
+  {
+    return new GameSession(aNumOfLives, aCurrentLevel, aScore, aPaddlePosition, this);
+  }
+
+  public boolean addGameSession(GameSession aGameSession)
+  {
+    boolean wasAdded = false;
+    if (gameSessions.contains(aGameSession)) { return false; }
+    Game existingGame = aGameSession.getGame();
+    boolean isNewGame = existingGame != null && !this.equals(existingGame);
+    if (isNewGame)
+    {
+      aGameSession.setGame(this);
+    }
+    else
+    {
+      gameSessions.add(aGameSession);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeGameSession(GameSession aGameSession)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aGameSession, as it must always have a game
+    if (!this.equals(aGameSession.getGame()))
+    {
+      gameSessions.remove(aGameSession);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addGameSessionAt(GameSession aGameSession, int index)
+  {  
+    boolean wasAdded = false;
+    if(addGameSession(aGameSession))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfGameSessions()) { index = numberOfGameSessions() - 1; }
+      gameSessions.remove(aGameSession);
+      gameSessions.add(index, aGameSession);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveGameSessionAt(GameSession aGameSession, int index)
+  {
+    boolean wasAdded = false;
+    if(gameSessions.contains(aGameSession))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfGameSessions()) { index = numberOfGameSessions() - 1; }
+      gameSessions.remove(aGameSession);
+      gameSessions.add(index, aGameSession);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addGameSessionAt(aGameSession, index);
+    }
+    return wasAdded;
+  }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfScores()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public Score addScore(int aScore, User aUser)
+  {
+    return new Score(aScore, aUser, this);
+  }
+
+  public boolean addScore(Score aScore)
+  {
+    boolean wasAdded = false;
+    if (scores.contains(aScore)) { return false; }
+    Game existingGame = aScore.getGame();
+    boolean isNewGame = existingGame != null && !this.equals(existingGame);
+    if (isNewGame)
+    {
+      aScore.setGame(this);
+    }
+    else
+    {
+      scores.add(aScore);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeScore(Score aScore)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aScore, as it must always have a game
+    if (!this.equals(aScore.getGame()))
+    {
+      scores.remove(aScore);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addScoreAt(Score aScore, int index)
+  {  
+    boolean wasAdded = false;
+    if(addScore(aScore))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfScores()) { index = numberOfScores() - 1; }
+      scores.remove(aScore);
+      scores.add(index, aScore);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveScoreAt(Score aScore, int index)
+  {
+    boolean wasAdded = false;
+    if(scores.contains(aScore))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfScores()) { index = numberOfScores() - 1; }
+      scores.remove(aScore);
+      scores.add(index, aScore);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addScoreAt(aScore, index);
+    }
+    return wasAdded;
+  }
   /* Code from template association_SetOneToMany */
   public boolean setBlock223(Block223 aBlock223)
   {
@@ -609,6 +846,16 @@ public class Game implements Serializable
     {
       existingPaddle.delete();
     }
+    for(int i=gameSessions.size(); i > 0; i--)
+    {
+      GameSession aGameSession = gameSessions.get(i - 1);
+      aGameSession.delete();
+    }
+    for(int i=scores.size(); i > 0; i--)
+    {
+      Score aScore = scores.get(i - 1);
+      aScore.delete();
+    }
     Block223 placeholderBlock223 = block223;
     this.block223 = null;
     if(placeholderBlock223 != null)
@@ -625,7 +872,7 @@ public class Game implements Serializable
     }
   }
 
-  // line 71 "../../../../../Block223 v2.ump"
+  // line 73 "../../../../../Block223 v2.ump"
    public Block findBlock(int id){
     for(Block block: blocks){
    			if(id == block.getId()){
@@ -639,6 +886,7 @@ public class Game implements Serializable
   public String toString()
   {
     return super.toString() + "["+
+            "isPublished" + ":" + getIsPublished()+ "," +
             "name" + ":" + getName()+ "," +
             "nrBlocksPerLevel" + ":" + getNrBlocksPerLevel()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "admin = "+(getAdmin()!=null?Integer.toHexString(System.identityHashCode(getAdmin())):"null") + System.getProperties().getProperty("line.separator") +

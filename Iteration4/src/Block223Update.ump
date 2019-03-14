@@ -1,0 +1,49 @@
+class GameSession{
+
+	* -- 0..1 Player player;
+	* -- 1 Game game;
+	1 <@>- 1..99 SpecificLevel levels;
+	1 <@>- * SpecificBlockAssignment assignments;
+	
+	const Integer MAX_NR_LIVES=3;
+	Integer numOfLives;
+	Integer currentLevel;
+	Integer score;
+	Integer paddlePosition;
+	Integer ballPositonX =195;
+	Integer ballPositionY = 195;
+	defaulted Integer ballDirectionX = game.getBall().getMinBallSpeedX();
+	defaulted Integer ballDirectionY = game.getBall().getMinBallSpeedY();
+	autounique id;
+	
+	private boolean ballHitsPaddleOrWall(){return false;}
+	private boolean gameIsDone(){return false;}
+	private boolean ballHitsBlock(){return false;}
+	private boolean ballIsOutOfBound(){return false;}
+	private boolean saveScoreAndDelete(){return false;}
+	private boolean levelIsDone(){return false;}
+}
+class Player{
+
+}
+class SpecificBlockAssignment{
+	Integer positionX;
+	Integer positionY;
+	1 -> 1 Block block; 
+	* -- 1 SpecificLevel level; 
+}
+
+class SpecificLevel{
+	
+}
+
+class Score {
+	Integer score;
+	* -- 1 User user;
+	* -- 1 Game game; 
+}
+
+class Game{
+	lazy immutable Boolean isPublished; 
+
+}

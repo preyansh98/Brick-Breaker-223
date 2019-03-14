@@ -1,0 +1,24 @@
+
+
+class GameSession{
+	GameStatus{
+		Paused{
+			start()->Playing;
+			resume()->Playing; 
+		}
+		Playing{
+		   pause() ->Paused;
+		   update()[ballHitsPaddleOrWall()]->Playing;
+		   
+		   update()[gameIsDone()]->Done;
+		   update()[ballHitsBlock()]->Playing;
+		   update()[ballIsOutOfBound()]->Paused;
+		   
+		}
+		Done{
+			entry/{
+				saveScoreAndDelete();
+			};
+		} 
+	}
+}

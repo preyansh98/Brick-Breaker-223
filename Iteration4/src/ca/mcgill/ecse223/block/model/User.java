@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 30 "../../../../../Block223Persistence.ump"
-// line 20 "../../../../../Block223 v2.ump"
+// line 22 "../../../../../Block223 v2.ump"
 public class User implements Serializable
 {
 
@@ -25,6 +25,7 @@ public class User implements Serializable
 
   //User Associations
   private List<UserRole> roles;
+  private List<Score> scores;
   private Block223 block223;
 
   //------------------------
@@ -33,7 +34,7 @@ public class User implements Serializable
 
   public User(String aUsername, Block223 aBlock223, UserRole... allRoles)
   {
-    // line 24 "../../../../../Block223 v2.ump"
+    // line 26 "../../../../../Block223 v2.ump"
     if(aUsername ==null || aUsername.length()==0){
        			throw new RuntimeException("The username must be specified.");
        		}
@@ -48,6 +49,7 @@ public class User implements Serializable
     {
       throw new RuntimeException("Unable to create User, must have 1 to 2 roles");
     }
+    scores = new ArrayList<Score>();
     boolean didAddBlock223 = setBlock223(aBlock223);
     if (!didAddBlock223)
     {
@@ -62,7 +64,7 @@ public class User implements Serializable
   public boolean setUsername(String aUsername)
   {
     boolean wasSet = false;
-    // line 24 "../../../../../Block223 v2.ump"
+    // line 26 "../../../../../Block223 v2.ump"
     if(aUsername ==null || aUsername.length()==0){
        			throw new RuntimeException("The username must be specified.");
        		}
@@ -122,6 +124,36 @@ public class User implements Serializable
   public int indexOfRole(UserRole aRole)
   {
     int index = roles.indexOf(aRole);
+    return index;
+  }
+  /* Code from template association_GetMany */
+  public Score getScore(int index)
+  {
+    Score aScore = scores.get(index);
+    return aScore;
+  }
+
+  public List<Score> getScores()
+  {
+    List<Score> newScores = Collections.unmodifiableList(scores);
+    return newScores;
+  }
+
+  public int numberOfScores()
+  {
+    int number = scores.size();
+    return number;
+  }
+
+  public boolean hasScores()
+  {
+    boolean has = scores.size() > 0;
+    return has;
+  }
+
+  public int indexOfScore(Score aScore)
+  {
+    int index = scores.indexOf(aScore);
     return index;
   }
   /* Code from template association_GetOne */
@@ -225,6 +257,78 @@ public class User implements Serializable
     }
     return wasAdded;
   }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfScores()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public Score addScore(int aScore, Game aGame)
+  {
+    return new Score(aScore, this, aGame);
+  }
+
+  public boolean addScore(Score aScore)
+  {
+    boolean wasAdded = false;
+    if (scores.contains(aScore)) { return false; }
+    User existingUser = aScore.getUser();
+    boolean isNewUser = existingUser != null && !this.equals(existingUser);
+    if (isNewUser)
+    {
+      aScore.setUser(this);
+    }
+    else
+    {
+      scores.add(aScore);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeScore(Score aScore)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aScore, as it must always have a user
+    if (!this.equals(aScore.getUser()))
+    {
+      scores.remove(aScore);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addScoreAt(Score aScore, int index)
+  {  
+    boolean wasAdded = false;
+    if(addScore(aScore))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfScores()) { index = numberOfScores() - 1; }
+      scores.remove(aScore);
+      scores.add(index, aScore);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveScoreAt(Score aScore, int index)
+  {
+    boolean wasAdded = false;
+    if(scores.contains(aScore))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfScores()) { index = numberOfScores() - 1; }
+      scores.remove(aScore);
+      scores.add(index, aScore);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addScoreAt(aScore, index);
+    }
+    return wasAdded;
+  }
   /* Code from template association_SetOneToMany */
   public boolean setBlock223(Block223 aBlock223)
   {
@@ -249,6 +353,11 @@ public class User implements Serializable
   {
     usersByUsername.remove(getUsername());
     roles.clear();
+    for(int i=scores.size(); i > 0; i--)
+    {
+      Score aScore = scores.get(i - 1);
+      aScore.delete();
+    }
     Block223 placeholderBlock223 = block223;
     this.block223 = null;
     if(placeholderBlock223 != null)
