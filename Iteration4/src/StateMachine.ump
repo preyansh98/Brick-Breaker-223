@@ -20,17 +20,21 @@ class GameSession{
 		   		
 		   }->Done;
 		   update()[ballHitsBlock() && !isLastBlock()]{
+		   doChangeDirection();
 		   	doMoveBall();
-		   	doAddScore();
+		   
 		   }->Playing;
 		     update()[isballHitPaddle()]{
+		     	doChangeDirection();
 		   		doMoveBall();
 		   }->Playing;
 		    update()[isballHitWall()]{
+		    doChangeDirection()
 		    	doMoveBall();
 		    }->Playing;
 		   update()[ballIsOutOfBound() && !almostDead()]{
 		   	doDecrementLives();
+		   	doResetBallAndPaddle();
 		   }->Paused;
 		    update()[ballIsOutOfBound() && almostDead()]{
 		   	doDecrementLives();
@@ -61,10 +65,12 @@ class GameSession{
 	private boolean isLastBlock(){return false;}
 
 	private boolean gameIsAlmostDone(){return false;}
+	private void doResetBallAndPaddle(){};
 	
 	private boolean almostDead(){return false;}
 	private void doMoveBall(){}
-	
+	private void doChangeDirection(){}
+
 	private boolean checkLineIntersect(int x1,int y1,int x2,int y2,int x3,int y3,int x4,int y4){ return false;}
 	
 }

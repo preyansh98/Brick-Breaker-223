@@ -380,7 +380,7 @@ public class GameSession
     switch(gameStatus)
     {
       case Done:
-        // line 47 "../../../../../StateMachine.ump"
+        // line 51 "../../../../../StateMachine.ump"
         saveScoreAndDelete();
         break;
     }
@@ -598,72 +598,82 @@ public class GameSession
     
   }
 
-  // line 52 "../../../../../StateMachine.ump"
+  // line 56 "../../../../../StateMachine.ump"
    private boolean hasEnoughBlocks(){
     return false;
   }
 
-  // line 53 "../../../../../StateMachine.ump"
+  // line 57 "../../../../../StateMachine.ump"
    private void doDuplicateBlocks(){
     
   }
 
-  // line 54 "../../../../../StateMachine.ump"
+  // line 58 "../../../../../StateMachine.ump"
    private void doFillRandomBlocks(){
     
   }
 
-  // line 55 "../../../../../StateMachine.ump"
+  // line 59 "../../../../../StateMachine.ump"
    private boolean isballHitPaddle(){
     return false;
   }
 
-  // line 56 "../../../../../StateMachine.ump"
+  // line 60 "../../../../../StateMachine.ump"
    private boolean isballHitWall(){
     return false;
   }
 
-  // line 57 "../../../../../StateMachine.ump"
+  // line 61 "../../../../../StateMachine.ump"
    private boolean ballHitsBlock(){
     return false;
   }
 
-  // line 58 "../../../../../StateMachine.ump"
+  // line 62 "../../../../../StateMachine.ump"
    private boolean ballIsOutOfBound(){
     return false;
   }
 
-  // line 59 "../../../../../StateMachine.ump"
+  // line 63 "../../../../../StateMachine.ump"
    private boolean saveScoreAndDelete(){
     return false;
   }
 
-  // line 60 "../../../../../StateMachine.ump"
+  // line 64 "../../../../../StateMachine.ump"
    private void doJumpToNextLevel(){
     
   }
 
-  // line 61 "../../../../../StateMachine.ump"
+  // line 65 "../../../../../StateMachine.ump"
    private boolean isLastBlock(){
     return false;
   }
 
-  // line 63 "../../../../../StateMachine.ump"
+  // line 67 "../../../../../StateMachine.ump"
    private boolean gameIsAlmostDone(){
     return false;
   }
 
-  // line 65 "../../../../../StateMachine.ump"
+  // line 68 "../../../../../StateMachine.ump"
+   private void doResetBallAndPaddle(){
+    
+  }
+
+  // line 70 "../../../../../StateMachine.ump"
    private boolean almostDead(){
     return false;
   }
 
-  // line 66 "../../../../../StateMachine.ump"
+  // line 71 "../../../../../StateMachine.ump"
    private void doMoveBall(){
     
   }
 
-  // line 68 "../../../../../StateMachine.ump"
+  // line 72 "../../../../../StateMachine.ump"
+   private void doChangeDirection(){
+    
+  }
+
+  // line 74 "../../../../../StateMachine.ump"
    private boolean checkLineIntersect(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4){
     return false;
   }
