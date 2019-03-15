@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 16 "../../../../../Block223Persistence.ump"
-// line 46 "../../../../../Block223Update.ump"
+// line 47 "../../../../../Block223Update.ump"
 // line 50 "../../../../../Block223 v2.ump"
 public class Game implements Serializable
 {
@@ -646,9 +646,9 @@ public class Game implements Serializable
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public GameSession addGameSession(int aNumOfLives, int aCurrentLevel, int aScore, int aPaddlePosition)
+  public GameSession addGameSession(Block223 aBlock223)
   {
-    return new GameSession(aNumOfLives, aCurrentLevel, aScore, aPaddlePosition, this);
+    return new GameSession(this, aBlock223);
   }
 
   public boolean addGameSession(GameSession aGameSession)
@@ -718,9 +718,9 @@ public class Game implements Serializable
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Score addScore(int aScore, User aUser)
+  public Score addScore(int aScore, User aUser, Block223 aBlock223)
   {
-    return new Score(aScore, aUser, this);
+    return new Score(aScore, aUser, this, aBlock223);
   }
 
   public boolean addScore(Score aScore)

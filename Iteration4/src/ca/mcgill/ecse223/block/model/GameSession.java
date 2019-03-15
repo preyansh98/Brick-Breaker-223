@@ -4,10 +4,16 @@
 package ca.mcgill.ecse223.block.model;
 import java.util.*;
 
-// line 1 "../../../../../Block223Update.ump"
-// line 3 "../../../../../StateMachine.ump"
+// line 6 "../../../../../Block223Update.ump"
+// line 2 "../../../../../StateMachine.ump"
 public class GameSession
 {
+
+  //------------------------
+  // ENUMERATIONS
+  //------------------------
+
+  public enum BallIncidence { Downward, Upward, Left, Right, None }
 
   //------------------------
   // STATIC VARIABLES
@@ -21,6 +27,7 @@ public class GameSession
   //------------------------
 
   //GameSession Attributes
+  private BallIncidence hitIncidence;
   private int numOfLives;
   private int currentLevel;
   private int score;
@@ -29,49 +36,64 @@ public class GameSession
   private int ballPositionY;
   private int ballDirectionX;
   private int ballDirectionY;
+  private int currentPaddleSize;
 
   //Autounique Attributes
   private int id;
 
   //GameSession State Machines
-  public enum GameStatus { Paused, Playing, Done }
+  public enum GameStatus { Idle, Playing, Paused, Done }
   private GameStatus gameStatus;
 
   //GameSession Associations
   private Player player;
   private Game game;
-  private List<SpecificLevel> levels;
   private List<SpecificBlockAssignment> assignments;
+  private Block223 block223;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public GameSession(int aNumOfLives, int aCurrentLevel, int aScore, int aPaddlePosition, Game aGame)
+  public GameSession(Game aGame, Block223 aBlock223)
   {
-    numOfLives = aNumOfLives;
-    currentLevel = aCurrentLevel;
-    score = aScore;
-    paddlePosition = aPaddlePosition;
-    ballPositonX = 195;
-    ballPositionY = 195;
+    resetNumOfLives();
+    resetCurrentLevel();
+    resetScore();
+    resetPaddlePosition();
+    resetBallPositonX();
+    resetBallPositionY();
     resetBallDirectionX();
     resetBallDirectionY();
+    currentPaddleSize = game.getPaddle().getMinPaddleLength()+
+		(currentLevel-1)*(game.getPaddle().getMaxPaddleLength()-game.getPaddle().getMinPaddleLength())/(game.getLevels().size()-1);
     id = nextId++;
     boolean didAddGame = setGame(aGame);
     if (!didAddGame)
     {
       throw new RuntimeException("Unable to create gameSession due to game");
     }
-    levels = new ArrayList<SpecificLevel>();
     assignments = new ArrayList<SpecificBlockAssignment>();
-    setGameStatus(GameStatus.Paused);
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create gameSession due to block223");
+    }
+    setGameStatus(GameStatus.Idle);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
+  public boolean setHitIncidence(BallIncidence aHitIncidence)
+  {
+    boolean wasSet = false;
+    hitIncidence = aHitIncidence;
+    wasSet = true;
+    return wasSet;
+  }
+  /* Code from template attribute_SetDefaulted */
   public boolean setNumOfLives(int aNumOfLives)
   {
     boolean wasSet = false;
@@ -80,6 +102,14 @@ public class GameSession
     return wasSet;
   }
 
+  public boolean resetNumOfLives()
+  {
+    boolean wasReset = false;
+    numOfLives = getDefaultNumOfLives();
+    wasReset = true;
+    return wasReset;
+  }
+  /* Code from template attribute_SetDefaulted */
   public boolean setCurrentLevel(int aCurrentLevel)
   {
     boolean wasSet = false;
@@ -88,6 +118,14 @@ public class GameSession
     return wasSet;
   }
 
+  public boolean resetCurrentLevel()
+  {
+    boolean wasReset = false;
+    currentLevel = getDefaultCurrentLevel();
+    wasReset = true;
+    return wasReset;
+  }
+  /* Code from template attribute_SetDefaulted */
   public boolean setScore(int aScore)
   {
     boolean wasSet = false;
@@ -96,6 +134,14 @@ public class GameSession
     return wasSet;
   }
 
+  public boolean resetScore()
+  {
+    boolean wasReset = false;
+    score = getDefaultScore();
+    wasReset = true;
+    return wasReset;
+  }
+  /* Code from template attribute_SetDefaulted */
   public boolean setPaddlePosition(int aPaddlePosition)
   {
     boolean wasSet = false;
@@ -104,6 +150,14 @@ public class GameSession
     return wasSet;
   }
 
+  public boolean resetPaddlePosition()
+  {
+    boolean wasReset = false;
+    paddlePosition = getDefaultPaddlePosition();
+    wasReset = true;
+    return wasReset;
+  }
+  /* Code from template attribute_SetDefaulted */
   public boolean setBallPositonX(int aBallPositonX)
   {
     boolean wasSet = false;
@@ -112,12 +166,28 @@ public class GameSession
     return wasSet;
   }
 
+  public boolean resetBallPositonX()
+  {
+    boolean wasReset = false;
+    ballPositonX = getDefaultBallPositonX();
+    wasReset = true;
+    return wasReset;
+  }
+  /* Code from template attribute_SetDefaulted */
   public boolean setBallPositionY(int aBallPositionY)
   {
     boolean wasSet = false;
     ballPositionY = aBallPositionY;
     wasSet = true;
     return wasSet;
+  }
+
+  public boolean resetBallPositionY()
+  {
+    boolean wasReset = false;
+    ballPositionY = getDefaultBallPositionY();
+    wasReset = true;
+    return wasReset;
   }
   /* Code from template attribute_SetDefaulted */
   public boolean setBallDirectionX(int aBallDirectionX)
@@ -152,34 +222,77 @@ public class GameSession
     return wasReset;
   }
 
+  public boolean setCurrentPaddleSize(int aCurrentPaddleSize)
+  {
+    boolean wasSet = false;
+    currentPaddleSize = aCurrentPaddleSize;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public BallIncidence getHitIncidence()
+  {
+    return hitIncidence;
+  }
+
   public int getNumOfLives()
   {
     return numOfLives;
+  }
+  /* Code from template attribute_GetDefaulted */
+  public int getDefaultNumOfLives()
+  {
+    return 3;
   }
 
   public int getCurrentLevel()
   {
     return currentLevel;
   }
+  /* Code from template attribute_GetDefaulted */
+  public int getDefaultCurrentLevel()
+  {
+    return 1;
+  }
 
   public int getScore()
   {
     return score;
+  }
+  /* Code from template attribute_GetDefaulted */
+  public int getDefaultScore()
+  {
+    return 0;
   }
 
   public int getPaddlePosition()
   {
     return paddlePosition;
   }
+  /* Code from template attribute_GetDefaulted */
+  public int getDefaultPaddlePosition()
+  {
+    return 195-getCurrentPaddleSize()/2;
+  }
 
   public int getBallPositonX()
   {
     return ballPositonX;
   }
+  /* Code from template attribute_GetDefaulted */
+  public int getDefaultBallPositonX()
+  {
+    return 195;
+  }
 
   public int getBallPositionY()
   {
     return ballPositionY;
+  }
+  /* Code from template attribute_GetDefaulted */
+  public int getDefaultBallPositionY()
+  {
+    return 195;
   }
 
   public int getBallDirectionX()
@@ -202,6 +315,11 @@ public class GameSession
     return game.getBall().getMinBallSpeedY();
   }
 
+  public int getCurrentPaddleSize()
+  {
+    return currentPaddleSize;
+  }
+
   public int getId()
   {
     return id;
@@ -218,15 +336,15 @@ public class GameSession
     return gameStatus;
   }
 
-  public boolean start()
+  public boolean pause()
   {
     boolean wasEventProcessed = false;
     
     GameStatus aGameStatus = gameStatus;
     switch (aGameStatus)
     {
-      case Paused:
-        setGameStatus(GameStatus.Playing);
+      case Playing:
+        setGameStatus(GameStatus.Paused);
         wasEventProcessed = true;
         break;
       default:
@@ -254,64 +372,6 @@ public class GameSession
     return wasEventProcessed;
   }
 
-  public boolean pause()
-  {
-    boolean wasEventProcessed = false;
-    
-    GameStatus aGameStatus = gameStatus;
-    switch (aGameStatus)
-    {
-      case Playing:
-        setGameStatus(GameStatus.Paused);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean update()
-  {
-    boolean wasEventProcessed = false;
-    
-    GameStatus aGameStatus = gameStatus;
-    switch (aGameStatus)
-    {
-      case Playing:
-        if (ballHitsPaddleOrWall())
-        {
-          setGameStatus(GameStatus.Playing);
-          wasEventProcessed = true;
-          break;
-        }
-        if (gameIsDone())
-        {
-          setGameStatus(GameStatus.Done);
-          wasEventProcessed = true;
-          break;
-        }
-        if (ballHitsBlock())
-        {
-          setGameStatus(GameStatus.Playing);
-          wasEventProcessed = true;
-          break;
-        }
-        if (ballIsOutOfBound())
-        {
-          setGameStatus(GameStatus.Paused);
-          wasEventProcessed = true;
-          break;
-        }
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
   private void setGameStatus(GameStatus aGameStatus)
   {
     gameStatus = aGameStatus;
@@ -320,7 +380,7 @@ public class GameSession
     switch(gameStatus)
     {
       case Done:
-        // line 19 "../../../../../StateMachine.ump"
+        // line 47 "../../../../../StateMachine.ump"
         saveScoreAndDelete();
         break;
     }
@@ -340,36 +400,6 @@ public class GameSession
   public Game getGame()
   {
     return game;
-  }
-  /* Code from template association_GetMany */
-  public SpecificLevel getLevel(int index)
-  {
-    SpecificLevel aLevel = levels.get(index);
-    return aLevel;
-  }
-
-  public List<SpecificLevel> getLevels()
-  {
-    List<SpecificLevel> newLevels = Collections.unmodifiableList(levels);
-    return newLevels;
-  }
-
-  public int numberOfLevels()
-  {
-    int number = levels.size();
-    return number;
-  }
-
-  public boolean hasLevels()
-  {
-    boolean has = levels.size() > 0;
-    return has;
-  }
-
-  public int indexOfLevel(SpecificLevel aLevel)
-  {
-    int index = levels.indexOf(aLevel);
-    return index;
   }
   /* Code from template association_GetMany */
   public SpecificBlockAssignment getAssignment(int index)
@@ -400,6 +430,11 @@ public class GameSession
   {
     int index = assignments.indexOf(aAssignment);
     return index;
+  }
+  /* Code from template association_GetOne */
+  public Block223 getBlock223()
+  {
+    return block223;
   }
   /* Code from template association_SetOptionalOneToMany */
   public boolean setPlayer(Player aPlayer)
@@ -437,123 +472,15 @@ public class GameSession
     wasSet = true;
     return wasSet;
   }
-  /* Code from template association_IsNumberOfValidMethod */
-  public boolean isNumberOfLevelsValid()
-  {
-    boolean isValid = numberOfLevels() >= minimumNumberOfLevels() && numberOfLevels() <= maximumNumberOfLevels();
-    return isValid;
-  }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfLevels()
-  {
-    return 1;
-  }
-  /* Code from template association_MaximumNumberOfMethod */
-  public static int maximumNumberOfLevels()
-  {
-    return 99;
-  }
-  /* Code from template association_AddMNToOnlyOne */
-  public SpecificLevel addLevel()
-  {
-    if (numberOfLevels() >= maximumNumberOfLevels())
-    {
-      return null;
-    }
-    else
-    {
-      return new SpecificLevel(this);
-    }
-  }
-
-  public boolean addLevel(SpecificLevel aLevel)
-  {
-    boolean wasAdded = false;
-    if (levels.contains(aLevel)) { return false; }
-    if (numberOfLevels() >= maximumNumberOfLevels())
-    {
-      return wasAdded;
-    }
-
-    GameSession existingGameSession = aLevel.getGameSession();
-    boolean isNewGameSession = existingGameSession != null && !this.equals(existingGameSession);
-
-    if (isNewGameSession && existingGameSession.numberOfLevels() <= minimumNumberOfLevels())
-    {
-      return wasAdded;
-    }
-
-    if (isNewGameSession)
-    {
-      aLevel.setGameSession(this);
-    }
-    else
-    {
-      levels.add(aLevel);
-    }
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removeLevel(SpecificLevel aLevel)
-  {
-    boolean wasRemoved = false;
-    //Unable to remove aLevel, as it must always have a gameSession
-    if (this.equals(aLevel.getGameSession()))
-    {
-      return wasRemoved;
-    }
-
-    //gameSession already at minimum (1)
-    if (numberOfLevels() <= minimumNumberOfLevels())
-    {
-      return wasRemoved;
-    }
-    levels.remove(aLevel);
-    wasRemoved = true;
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addLevelAt(SpecificLevel aLevel, int index)
-  {  
-    boolean wasAdded = false;
-    if(addLevel(aLevel))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfLevels()) { index = numberOfLevels() - 1; }
-      levels.remove(aLevel);
-      levels.add(index, aLevel);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveLevelAt(SpecificLevel aLevel, int index)
-  {
-    boolean wasAdded = false;
-    if(levels.contains(aLevel))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfLevels()) { index = numberOfLevels() - 1; }
-      levels.remove(aLevel);
-      levels.add(index, aLevel);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addLevelAt(aLevel, index);
-    }
-    return wasAdded;
-  }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfAssignments()
   {
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public SpecificBlockAssignment addAssignment(int aPositionX, int aPositionY, Block aBlock, SpecificLevel aLevel)
+  public SpecificBlockAssignment addAssignment(int aPositionX, int aPositionY, Block aBlock)
   {
-    return new SpecificBlockAssignment(aPositionX, aPositionY, aBlock, aLevel, this);
+    return new SpecificBlockAssignment(aPositionX, aPositionY, aBlock, this);
   }
 
   public boolean addAssignment(SpecificBlockAssignment aAssignment)
@@ -617,6 +544,25 @@ public class GameSession
     }
     return wasAdded;
   }
+  /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removeGameSession(this);
+    }
+    block223.addGameSession(this);
+    wasSet = true;
+    return wasSet;
+  }
 
   public void delete()
   {
@@ -632,13 +578,6 @@ public class GameSession
     {
       placeholderGame.removeGameSession(this);
     }
-    while (levels.size() > 0)
-    {
-      SpecificLevel aLevel = levels.get(levels.size() - 1);
-      aLevel.delete();
-      levels.remove(aLevel);
-    }
-    
     while (assignments.size() > 0)
     {
       SpecificBlockAssignment aAssignment = assignments.get(assignments.size() - 1);
@@ -646,35 +585,86 @@ public class GameSession
       assignments.remove(aAssignment);
     }
     
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removeGameSession(this);
+    }
   }
 
-  // line 19 "../../../../../Block223Update.ump"
-   private boolean ballHitsPaddleOrWall(){
+  // line 28 "../../../../../Block223Update.ump"
+   public void movePaddle(int offset){
+    
+  }
+
+  // line 52 "../../../../../StateMachine.ump"
+   private boolean hasEnoughBlocks(){
     return false;
   }
 
-  // line 20 "../../../../../Block223Update.ump"
-   private boolean gameIsDone(){
+  // line 53 "../../../../../StateMachine.ump"
+   private void doDuplicateBlocks(){
+    
+  }
+
+  // line 54 "../../../../../StateMachine.ump"
+   private void doFillRandomBlocks(){
+    
+  }
+
+  // line 55 "../../../../../StateMachine.ump"
+   private boolean isballHitPaddle(){
     return false;
   }
 
-  // line 21 "../../../../../Block223Update.ump"
+  // line 56 "../../../../../StateMachine.ump"
+   private boolean isballHitWall(){
+    return false;
+  }
+
+  // line 57 "../../../../../StateMachine.ump"
    private boolean ballHitsBlock(){
     return false;
   }
 
-  // line 22 "../../../../../Block223Update.ump"
+  // line 58 "../../../../../StateMachine.ump"
    private boolean ballIsOutOfBound(){
     return false;
   }
 
-  // line 23 "../../../../../Block223Update.ump"
+  // line 59 "../../../../../StateMachine.ump"
    private boolean saveScoreAndDelete(){
     return false;
   }
 
-  // line 24 "../../../../../Block223Update.ump"
-   private boolean levelIsDone(){
+  // line 60 "../../../../../StateMachine.ump"
+   private void doJumpToNextLevel(){
+    
+  }
+
+  // line 61 "../../../../../StateMachine.ump"
+   private boolean isLastBlock(){
+    return false;
+  }
+
+  // line 63 "../../../../../StateMachine.ump"
+   private boolean gameIsAlmostDone(){
+    return false;
+  }
+
+  // line 65 "../../../../../StateMachine.ump"
+   private boolean almostDead(){
+    return false;
+  }
+
+  // line 66 "../../../../../StateMachine.ump"
+   private void doMoveBall(){
+    
+  }
+
+  // line 68 "../../../../../StateMachine.ump"
+   private boolean checkLineIntersect(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4){
     return false;
   }
 
@@ -690,8 +680,11 @@ public class GameSession
             "ballPositonX" + ":" + getBallPositonX()+ "," +
             "ballPositionY" + ":" + getBallPositionY()+ "," +
             "ballDirectionX" + ":" + getBallDirectionX()+ "," +
-            "ballDirectionY" + ":" + getBallDirectionY()+ "]" + System.getProperties().getProperty("line.separator") +
+            "ballDirectionY" + ":" + getBallDirectionY()+ "," +
+            "currentPaddleSize" + ":" + getCurrentPaddleSize()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "hitIncidence" + "=" + (getHitIncidence() != null ? !getHitIncidence().equals(this)  ? getHitIncidence().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "player = "+(getPlayer()!=null?Integer.toHexString(System.identityHashCode(getPlayer())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
+            "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null");
   }
 }

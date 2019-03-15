@@ -263,9 +263,9 @@ public class User implements Serializable
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Score addScore(int aScore, Game aGame)
+  public Score addScore(int aScore, Game aGame, Block223 aBlock223)
   {
-    return new Score(aScore, this, aGame);
+    return new Score(aScore, this, aGame, aBlock223);
   }
 
   public boolean addScore(Score aScore)

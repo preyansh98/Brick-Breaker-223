@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 3 "../../../../../Block223Persistence.ump"
+// line 2 "../../../../../Block223Update.ump"
 // line 7 "../../../../../Block223 v2.ump"
 public class Block223 implements Serializable
 {
@@ -15,6 +16,8 @@ public class Block223 implements Serializable
   //------------------------
 
   //Block223 Associations
+  private List<GameSession> gameSessions;
+  private List<Score> scores;
   private List<User> users;
   private List<UserRole> roles;
   private List<Game> games;
@@ -25,6 +28,8 @@ public class Block223 implements Serializable
 
   public Block223()
   {
+    gameSessions = new ArrayList<GameSession>();
+    scores = new ArrayList<Score>();
     users = new ArrayList<User>();
     roles = new ArrayList<UserRole>();
     games = new ArrayList<Game>();
@@ -33,6 +38,66 @@ public class Block223 implements Serializable
   //------------------------
   // INTERFACE
   //------------------------
+  /* Code from template association_GetMany */
+  public GameSession getGameSession(int index)
+  {
+    GameSession aGameSession = gameSessions.get(index);
+    return aGameSession;
+  }
+
+  public List<GameSession> getGameSessions()
+  {
+    List<GameSession> newGameSessions = Collections.unmodifiableList(gameSessions);
+    return newGameSessions;
+  }
+
+  public int numberOfGameSessions()
+  {
+    int number = gameSessions.size();
+    return number;
+  }
+
+  public boolean hasGameSessions()
+  {
+    boolean has = gameSessions.size() > 0;
+    return has;
+  }
+
+  public int indexOfGameSession(GameSession aGameSession)
+  {
+    int index = gameSessions.indexOf(aGameSession);
+    return index;
+  }
+  /* Code from template association_GetMany */
+  public Score getScore(int index)
+  {
+    Score aScore = scores.get(index);
+    return aScore;
+  }
+
+  public List<Score> getScores()
+  {
+    List<Score> newScores = Collections.unmodifiableList(scores);
+    return newScores;
+  }
+
+  public int numberOfScores()
+  {
+    int number = scores.size();
+    return number;
+  }
+
+  public boolean hasScores()
+  {
+    boolean has = scores.size() > 0;
+    return has;
+  }
+
+  public int indexOfScore(Score aScore)
+  {
+    int index = scores.indexOf(aScore);
+    return index;
+  }
   /* Code from template association_GetMany */
   public User getUser(int index)
   {
@@ -122,6 +187,150 @@ public class Block223 implements Serializable
   {
     int index = games.indexOf(aGame);
     return index;
+  }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfGameSessions()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public GameSession addGameSession(Game aGame)
+  {
+    return new GameSession(aGame, this);
+  }
+
+  public boolean addGameSession(GameSession aGameSession)
+  {
+    boolean wasAdded = false;
+    if (gameSessions.contains(aGameSession)) { return false; }
+    Block223 existingBlock223 = aGameSession.getBlock223();
+    boolean isNewBlock223 = existingBlock223 != null && !this.equals(existingBlock223);
+    if (isNewBlock223)
+    {
+      aGameSession.setBlock223(this);
+    }
+    else
+    {
+      gameSessions.add(aGameSession);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeGameSession(GameSession aGameSession)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aGameSession, as it must always have a block223
+    if (!this.equals(aGameSession.getBlock223()))
+    {
+      gameSessions.remove(aGameSession);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addGameSessionAt(GameSession aGameSession, int index)
+  {  
+    boolean wasAdded = false;
+    if(addGameSession(aGameSession))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfGameSessions()) { index = numberOfGameSessions() - 1; }
+      gameSessions.remove(aGameSession);
+      gameSessions.add(index, aGameSession);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveGameSessionAt(GameSession aGameSession, int index)
+  {
+    boolean wasAdded = false;
+    if(gameSessions.contains(aGameSession))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfGameSessions()) { index = numberOfGameSessions() - 1; }
+      gameSessions.remove(aGameSession);
+      gameSessions.add(index, aGameSession);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addGameSessionAt(aGameSession, index);
+    }
+    return wasAdded;
+  }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfScores()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public Score addScore(int aScore, User aUser, Game aGame)
+  {
+    return new Score(aScore, aUser, aGame, this);
+  }
+
+  public boolean addScore(Score aScore)
+  {
+    boolean wasAdded = false;
+    if (scores.contains(aScore)) { return false; }
+    Block223 existingBlock223 = aScore.getBlock223();
+    boolean isNewBlock223 = existingBlock223 != null && !this.equals(existingBlock223);
+    if (isNewBlock223)
+    {
+      aScore.setBlock223(this);
+    }
+    else
+    {
+      scores.add(aScore);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeScore(Score aScore)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aScore, as it must always have a block223
+    if (!this.equals(aScore.getBlock223()))
+    {
+      scores.remove(aScore);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addScoreAt(Score aScore, int index)
+  {  
+    boolean wasAdded = false;
+    if(addScore(aScore))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfScores()) { index = numberOfScores() - 1; }
+      scores.remove(aScore);
+      scores.add(index, aScore);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveScoreAt(Score aScore, int index)
+  {
+    boolean wasAdded = false;
+    if(scores.contains(aScore))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfScores()) { index = numberOfScores() - 1; }
+      scores.remove(aScore);
+      scores.add(index, aScore);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addScoreAt(aScore, index);
+    }
+    return wasAdded;
   }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfUsers()
@@ -339,6 +548,20 @@ public class Block223 implements Serializable
 
   public void delete()
   {
+    while (gameSessions.size() > 0)
+    {
+      GameSession aGameSession = gameSessions.get(gameSessions.size() - 1);
+      aGameSession.delete();
+      gameSessions.remove(aGameSession);
+    }
+    
+    while (scores.size() > 0)
+    {
+      Score aScore = scores.get(scores.size() - 1);
+      aScore.delete();
+      scores.remove(aScore);
+    }
+    
     while (users.size() > 0)
     {
       User aUser = users.get(users.size() - 1);

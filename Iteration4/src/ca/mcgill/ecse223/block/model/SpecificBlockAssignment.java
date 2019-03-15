@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.block.model;
 
-// line 29 "../../../../../Block223Update.ump"
+// line 33 "../../../../../Block223Update.ump"
 public class SpecificBlockAssignment
 {
 
@@ -17,25 +17,19 @@ public class SpecificBlockAssignment
 
   //SpecificBlockAssignment Associations
   private Block block;
-  private SpecificLevel level;
   private GameSession gameSession;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public SpecificBlockAssignment(int aPositionX, int aPositionY, Block aBlock, SpecificLevel aLevel, GameSession aGameSession)
+  public SpecificBlockAssignment(int aPositionX, int aPositionY, Block aBlock, GameSession aGameSession)
   {
     positionX = aPositionX;
     positionY = aPositionY;
     if (!setBlock(aBlock))
     {
       throw new RuntimeException("Unable to create SpecificBlockAssignment due to aBlock");
-    }
-    boolean didAddLevel = setLevel(aLevel);
-    if (!didAddLevel)
-    {
-      throw new RuntimeException("Unable to create specificBlockAssignment due to level");
     }
     boolean didAddGameSession = setGameSession(aGameSession);
     if (!didAddGameSession)
@@ -79,11 +73,6 @@ public class SpecificBlockAssignment
     return block;
   }
   /* Code from template association_GetOne */
-  public SpecificLevel getLevel()
-  {
-    return level;
-  }
-  /* Code from template association_GetOne */
   public GameSession getGameSession()
   {
     return gameSession;
@@ -97,25 +86,6 @@ public class SpecificBlockAssignment
       block = aNewBlock;
       wasSet = true;
     }
-    return wasSet;
-  }
-  /* Code from template association_SetOneToMany */
-  public boolean setLevel(SpecificLevel aLevel)
-  {
-    boolean wasSet = false;
-    if (aLevel == null)
-    {
-      return wasSet;
-    }
-
-    SpecificLevel existingLevel = level;
-    level = aLevel;
-    if (existingLevel != null && !existingLevel.equals(aLevel))
-    {
-      existingLevel.removeSpecificBlockAssignment(this);
-    }
-    level.addSpecificBlockAssignment(this);
-    wasSet = true;
     return wasSet;
   }
   /* Code from template association_SetOneToMany */
@@ -141,12 +111,6 @@ public class SpecificBlockAssignment
   public void delete()
   {
     block = null;
-    SpecificLevel placeholderLevel = level;
-    this.level = null;
-    if(placeholderLevel != null)
-    {
-      placeholderLevel.removeSpecificBlockAssignment(this);
-    }
     GameSession placeholderGameSession = gameSession;
     this.gameSession = null;
     if(placeholderGameSession != null)
@@ -162,7 +126,6 @@ public class SpecificBlockAssignment
             "positionX" + ":" + getPositionX()+ "," +
             "positionY" + ":" + getPositionY()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "block = "+(getBlock()!=null?Integer.toHexString(System.identityHashCode(getBlock())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "level = "+(getLevel()!=null?Integer.toHexString(System.identityHashCode(getLevel())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "gameSession = "+(getGameSession()!=null?Integer.toHexString(System.identityHashCode(getGameSession())):"null");
   }
 }

@@ -1,19 +1,47 @@
 
-
 class GameSession{
 	GameStatus{
-		Paused{
-			start()->Playing;
-			resume()->Playing; 
+		Idle{
+			start()[hasEnoughBlocks()]{
+				doDuplicateBlocks();
+			}->Playing;
+			start()[!hasEnoughBlocks()]{
+				doDuplicateBlocks();
+				doFillRandomBlocks();
+			}->Playing;
 		}
 		Playing{
 		   pause() ->Paused;
-		   update()[ballHitsPaddleOrWall()]->Playing;
+		 
+		   update()[ballHitsBlock() && isLastBlock() && !gameIsAlmostDone()]{	
+		   		doJumpToNextLevel();
+		   }->Idle;
+		    update()[ballHitsBlock() && isLastBlock() && gameIsAlmostDone()]{
+		   		
+		   }->Done;
+		   update()[ballHitsBlock() && !isLastBlock()]{
+		   	doMoveBall();
+		   	doAddScore();
+		   }->Playing;
+		     update()[isballHitPaddle()]{
+		   		doMoveBall();
+		   }->Playing;
+		    update()[isballHitWall()]{
+		    	doMoveBall();
+		    }->Playing;
+		   update()[ballIsOutOfBound() && !almostDead()]{
+		   	doDecrementLives();
+		   }->Paused;
+		    update()[ballIsOutOfBound() && almostDead()]{
+		   	doDecrementLives();
+		   }->Done;
+		   update(){
+		   	doMoveBall()
+		   }->Playing;
 		   
-		   update()[gameIsDone()]->Done;
-		   update()[ballHitsBlock()]->Playing;
-		   update()[ballIsOutOfBound()]->Paused;
-		   
+		}
+		Paused{
+			resume()->Playing; 
 		}
 		Done{
 			entry/{
@@ -21,4 +49,22 @@ class GameSession{
 			};
 		} 
 	}
+	private boolean hasEnoughBlocks(){return false;}
+	private void doDuplicateBlocks(){}
+	private void doFillRandomBlocks(){}
+	private boolean isballHitPaddle(){return false;}
+	private boolean isballHitWall(){return false;}
+	private boolean ballHitsBlock(){return false;}
+	private boolean ballIsOutOfBound(){return false;}
+	private boolean saveScoreAndDelete(){return false;}
+	private void doJumpToNextLevel(){};
+	private boolean isLastBlock(){return false;}
+
+	private boolean gameIsAlmostDone(){return false;}
+	
+	private boolean almostDead(){return false;}
+	private void doMoveBall(){}
+	
+	private boolean checkLineIntersect(int x1,int y1,int x2,int y2,int x3,int y3,int x4,int y4){ return false;}
+	
 }

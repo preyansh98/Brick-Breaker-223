@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse223.block.model;
 
-// line 40 "../../../../../Block223Update.ump"
+// line 41 "../../../../../Block223Update.ump"
 public class Score
 {
 
@@ -17,12 +17,13 @@ public class Score
   //Score Associations
   private User user;
   private Game game;
+  private Block223 block223;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Score(int aScore, User aUser, Game aGame)
+  public Score(int aScore, User aUser, Game aGame, Block223 aBlock223)
   {
     score = aScore;
     boolean didAddUser = setUser(aUser);
@@ -34,6 +35,11 @@ public class Score
     if (!didAddGame)
     {
       throw new RuntimeException("Unable to create score due to game");
+    }
+    boolean didAddBlock223 = setBlock223(aBlock223);
+    if (!didAddBlock223)
+    {
+      throw new RuntimeException("Unable to create score due to block223");
     }
   }
 
@@ -62,6 +68,11 @@ public class Score
   public Game getGame()
   {
     return game;
+  }
+  /* Code from template association_GetOne */
+  public Block223 getBlock223()
+  {
+    return block223;
   }
   /* Code from template association_SetOneToMany */
   public boolean setUser(User aUser)
@@ -101,6 +112,25 @@ public class Score
     wasSet = true;
     return wasSet;
   }
+  /* Code from template association_SetOneToMany */
+  public boolean setBlock223(Block223 aBlock223)
+  {
+    boolean wasSet = false;
+    if (aBlock223 == null)
+    {
+      return wasSet;
+    }
+
+    Block223 existingBlock223 = block223;
+    block223 = aBlock223;
+    if (existingBlock223 != null && !existingBlock223.equals(aBlock223))
+    {
+      existingBlock223.removeScore(this);
+    }
+    block223.addScore(this);
+    wasSet = true;
+    return wasSet;
+  }
 
   public void delete()
   {
@@ -116,6 +146,12 @@ public class Score
     {
       placeholderGame.removeScore(this);
     }
+    Block223 placeholderBlock223 = block223;
+    this.block223 = null;
+    if(placeholderBlock223 != null)
+    {
+      placeholderBlock223.removeScore(this);
+    }
   }
 
 
@@ -124,6 +160,7 @@ public class Score
     return super.toString() + "["+
             "score" + ":" + getScore()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "user = "+(getUser()!=null?Integer.toHexString(System.identityHashCode(getUser())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null");
+            "  " + "game = "+(getGame()!=null?Integer.toHexString(System.identityHashCode(getGame())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "block223 = "+(getBlock223()!=null?Integer.toHexString(System.identityHashCode(getBlock223())):"null");
   }
 }

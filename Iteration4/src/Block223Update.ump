@@ -1,27 +1,31 @@
+
+class Block223{
+	1 <@>- * GameSession gameSessions;
+	1 <@>- * Score scores;
+}
 class GameSession{
 
 	* -- 0..1 Player player;
 	* -- 1 Game game;
-	1 <@>- 1..99 SpecificLevel levels;
 	1 <@>- * SpecificBlockAssignment assignments;
-	
+	enum BallIncidence{Downward, Upward, Left, Right, None};
+	lazy BallIncidence hitIncidence;
 	const Integer MAX_NR_LIVES=3;
-	Integer numOfLives;
-	Integer currentLevel;
-	Integer score;
-	Integer paddlePosition;
-	Integer ballPositonX =195;
-	Integer ballPositionY = 195;
+	defaulted Integer numOfLives=3;
+	defaulted Integer currentLevel=1;
+	defaulted Integer score=0;
+	defaulted Integer paddlePosition =195-getCurrentPaddleSize()/2;
+	defaulted Integer ballPositonX =195;
+	defaulted Integer ballPositionY = 195;
 	defaulted Integer ballDirectionX = game.getBall().getMinBallSpeedX();
 	defaulted Integer ballDirectionY = game.getBall().getMinBallSpeedY();
 	autounique id;
+
+	Integer currentPaddleSize= game.getPaddle().getMinPaddleLength()+
+		(currentLevel-1)*(game.getPaddle().getMaxPaddleLength()-game.getPaddle().getMinPaddleLength())/(game.getLevels().size()-1) ;
 	
-	private boolean ballHitsPaddleOrWall(){return false;}
-	private boolean gameIsDone(){return false;}
-	private boolean ballHitsBlock(){return false;}
-	private boolean ballIsOutOfBound(){return false;}
-	private boolean saveScoreAndDelete(){return false;}
-	private boolean levelIsDone(){return false;}
+	
+	public void movePaddle(int offset){}
 }
 class Player{
 
@@ -30,12 +34,9 @@ class SpecificBlockAssignment{
 	Integer positionX;
 	Integer positionY;
 	1 -> 1 Block block; 
-	* -- 1 SpecificLevel level; 
 }
 
-class SpecificLevel{
-	
-}
+
 
 class Score {
 	Integer score;
