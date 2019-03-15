@@ -114,9 +114,7 @@ public class Block223Controller {
     }
     
     paddle.setMinPaddleLength(minPaddleLength);
-    
-    
-    //ASK GUNTER ABOUT THIS STUFF
+  
     //Level Settings
     List<Level> levels = game.getLevels();
     
