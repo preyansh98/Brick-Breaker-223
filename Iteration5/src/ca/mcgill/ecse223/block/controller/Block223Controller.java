@@ -13,9 +13,12 @@ import ca.mcgill.ecse223.block.model.BlockAssignment;
 import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.Level;
 import ca.mcgill.ecse223.block.model.Paddle;
+import ca.mcgill.ecse223.block.model.PlayedBlockAssignment;
+import ca.mcgill.ecse223.block.model.PlayedGame;
 import ca.mcgill.ecse223.block.model.Player;
 import ca.mcgill.ecse223.block.model.User;
 import ca.mcgill.ecse223.block.model.UserRole;
+import ca.mcgill.ecse223.block.model.PlayedGame.PlayStatus;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 import ca.mcgill.ecse223.block.view.Block223PlayModeInterface;
 
@@ -723,19 +726,96 @@ public class Block223Controller {
 	// play mode
 
 	public static List<TOPlayableGame> getPlayableGames() throws InvalidInputException {
-		return null;
+		
+		Block223 block223 = Block223Application.getBlock223(); 
+		Player player = (Player) Block223Application.getCurrentUserRole(); //checks
+		
+		List<TOPlayableGame> result = new ArrayList<TOPlayableGame>(); 
+		
+		List<Game> games = block223.getGames(); 
+		
+		for(Game game : games) {
+			boolean published = game.isPublished();
+			
+			if(published) {
+				TOPlayableGame to = new TOPlayableGame(game.getName(), -1, 0); 
+				result.add(to); 
+			}
+		}
+		
+		List<PlayedGame> playedGames = player.getPlayedGames(); 
+		
+		for(PlayedGame playedGame : playedGames) {
+			TOPlayableGame to = new TOPlayableGame(playedGame.getGame().getName(),playedGame.getId(), playedGame.getCurrentLevel());
+			result.add(to); 
+		}
+		
+		
+	return result;
 	}
 
 	public static List<TOCurrentlyPlayedGame> getCurrentPlayableGame() throws InvalidInputException {
-		return null;
+		
+		PlayedGame pgame = Block223Application.getCurrentPlayableGame(); 
+		
+		boolean paused = (pgame.getPlayStatus() == PlayStatus.Ready || 
+						pgame.getPlayStatus() == PlayStatus.Paused); 
+		
+		TOCurrentlyPlayedGame result = new TOCurrentlyPlayedGame(pgame.getGame().getName(), paused, pgame.getScore(), pgame.getLives(), pgame.getCurrentLevel(), 
+				pgame.getPlayername(), (int) pgame.getCurrentBallX(), (int) pgame.getCurrentBallY(), (int) pgame.getCurrentPaddleLength(), (int) pgame.getCurrentPaddleX()); 
+		
+		List<PlayedBlockAssignment> blocks = pgame.getBlocks(); 
+		
+		for(PlayedBlockAssignment pblock : blocks) {
+			TOCurrentBlock to = new TOCurrentBlock(pblock.getBlock().getRed(), pblock.getBlock().getGreen(), pblock.getBlock().getBlue(), pblock.getBlock().getPoints(), 
+					pblock.getX(), pblock.getY(), result); 
+			result.addBlock(to); 
+		}
+		
+		return result; 
 	}
 
 	public static TOHallOfFame getHallOfFame(int start, int end) throws InvalidInputException {
-		return null;
+		
+		PlayedGame pgame = Block223Application.getCurrentPlayableGame(); 
+		Game game = pgame.getGame(); 
+		
+		TOHallOfFame result = new TOHallOfFame(game.getName()); 
+		if(start < 1) start = 1; 
+		if(end > game.numberOfHallOfFameEntries()) end = game.numberOfHallOfFameEntries(); 
+		start = start - 1; 
+		end = end-1; 
+		
+		for(int i = start; i<end; i++) {
+			String username = User.findUsername(game.getHallOfFameEntry(i).getPlayer()); 
+			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, username, game.getHallOfFameEntry(i).getScore(), result); 
+		}
+		
+		return result; 
 	}
 
 	public static TOHallOfFame getHallOfFameWithMostRecentEntry(int numberOfEntries) throws InvalidInputException {
-		return null;
+		PlayedGame pgame = Block223Application.getCurrentPlayableGame(); 
+		Game game = pgame.getGame(); 
+		
+		TOHallOfFame result = new TOHallOfFame(game.getName()); 
+		Object mostRecent = pgame.getMostRecentEntry(); //TODO: type
+		int index = pgame.indexOfHallOfFameEntry(); 
+		
+		int start = index - numberOfEntries/2; 
+		
+		if(start < 1) start = 1; 
+		int end = start + numberOfEntries - 1; 
+		if(end > game.numberOfHallOfFameEntries()) end = game.numberOfHallOfFameEntries(); 
+		start = start -1; 
+		end = end - 1; 
+		
+		for(int i = start; i<end; i++) {
+			String username = User.findUsername(game.getHallOfFameEntry(i).getPlayer()); 
+			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, username, game.getHallOfFameEntry(i).getScore(), result); 
+		}
+		
+		return result; 
 	}
 
 }

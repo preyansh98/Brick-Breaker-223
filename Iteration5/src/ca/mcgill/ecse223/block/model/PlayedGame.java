@@ -846,5 +846,15 @@ public class PlayedGame implements Serializable
   // line 102 "../../../../../Block223Persistence.ump"
   private static final long serialVersionUID = 8597675110221231714L ;
 
+public int indexOfHallOfFameEntry() {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+public Object getMostRecentEntry() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
   
 }
