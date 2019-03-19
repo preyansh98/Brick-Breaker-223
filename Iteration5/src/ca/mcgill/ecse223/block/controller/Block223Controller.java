@@ -754,7 +754,7 @@ public class Block223Controller {
 	return result;
 	}
 
-	public static List<TOCurrentlyPlayedGame> getCurrentPlayableGame() throws InvalidInputException {
+	public static TOCurrentlyPlayedGame getCurrentPlayableGame() throws InvalidInputException {
 		
 		PlayedGame pgame = Block223Application.getCurrentPlayableGame(); 
 		

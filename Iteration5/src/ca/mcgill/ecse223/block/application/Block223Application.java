@@ -59,10 +59,7 @@ public class Block223Application {
 		setCurrentGame(null);
 		block223=Block223Persistence.load();
 	}
-	public static PlayedGame getCurrentPlayableGame() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 
