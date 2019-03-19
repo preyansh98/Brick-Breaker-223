@@ -265,6 +265,13 @@ public class User implements Serializable
     }
   }
 
+  // line 30 "../../../../../Block223 v3.ump"
+   public static  String findUsername(Player player){
+    //TODO: implement
+   
+   return null;
+  }
+
 
   public String toString()
   {
@@ -278,11 +285,6 @@ public class User implements Serializable
   
   // line 19 "../../../../../Block223Persistence.ump"
   private static final long serialVersionUID = 4267485601061759914L ;
-
-public static String findUsername(Player player) {
-	// TODO Auto-generated method stub
-	return null;
-}
 
   
 }

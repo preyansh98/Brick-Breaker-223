@@ -7,7 +7,7 @@ import java.util.*;
 
 // line 6 "../../../../../Block223PlayMode.ump"
 // line 46 "../../../../../Block223Persistence.ump"
-// line 49 "../../../../../Block223 v3.ump"
+// line 54 "../../../../../Block223 v3.ump"
 public class Game implements Serializable
 {
 
@@ -39,7 +39,7 @@ public class Game implements Serializable
   private boolean published;
   private String name;
   private int nrBlocksPerLevel;
-  private transient Comparator<HallOfFameEntry> hallOfFameEntriesPriority;
+  private Comparator<HallOfFameEntry> hallOfFameEntriesPriority;
 
   //Game Associations
   private HallOfFameEntry mostRecentEntry;
@@ -59,7 +59,7 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, Ball aBall, Paddle aPaddle, Block223 aBlock223)
   {
-    // line 65 "../../../../../Block223 v3.ump"
+    // line 70 "../../../../../Block223 v3.ump"
     if(aName == null || aName.isEmpty() == true){
        		throw new RuntimeException("The name of the game must be unique."); 
        	}
@@ -108,7 +108,7 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, int aMinBallSpeedXForBall, int aMinBallSpeedYForBall, double aBallSpeedIncreaseFactorForBall, int aMaxPaddleLengthForPaddle, int aMinPaddleLengthForPaddle, Block223 aBlock223)
   {
-    // line 65 "../../../../../Block223 v3.ump"
+    // line 70 "../../../../../Block223 v3.ump"
     if(aName == null || aName.isEmpty() == true){
        		throw new RuntimeException("The name of the game must be unique."); 
        	}
@@ -159,7 +159,7 @@ public class Game implements Serializable
   public boolean setName(String aName)
   {
     boolean wasSet = false;
-    // line 65 "../../../../../Block223 v3.ump"
+    // line 70 "../../../../../Block223 v3.ump"
     if(aName == null || aName.isEmpty() == true){
        		throw new RuntimeException("The name of the game must be unique."); 
        	}
@@ -892,7 +892,7 @@ public class Game implements Serializable
     }
   }
 
-  // line 71 "../../../../../Block223 v3.ump"
+  // line 76 "../../../../../Block223 v3.ump"
    public Block findBlock(int id){
     for(Block block: blocks){
    			if(id == block.getId()){

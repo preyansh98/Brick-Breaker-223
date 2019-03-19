@@ -26,6 +26,11 @@ class User {
    			throw new RuntimeException("The username must be specified.");
    		}
    } 
+   public static String findUsername(Player player){
+   //TODO: implement
+   
+   return null; 
+   }
 }
 
 class UserRole {

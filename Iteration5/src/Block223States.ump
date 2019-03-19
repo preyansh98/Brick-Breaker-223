@@ -44,18 +44,68 @@ class PlayedGame {
   }
   
   private boolean hitLastBlockAndLastLevel() {
-    // TODO implement
+    
+    Game game = this.getGame(); 
+	int nrLevels = game.numberOfLevels(); 
+	
+	this.setBounce(null); 
+	
+	if(nrLevels == currentLevel) {
+		int nrBlocks = numberOfBlocks(); 
+		if(nrBlocks == 1) {
+			PlayedBlockAssignment block = this.getBlock(0); 
+			BouncePoint bp = calculateBouncePointBlock(block); 
+			setBounce(bp); 
+			return true; 
+		}
+	}
     return false;
   }
   
   private boolean hitLastBlock(){
-    // TODO implement
+
+	int nrBlocks = numberOfBlocks(); 
+	setBounce(null); 
+	
+	if(nrBlocks == 1) {
+		PlayedBlockAssignment block = this.getBlock(0); 
+		BouncePoint bp = null; 
+		
+		try{
+			bp = calculateBouncePointBlock(block);
+		}
+		catch(NullPointerException e) {
+			return false; //no bounce point found. 
+		}
+		setBounce(bp); 
+		return true; 
+	}
     return false;
+    
   }
   
   private boolean hitBlock() {
-    // TODO implement
-    return false;
+	   int nrBlocks = numberOfBlocks();
+	   setBounce(null); 
+	   
+	   for(int index = 0; index < nrBlocks - 1; index++) {
+		   PlayedBlockAssignment block = getBlock(index); 
+		   
+		   BouncePoint bp = null; 
+		   try {
+			   bp = calculateBouncePointBlock(block); 
+		   }
+		   catch(NullPointerException e) {
+			   //what happens if its null?
+		   }
+		   
+		   bounce = getBounce(); 
+		   boolean closer = isCloser(bp, bounce); 
+		   
+		   if(closer) setBounce(bp); 
+		  
+	   }
+	   return (getBounce()!=null); 
   }
   
   private boolean hitWall() {
@@ -78,11 +128,29 @@ class PlayedGame {
   }
 
   private void doHitBlock() {
-    // TODO implement
+       int score = getScore(); 
+	   bounce = getBounce(); 
+	   PlayedBlockAssignment pblock = bounce.getHitBlock(); 
+	   
+	   Block block = pblock.getBlock(); 
+	   int bscore = block.getPoints();
+	   
+	   this.setScore(score + bscore); 
+	   pblock.delete();
+	   bounceBall(); 
   }
 
   private void doHitBlockNextLevel() {
-    // TODO implement
+   	   doHitBlock(); 
+	   int level = getCurrentLevel(); 
+	   setCurrentLevel(level+1); 
+	   
+	   setCurrentPaddleLength(getGame().getPaddle().getMaxPaddleLength() -
+			   (getGame().getPaddle().getMaxPaddleLength() - getGame().getPaddle().getMinPaddleLength())/
+			   (getGame().numberOfLevels() - 1) * (getCurrentLevel() - 1));
+	   
+	   setWaitTime(INITIAL_WAIT_TIME * Math.pow(getGame().getBall().getBallSpeedIncreaseFactor(), 
+			   (getCurrentLevel() - 1))); 
   }
 
   private void doHitNothingAndNotOutOfBounds() {
@@ -131,5 +199,44 @@ class PlayedGame {
   private void bounceBall(){
   
   }
+  
+  private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
+  	return null;
+  }
+  
+   private boolean isCloser(BouncePoint first, BouncePoint second) {
+	    double ballPosX = getCurrentBallX(); 
+	    double ballPosY = getCurrentBallY(); 
+	    
+	    if(first == null) {
+	    	return false; 
+	    }
+	    
+	    if(second == null) {
+	    	return true; 
+	    }
+	    
+	    //we will use euclidean distance to see which is closer 
+	    double distToFirst = Math.sqrt(Math.pow((first.getX() - ballPosX),2) + 
+	    							   Math.pow(first.getY() - ballPosY, 2));
 
-}
+	    double distToSecond = Math.sqrt(Math.pow((second.getX() - ballPosX),2) + 
+				   Math.pow(second.getY() - ballPosY, 2));
+	    
+	    if(distToFirst <= distToSecond) {
+	    	return true; 
+	    }
+	    return false; 
+	  }
+
+	public int indexOfHallOfFameEntry(){
+	//TODO: IMPLEMENT
+	return 0; 
+	}
+	
+	public Object getMostRecentEntry(){
+	//TODO: implement, and type of return statement 
+	return null;
+	}
+
+	  }

@@ -2,11 +2,10 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.*;
-
 
 // line 11 "../../../../../Block223PlayMode.ump"
 // line 99 "../../../../../Block223Persistence.ump"
@@ -737,25 +736,72 @@ public class PlayedGame implements Serializable
     return false;
   }
 
-  // line 47 "../../../../../Block223States.ump"
+  // line 48 "../../../../../Block223States.ump"
    private boolean hitLastBlockAndLastLevel(){
-    // TODO implement
+    Game game = this.getGame(); 
+	int nrLevels = game.numberOfLevels(); 
+	
+	this.setBounce(null); 
+	
+	if(nrLevels == currentLevel) {
+		int nrBlocks = numberOfBlocks(); 
+		if(nrBlocks == 1) {
+			PlayedBlockAssignment block = this.getBlock(0); 
+			BouncePoint bp = calculateBouncePointBlock(block); 
+			setBounce(bp); 
+			return true; 
+		}
+	}
     return false;
   }
 
-  // line 52 "../../../../../Block223States.ump"
+  // line 67 "../../../../../Block223States.ump"
    private boolean hitLastBlock(){
-    // TODO implement
+    int nrBlocks = numberOfBlocks(); 
+	setBounce(null); 
+	
+	if(nrBlocks == 1) {
+		PlayedBlockAssignment block = this.getBlock(0); 
+		BouncePoint bp = null; 
+		
+		try{
+			bp = calculateBouncePointBlock(block);
+		}
+		catch(NullPointerException e) {
+			return false; //no bounce point found. 
+		}
+		setBounce(bp); 
+		return true; 
+	}
     return false;
   }
 
-  // line 57 "../../../../../Block223States.ump"
+  // line 88 "../../../../../Block223States.ump"
    private boolean hitBlock(){
-    // TODO implement
-    return false;
+    int nrBlocks = numberOfBlocks();
+	   setBounce(null); 
+	   
+	   for(int index = 0; index < nrBlocks - 1; index++) {
+		   PlayedBlockAssignment block = getBlock(index); 
+		   
+		   BouncePoint bp = null; 
+		   try {
+			   bp = calculateBouncePointBlock(block); 
+		   }
+		   catch(NullPointerException e) {
+			   //what happens if its null?
+		   }
+		   
+		   bounce = getBounce(); 
+		   boolean closer = isCloser(bp, bounce); 
+		   
+		   if(closer) setBounce(bp); 
+		  
+	   }
+	   return (getBounce()!=null);
   }
 
-  // line 62 "../../../../../Block223States.ump"
+  // line 112 "../../../../../Block223States.ump"
    private boolean hitWall(){
     // TODO implement
     return false;
@@ -765,37 +811,55 @@ public class PlayedGame implements Serializable
   /**
    * Actions
    */
-  // line 69 "../../../../../Block223States.ump"
+  // line 119 "../../../../../Block223States.ump"
    private void doSetup(){
     // TODO implement
   }
 
-  // line 73 "../../../../../Block223States.ump"
+  // line 123 "../../../../../Block223States.ump"
    private void doHitPaddleOrWall(){
     // TODO implement
   }
 
-  // line 77 "../../../../../Block223States.ump"
+  // line 127 "../../../../../Block223States.ump"
    private void doOutOfBounds(){
     // TODO implement
   }
 
-  // line 81 "../../../../../Block223States.ump"
+  // line 131 "../../../../../Block223States.ump"
    private void doHitBlock(){
-    // TODO implement
+    int score = getScore(); 
+	   bounce = getBounce(); 
+	   PlayedBlockAssignment pblock = bounce.getHitBlock(); 
+	   
+	   Block block = pblock.getBlock(); 
+	   int bscore = block.getPoints();
+	   
+	   this.setScore(score + bscore); 
+	   pblock.delete();
+	   bounceBall();
   }
 
-  // line 85 "../../../../../Block223States.ump"
+  // line 144 "../../../../../Block223States.ump"
    private void doHitBlockNextLevel(){
-    // TODO implement
+    doHitBlock(); 
+	   int level = getCurrentLevel(); 
+	   setCurrentLevel(level+1); 
+	   
+	   setCurrentPaddleLength(getGame().getPaddle().getMaxPaddleLength() -
+			   (getGame().getPaddle().getMaxPaddleLength() - getGame().getPaddle().getMinPaddleLength())/
+			   (getGame().numberOfLevels() - 1) * (getCurrentLevel() - 1));
+	   
+	   setWaitTime(INITIAL_WAIT_TIME * Math.pow(getGame().getBall().getBallSpeedIncreaseFactor(), 
+			   (getCurrentLevel() - 1)));
   }
 
-  // line 89 "../../../../../Block223States.ump"
+  // line 157 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
     // TODO implement
   }
 
-  // line 93 "../../../../../Block223States.ump"
+  // line 161 "../../../../../Block223States.ump"
    private void doGameOver(){
     // TODO implement
   }
@@ -804,7 +868,7 @@ public class PlayedGame implements Serializable
   /**
    * Helper methods
    */
-  // line 99 "../../../../../Block223States.ump"
+  // line 167 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointPaddle(){
     int x=(int)getCurrentPaddleX();
   	int y=(int)getCurrentPaddleY();
@@ -834,14 +898,57 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 128 "../../../../../Block223States.ump"
+  // line 196 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointWall(){
     return null;
   }
 
-  // line 133 "../../../../../Block223States.ump"
+  // line 201 "../../../../../Block223States.ump"
    private void bounceBall(){
     
+  }
+
+  // line 204 "../../../../../Block223States.ump"
+   private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
+    return null;
+  }
+
+  // line 208 "../../../../../Block223States.ump"
+   private boolean isCloser(BouncePoint first, BouncePoint second){
+    double ballPosX = getCurrentBallX(); 
+	    double ballPosY = getCurrentBallY(); 
+	    
+	    if(first == null) {
+	    	return false; 
+	    }
+	    
+	    if(second == null) {
+	    	return true; 
+	    }
+	    
+	    //we will use euclidean distance to see which is closer 
+	    double distToFirst = Math.sqrt(Math.pow((first.getX() - ballPosX),2) + 
+	    							   Math.pow(first.getY() - ballPosY, 2));
+
+	    double distToSecond = Math.sqrt(Math.pow((second.getX() - ballPosX),2) + 
+				   Math.pow(second.getY() - ballPosY, 2));
+	    
+	    if(distToFirst <= distToSecond) {
+	    	return true; 
+	    }
+	    return false;
+  }
+
+  // line 233 "../../../../../Block223States.ump"
+   public int indexOfHallOfFameEntry(){
+    //TODO: IMPLEMENT
+	return 0;
+  }
+
+  // line 238 "../../../../../Block223States.ump"
+   public Object getMostRecentEntry(){
+    //TODO: implement, and type of return statement 
+	return null;
   }
 
 
@@ -872,16 +979,6 @@ public class PlayedGame implements Serializable
   
   // line 102 "../../../../../Block223Persistence.ump"
   private static final long serialVersionUID = 8597675110221231714L ;
-
-public Object getMostRecentEntry() {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-public int indexOfHallOfFameEntry() {
-	// TODO Auto-generated method stub
-	return 0;
-}
 
   
 }
