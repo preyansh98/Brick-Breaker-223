@@ -5,6 +5,7 @@ import ca.mcgill.ecse223.block.model.Admin;
 import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.model.Game;
 import ca.mcgill.ecse223.block.model.Level;
+import ca.mcgill.ecse223.block.model.PlayedGame;
 import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 import ca.mcgill.ecse223.block.view.NewBlockUI;
@@ -15,6 +16,14 @@ public class Block223Application {
 	private static Block223 block223; 
 	private static Game currentGame;
 	private static UserRole currentUserRole; 
+	private static PlayedGame currentPlayableGame;
+	
+	public static PlayedGame getCurrentPlayableGame() {
+		return currentPlayableGame;
+	}
+	public static void setCurrentPlayableGame(PlayedGame currentPlayableGame) {
+		Block223Application.currentPlayableGame = currentPlayableGame;
+	}
 	public static void main(String [] args) {
 		SignInUI.init();
 	}
@@ -44,6 +53,10 @@ public class Block223Application {
 	
 	
 	public static void resetBlock223() {
+		if(block223!=null) {
+			block223.delete();
+		}
+		setCurrentGame(null);
 		block223=Block223Persistence.load();
 	}
 

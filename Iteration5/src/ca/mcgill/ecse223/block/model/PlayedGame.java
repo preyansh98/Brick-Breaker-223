@@ -2,6 +2,8 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.*;
 
@@ -769,6 +771,50 @@ public class PlayedGame implements Serializable
   // line 93 "../../../../../Block223States.ump"
    private void doGameOver(){
     // TODO implement
+  }
+
+
+  /**
+   * Helper methods
+   */
+  // line 99 "../../../../../Block223States.ump"
+   private BouncePoint calculateBouncePointPaddle(){
+    int x=(int)getCurrentPaddleX();
+  	int y=(int)getCurrentPaddleY();
+  	int length=(int)getCurrentPaddleLength();
+  	int radius=Ball.BALL_DIAMETER/2;
+  	int width=Paddle.PADDLE_WIDTH;
+  	Rectangle2D A=new Rectangle2D.Float(x,y-radius,length,width );
+  	Rectangle2D B=new Rectangle2D.Float(x-radius,y,length,width );
+  	Rectangle2D C=new Rectangle2D.Float(x+length,y,length,width );
+  	Rectangle2D F=new Rectangle2D.Float(x+length,y-radius,length,width);
+  	Rectangle2D E=new Rectangle2D.Float(x-radius,y-radius,length,width);
+  	
+  	Line2D segment=new Line2D.Float((float)getCurrentBallX(),(float)getCurrentBallY(),
+  			(float)(getCurrentBallX()+getBallDirectionX()),(float)(getCurrentBallY()+getBallDirectionY()));
+  	
+  	if(segment.intersects(A)){
+  		
+  	}else if(segment.intersects(B)){
+  	
+  	}else if(segment.intersects(C)){
+  	
+  	}else if(segment.intersects(F)){
+  	
+  	}else if(segment.intersects(E)){
+  	
+  	}
+  	return null;
+  }
+
+  // line 128 "../../../../../Block223States.ump"
+   private BouncePoint calculateBouncePointWall(){
+    return null;
+  }
+
+  // line 133 "../../../../../Block223States.ump"
+   private void bounceBall(){
+    
   }
 
 
