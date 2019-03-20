@@ -22,6 +22,7 @@ import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.model.PlayedGame.PlayStatus;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 import ca.mcgill.ecse223.block.view.Block223PlayModeInterface;
+import jdk.nashorn.internal.runtime.FindProperty;
 
 public class Block223Controller {
 
@@ -567,9 +568,19 @@ public class Block223Controller {
 		Game game = Game.getWithName(name);
 		Block223 block223 = Block223Application.getBlock223(); 
 		
+		//Checks 
+		if (!(Block223Application.getCurrentUserRole() instanceof Player)) {
+			throw new InvalidInputException("Player privileges are required to define game settings.");
+		}
+		
+	//	if (Game.getWithName(name) == null && Block223.findPlayableGame == null)
+		
 		if (game != null) {
 			
 			Player player = (Player) Block223Application.getCurrentUserRole();
+		
+			
+			
 			String username = User.findUsername(player);
 			
 			PlayedGame pgame = new PlayedGame(username, game, block223);
@@ -584,6 +595,23 @@ public class Block223Controller {
 	}
 
 	public static void startGame(Block223PlayModeInterface ui) throws InvalidInputException {
+		
+		PlayedGame game = (PlayedGame) Block223Application.getCurrentPlayableGame(); 
+		game.play();
+		
+		//Block223PlayModeInterface.takeinputs()
+		
+		while (game.getPlayStatus() == PlayStatus.Moving) {
+			
+			//Block223PlayModeInterface.takeinputs()
+			
+			//Block223Controller.updatePaddlePosition
+			
+			game.move();
+			
+			//NOT COMPLETE
+		}
+	
 	}
 
 	public static void testGame(Block223PlayModeInterface ui) throws InvalidInputException {
