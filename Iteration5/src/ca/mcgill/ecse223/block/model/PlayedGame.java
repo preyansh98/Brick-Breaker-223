@@ -735,8 +735,9 @@ public class PlayedGame implements Serializable
 
   // line 42 "../../../../../Block223States.ump"
    private boolean isOutOfBounds(){
-    // TODO implement
-    return false;
+    Boolean outOfBounds = isBallOutOfBounds();
+    
+    return outOfBounds;
   }
 
   // line 48 "../../../../../Block223States.ump"
@@ -826,7 +827,12 @@ public class PlayedGame implements Serializable
 
   // line 127 "../../../../../Block223States.ump"
    private void doOutOfBounds(){
-    // TODO implement
+    this.setLives(lives-1);
+    this.resetCurrentBallX();
+    this.resetCurrentBallY();
+    this.resetBallDirectionX();
+    this.resetBallDirectionY();
+    this.resetCurrentPaddleX();
   }
 
   // line 131 "../../../../../Block223States.ump"
