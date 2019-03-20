@@ -564,6 +564,17 @@ public class Block223Controller {
 	// play mode
 
 	public static void selectPlayableGame(String name, int id) throws InvalidInputException {
+		Game game = Game.getWithName(name);
+		Block223 block223 = Block223Application.getBlock223(); 
+		
+		if (game != null) {
+			
+			Player player = (Player) Block223Application.getCurrentUserRole();
+			String username = User.findUsername(player);
+			
+			
+		}
+		
 	}
 
 	public static void startGame(Block223PlayModeInterface ui) throws InvalidInputException {
