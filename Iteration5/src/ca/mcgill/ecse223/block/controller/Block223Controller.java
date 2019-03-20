@@ -572,8 +572,14 @@ public class Block223Controller {
 			Player player = (Player) Block223Application.getCurrentUserRole();
 			String username = User.findUsername(player);
 			
+			PlayedGame pgame = new PlayedGame(username, game, block223);
+			pgame.setPlayer(player);
+		} else {
 			
+			// block223.findPlayableGame(ID);
 		}
+		
+		//Block223Application.setCurrentPlayableGame(pgame);
 		
 	}
 
