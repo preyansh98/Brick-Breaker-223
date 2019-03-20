@@ -229,14 +229,6 @@ class PlayedGame {
 	    return false; 
 	  }
 
-	public int indexOfHallOfFameEntry(){
-	//TODO: IMPLEMENT
-	return 0; 
-	}
-	
-	public Object getMostRecentEntry(){
-	//TODO: implement, and type of return statement 
-	return null;
-	}
+
 
 	  }

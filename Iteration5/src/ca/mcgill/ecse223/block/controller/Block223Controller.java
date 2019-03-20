@@ -11,6 +11,7 @@ import ca.mcgill.ecse223.block.model.Block;
 import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.model.BlockAssignment;
 import ca.mcgill.ecse223.block.model.Game;
+import ca.mcgill.ecse223.block.model.HallOfFameEntry;
 import ca.mcgill.ecse223.block.model.Level;
 import ca.mcgill.ecse223.block.model.Paddle;
 import ca.mcgill.ecse223.block.model.PlayedBlockAssignment;
@@ -787,7 +788,7 @@ public class Block223Controller {
 		end = end-1; 
 		
 		for(int i = start; i<end; i++) {
-			String username = User.findUsername(game.getHallOfFameEntry(i).getPlayer()); 
+			String username = pgame.getPlayername(); 
 			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, username, game.getHallOfFameEntry(i).getScore(), result); 
 		}
 		
@@ -799,8 +800,8 @@ public class Block223Controller {
 		Game game = pgame.getGame(); 
 		
 		TOHallOfFame result = new TOHallOfFame(game.getName()); 
-		Object mostRecent = pgame.getMostRecentEntry(); //TODO: type
-		int index = pgame.indexOfHallOfFameEntry(); 
+		HallOfFameEntry mostRecent = game.getMostRecentEntry(); 
+		int index = game.indexOfHallOfFameEntry(mostRecent); 
 		
 		int start = index - numberOfEntries/2; 
 		
@@ -811,7 +812,7 @@ public class Block223Controller {
 		end = end - 1; 
 		
 		for(int i = start; i<end; i++) {
-			String username = User.findUsername(game.getHallOfFameEntry(i).getPlayer()); 
+			String username = pgame.getPlayername(); 
 			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, username, game.getHallOfFameEntry(i).getScore(), result); 
 		}
 		

@@ -939,18 +939,6 @@ public class PlayedGame implements Serializable
 	    return false;
   }
 
-  // line 233 "../../../../../Block223States.ump"
-   public int indexOfHallOfFameEntry(){
-    //TODO: IMPLEMENT
-	return 0;
-  }
-
-  // line 238 "../../../../../Block223States.ump"
-   public Object getMostRecentEntry(){
-    //TODO: implement, and type of return statement 
-	return null;
-  }
-
 
   public String toString()
   {
