@@ -7,6 +7,8 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.*;
 
+import ca.mcgill.ecse223.block.application.Block223Application;
+
 // line 11 "../../../../../Block223PlayMode.ump"
 // line 99 "../../../../../Block223Persistence.ump"
 // line 1 "../../../../../Block223States.ump"
@@ -870,7 +872,15 @@ public class PlayedGame implements Serializable
 
   // line 161 "../../../../../Block223States.ump"
    private void doGameOver(){
-    // TODO implement
+	   Block223 block223 = Block223Application.getBlock223();
+	   Player p = this.getPlayer();
+	   
+	   if (p != null) {
+		   Game game = this.getGame();
+		   HallOfFameEntry hof = new HallOfFameEntry(this.score, p.toString(), p, game, block223);
+		   game.setMostRecentEntry(hof);
+	   }
+	   this.delete();
   }
 
 
