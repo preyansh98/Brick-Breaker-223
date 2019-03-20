@@ -726,8 +726,11 @@ public class PlayedGame implements Serializable
 
   // line 37 "../../../../../Block223States.ump"
    private boolean isOutOfBoundsAndLastLife(){
-    // TODO implement
-    return false;
+    boolean outOfBounds = false;
+    if (PlayedGame.NR_LIVES ==1) {
+    	outOfBounds = isOutOfBounds();
+    }
+    return outOfBounds;
   }
 
   // line 42 "../../../../../Block223States.ump"
