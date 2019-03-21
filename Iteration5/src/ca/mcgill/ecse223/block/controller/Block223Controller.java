@@ -22,7 +22,8 @@ import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.model.PlayedGame.PlayStatus;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 import ca.mcgill.ecse223.block.view.Block223PlayModeInterface;
-import jdk.nashorn.internal.runtime.FindProperty;
+import ca.mcgill.ecse223.block.view.PlayedModeClass;
+//import jdk.nashorn.internal.runtime.FindProperty;
 
 public class Block223Controller {
 
@@ -599,7 +600,10 @@ public class Block223Controller {
 		PlayedGame game = (PlayedGame) Block223Application.getCurrentPlayableGame(); 
 		game.play();
 		
-		//Block223PlayModeInterface.takeinputs()
+		PlayedModeClass pl = new PlayedModeClass();
+		//pl.takeInputs();
+		//METHOD IS UNDEFINED
+		
 		
 		while (game.getPlayStatus() == PlayStatus.Moving) {
 			
