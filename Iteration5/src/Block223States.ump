@@ -154,14 +154,13 @@ class PlayedGame {
   }
 
   private void doHitNothingAndNotOutOfBounds() {
-    double x = getCurrentBallX();
-    double y = getCurretBallY();
-    double dx = getBallDirectionX();
-    double dy = getBallDirectionY();
-    setCurrentBallX(x + dx);
-    setCurrentBallY(y + dy);
+	  double x = getCurrentBallX();
+	  double y = getCurrenttBallY();
+	  double dx = getBallDirectionX();
+	  double dy = getBallDirectionY();
+	  setCurrentBallX(x + dx);
+	  setCurrentBallY(y + dy);
   }
-
   private void doGameOver() {
     // TODO implement
   }

@@ -318,15 +318,15 @@ public class PlayedGame
 
   // line 157 "Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
-    double x = getCurrentBallX();
-    double y = getCurretBallY();
-    double dx = getBallDirectionX();
-    double dy = getBallDirectionY();
-    setCurrentBallX(x + dx);
-    setCurrentBallY(y + dy);
+    Double x = getCurrentBallX();
+	  Double y = getCurrenttBallY();
+	  Double dx = getBallDirectionX();
+	  Double dy = getBallDirectionY();
+	  setCurrentBallX(x + dx);
+	  setCurrentBallY(y + dy);
   }
 
-  // line 166 "Block223States.ump"
+  // line 165 "Block223States.ump"
    private void doGameOver(){
     // TODO implement
   }
@@ -335,7 +335,7 @@ public class PlayedGame
   /**
    * Helper methods
    */
-  // line 172 "Block223States.ump"
+  // line 171 "Block223States.ump"
    private BouncePoint calculateBouncePointPaddle(){
     int x=(int)getCurrentPaddleX();
   	int y=(int)getCurrentPaddleY();
@@ -365,22 +365,22 @@ public class PlayedGame
   	return null;
   }
 
-  // line 201 "Block223States.ump"
+  // line 200 "Block223States.ump"
    private BouncePoint calculateBouncePointWall(){
     return null;
   }
 
-  // line 206 "Block223States.ump"
+  // line 205 "Block223States.ump"
    private void bounceBall(){
     
   }
 
-  // line 209 "Block223States.ump"
+  // line 208 "Block223States.ump"
    private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
     return null;
   }
 
-  // line 213 "Block223States.ump"
+  // line 212 "Block223States.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     double ballPosX = getCurrentBallX(); 
 	    double ballPosY = getCurrentBallY(); 
