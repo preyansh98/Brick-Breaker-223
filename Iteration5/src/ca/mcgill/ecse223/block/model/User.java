@@ -266,9 +266,16 @@ public class User implements Serializable
   }
 
   // line 30 "../../../../../Block223 v3.ump"
-   public static  String findUsername(Player player){
-    //TODO: implement
-   
+   public static  String findUsername(UserRole aRole){
+    List<UserRole> ur = new ArrayList<UserRole>();
+       for(String username: usersByUsername.keySet()){
+            ur = usersByUsername.get(username).getRoles();
+            for(UserRole role: ur){
+                 if(aRole == role){
+                     return username;
+                 }
+            }
+       }  
    return null;
   }
 

@@ -2,12 +2,8 @@
 /*This code was generated using the UMPLE 1.29.0.4181.a593105a9 modeling language!*/
 
 package ca.mcgill.ecse223.block.model;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.*;
-
-import ca.mcgill.ecse223.block.application.Block223Application;
 
 // line 11 "../../../../../Block223PlayMode.ump"
 // line 99 "../../../../../Block223Persistence.ump"
@@ -728,18 +724,14 @@ public class PlayedGame implements Serializable
 
   // line 37 "../../../../../Block223States.ump"
    private boolean isOutOfBoundsAndLastLife(){
-    boolean outOfBounds = false;
-    if (PlayedGame.NR_LIVES ==1) {
-    	outOfBounds = isOutOfBounds();
-    }
-    return outOfBounds;
+    // TODO implement
+    return false;
   }
 
   // line 42 "../../../../../Block223States.ump"
    private boolean isOutOfBounds(){
-    Boolean outOfBounds = isBallOutOfBounds();
-    
-    return outOfBounds;
+    // TODO implement
+    return false;
   }
 
   // line 48 "../../../../../Block223States.ump"
@@ -829,12 +821,7 @@ public class PlayedGame implements Serializable
 
   // line 127 "../../../../../Block223States.ump"
    private void doOutOfBounds(){
-    this.setLives(lives-1);
-    this.resetCurrentBallX();
-    this.resetCurrentBallY();
-    this.resetBallDirectionX();
-    this.resetBallDirectionY();
-    this.resetCurrentPaddleX();
+    // TODO implement
   }
 
   // line 131 "../../../../../Block223States.ump"
@@ -867,27 +854,24 @@ public class PlayedGame implements Serializable
 
   // line 157 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
-    // TODO implement
+    double x = getCurrentBallX();
+    double y = getCurretBallY();
+    double dx = getBallDirectionX();
+    double dy = getBallDirectionY();
+    setCurrentBallX(x + dx);
+    setCurrentBallY(y + dy);
   }
 
-  // line 161 "../../../../../Block223States.ump"
+  // line 166 "../../../../../Block223States.ump"
    private void doGameOver(){
-	   Block223 block223 = Block223Application.getBlock223();
-	   Player p = this.getPlayer();
-	   
-	   if (p != null) {
-		   Game game = this.getGame();
-		   HallOfFameEntry hof = new HallOfFameEntry(this.score, p.toString(), p, game, block223);
-		   game.setMostRecentEntry(hof);
-	   }
-	   this.delete();
+    // TODO implement
   }
 
 
   /**
    * Helper methods
    */
-  // line 167 "../../../../../Block223States.ump"
+  // line 172 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointPaddle(){
     int x=(int)getCurrentPaddleX();
   	int y=(int)getCurrentPaddleY();
@@ -917,22 +901,22 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 196 "../../../../../Block223States.ump"
+  // line 201 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointWall(){
     return null;
   }
 
-  // line 201 "../../../../../Block223States.ump"
+  // line 206 "../../../../../Block223States.ump"
    private void bounceBall(){
     
   }
 
-  // line 204 "../../../../../Block223States.ump"
+  // line 209 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
     return null;
   }
 
-  // line 208 "../../../../../Block223States.ump"
+  // line 213 "../../../../../Block223States.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     double ballPosX = getCurrentBallX(); 
 	    double ballPosY = getCurrentBallY(); 

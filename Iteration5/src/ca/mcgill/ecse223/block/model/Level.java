@@ -10,7 +10,7 @@ import java.util.*;
  * Each level is filled up with random blocks just before playing the level to reach the nrBlocksPerLevel defined in Game
  */
 // line 75 "../../../../../Block223Persistence.ump"
-// line 123 "../../../../../Block223 v3.ump"
+// line 130 "../../../../../Block223 v3.ump"
 public class Level implements Serializable
 {
 
@@ -193,7 +193,7 @@ public class Level implements Serializable
     }
   }
 
-  // line 125 "../../../../../Block223 v3.ump"
+  // line 132 "../../../../../Block223 v3.ump"
    public BlockAssignment findBlockAssignment(int gridHorizontalPosition, int gridVerticalPosition){
     List<BlockAssignment> assignments=getBlockAssignments();
 		for(BlockAssignment assignment: assignments){
