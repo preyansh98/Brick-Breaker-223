@@ -318,10 +318,10 @@ public class PlayedGame
 
   // line 157 "Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
-    Double x = getCurrentBallX();
-	  Double y = getCurrenttBallY();
-	  Double dx = getBallDirectionX();
-	  Double dy = getBallDirectionY();
+    double x = getCurrentBallX();
+	  double y = getCurrenttBallY();
+	  double dx = getBallDirectionX();
+	  double dy = getBallDirectionY();
 	  setCurrentBallX(x + dx);
 	  setCurrentBallY(y + dy);
   }

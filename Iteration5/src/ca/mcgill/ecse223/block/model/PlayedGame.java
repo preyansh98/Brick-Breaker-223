@@ -855,7 +855,7 @@ public class PlayedGame implements Serializable
   // line 157 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
     double x = getCurrentBallX();
-    double y = getCurretBallY();
+    double y = getCurrentBallY();
     double dx = getBallDirectionX();
     double dy = getBallDirectionY();
     setCurrentBallX(x + dx);
