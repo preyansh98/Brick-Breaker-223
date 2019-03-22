@@ -144,6 +144,9 @@ public class Block223Controller {
 				.equals(Block223Application.getBlock223().findGame(name).getAdmin())) {
 			throw new InvalidInputException("Only the admin who created the game can delete the game.");
 		}
+		if(Block223Application.getBlock223().findGame(name).getPublished() == true) {
+			throw new InvalidInputException("A published game cannot be deleted.");
+		}
 
 		Game game = Block223Application.getBlock223().findGame(name);
 
@@ -165,6 +168,9 @@ public class Block223Controller {
 		}
 		if (Block223Application.getCurrentUserRole().equals(game.getAdmin()) == false) {
 			throw new InvalidInputException("Only the admin who created the game can select the game.");
+		}
+		if(Block223Application.getBlock223().findGame(name).getPublished() == true) {
+			throw new InvalidInputException("A published game cannot be changed.");
 		}
 		Block223Application.setCurrentGame(game);
 
@@ -666,6 +672,7 @@ public class Block223Controller {
 		if(Block223Application.getCurrentUserRole() instanceof Admin == false) {
 			throw new InvalidInputException("Admin privileges are required to access game information.");
 		}
+		
 		Block223 block223 = Block223Application.getBlock223();
 		Admin admin = (Admin) Block223Application.getCurrentUserRole();
 
@@ -676,7 +683,7 @@ public class Block223Controller {
 		for (Game game : games) {
 			Admin gameAdmin = game.getAdmin();
 
-			if (true) { // if gameAdmin.equals(admin), this is temporary for testing. 
+			if (gameAdmin.equals(admin) && !(game.getPublished())) { 
 				TOGame to = new TOGame(game.getName(), game.getLevels().size(), game.getNrBlocksPerLevel(),
 						game.getBall().getMinBallSpeedX(), game.getBall().getMinBallSpeedY(),
 						game.getBall().getBallSpeedIncreaseFactor(), game.getPaddle().getMaxPaddleLength(),
