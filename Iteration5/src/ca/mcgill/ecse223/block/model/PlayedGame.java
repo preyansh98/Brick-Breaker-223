@@ -741,7 +741,14 @@ public class PlayedGame implements Serializable
     }
     return outOfBounds;
   }
-
+   
+   private boolean isBallOutOfBounds() {
+	   boolean outofbounds= false;
+	   if (this.getCurrentBallY() + this.getBallDirectionY() + 5 > 355) {
+		   outofbounds=true;
+	   }
+	   return outofbounds;
+   }
   // line 46 "../../../../../Block223States.ump"
    private boolean isOutOfBounds(){
     Boolean outOfBounds = isBallOutOfBounds();
