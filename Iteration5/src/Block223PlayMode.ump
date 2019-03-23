@@ -9,6 +9,9 @@ class Game {
 }
 
 class PlayedGame {
+   depend java.awt.geom.Line2D;
+   depend java.awt.geom.Rectangle2D;
+depend ca.mcgill.ecse223.block.model.BouncePoint.BounceDirection;
    const Integer INITIAL_WAIT_TIME = 1000; // at design time, the initial wait time may be adjusted as seen fit
    autounique id;
    const Integer NR_LIVES = 3;
@@ -42,6 +45,14 @@ class PlayedGame {
    * -- 1 Game game;
    1 <@>- * PlayedBlockAssignment blocks;
    0..1 -> 0..1 BouncePoint bounce;
+   
+     before constructor {
+      boolean didAddGameResult = setGame(aGame);
+      if (!didAddGameResult)
+      {
+         throw new RuntimeException("Unable to create playedGame due to game");
+      }
+   }
 }
 
 class PlayedBlockAssignment {

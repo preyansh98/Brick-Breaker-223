@@ -28,7 +28,7 @@ class User {
 class UserRole {
   depend java.io.Serializable;
   isA Serializable;
-  private static final long serialVersionUID = 386717977557499839L;
+  private static final long serialVersionUID = 3389752283403781197L;
 }
 
 class Admin {
