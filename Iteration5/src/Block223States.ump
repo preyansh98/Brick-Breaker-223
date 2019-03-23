@@ -36,8 +36,8 @@ class PlayedGame {
 
   private boolean isOutOfBoundsAndLastLife() {
    boolean outOfBounds = false;
-    if (PlayedGame.NR_LIVES ==1) {
-    	outOfBounds = isOutOfBounds();
+     if (this.NR_LIVES ==1) {
+    	outOfBounds = isBallOutOfBounds();
     }
     return outOfBounds;
   }
@@ -47,6 +47,13 @@ class PlayedGame {
     
     return outOfBounds;
   }
+   private boolean isBallOutOfBounds() {
+	   boolean outofbounds= false;
+	   if (this.getCurrentBallY() + this.getBallDirectionY() + 5 > 355) {
+		   outofbounds=true;
+	   }
+	   return outofbounds;
+   }
   
   private boolean hitLastBlockAndLastLevel() {
     
@@ -166,14 +173,14 @@ class PlayedGame {
 
   private void doHitNothingAndNotOutOfBounds() {
 	  double x = getCurrentBallX();
-	  double y = getCurrenttBallY();
+	  double y = getCurrentBallY();
 	  double dx = getBallDirectionX();
 	  double dy = getBallDirectionY();
 	  setCurrentBallX(x + dx);
 	  setCurrentBallY(y + dy);
   }
   private void doGameOver() {
-    Block223 block223 = Block223Application.getBlock223();
+    Block223 block223 = this.getBlock223();
 	   Player p = this.getPlayer();
 	   
 	   if (p != null) {
@@ -272,9 +279,9 @@ class PlayedGame {
    float dY=(float)getBallDirectionY();
    
    if(currentY+dY<=5){
-   		if(currentX+dX==5){
+   		if(currentX+dX<=5){
    			return  new BouncePoint(5.0f,5.0f, BounceDirection.FLIP_BOTH);
-   		}else if(currentX+dX==385){
+   		}else if(currentX+dX<=385){
    			return  new BouncePoint(385.0f,5.0f, BounceDirection.FLIP_BOTH);
    		}else{
    			if(dX!=0){
@@ -313,9 +320,48 @@ class PlayedGame {
   }
   
   private void bounceBall(){
+  	BouncePoint bp=getBounce();
+  	double currentX=getCurrentBallX();
+  	double currentY=getCurrentBallY();
+  	double incomingX=bp.getX()-currentX;
+  	double incomingY=bp.getY()-currentY;
+  	double remainingX=getBallDirectionX()-incomingX;
+  	double remainingY=getBallDirectionY()-incomingX;
+  	if(remainingX==0 && remainingY==0){
+  		setCurrentBallX(bp.getX());
+  		setCurrentBallY(bp.getY());
+  	}else{
+  		double newDirX,newDirY,newX,newY;
+  		if(bp.getDirection()==BounceDirection.FLIP_X){
+  			 newDirX=-getBallDirectionX();
+  			 newDirY=getBallDirectionY()+sign(getBallDirectionY())*0.1*Math.abs(newDirX);
+  			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
+  			 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
+  		}else if (bp.getDirection()==BounceDirection.FLIP_Y){
+  			 newDirY=-getBallDirectionY();
+  			 newDirX=getBallDirectionX()+sign(getBallDirectionX())*0.1*Math.abs(newDirY);
+  			 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
+  			 newX=bp.getY()+remainingX*newDirX/getBallDirectionX();	
+  		}else{
+  			 newDirX=-getBallDirectionX();
+  			 newDirY=-getBallDirectionY();
+  			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
+  			 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
+  		}
+  			setCurrentBallX(newX);
+  			setCurrentBallY(newY);
+  			setBallDirectionX(newDirX);
+  			setBallDirectionY(newDirY);
+  	}
+  	
+  }
+  private int sign(double val){
+		if(val>=0){
+			return 1;
+		}  
+		return -1;
   
   }
-  
   private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
   	return null;
   }

@@ -77,7 +77,7 @@ public class BlockAssignment implements Serializable
     boolean wasSet = false;
     // line 163 "../../../../../Block223 v3.ump"
     if (aGridVerticalPosition <= 0 || aGridVerticalPosition > maxNrVerticalBlocks()){
-    throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrVerticalBlocks() + ".");
+    throw new RuntimeException ("The vertical position must be between 1 and " +maxNrVerticalBlocks() + ".");
     }
     // END OF UMPLE BEFORE INJECTION
     gridVerticalPosition = aGridVerticalPosition;
