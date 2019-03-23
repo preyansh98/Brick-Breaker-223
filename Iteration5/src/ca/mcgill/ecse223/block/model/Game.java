@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 6 "../../../../../Block223PlayMode.ump"
-// line 46 "../../../../../Block223Persistence.ump"
+// line 47 "../../../../../Block223Persistence.ump"
 // line 61 "../../../../../Block223 v3.ump"
 public class Game implements Serializable
 {
@@ -884,7 +884,7 @@ public class Game implements Serializable
     }
   }
 
-  // line 51 "../../../../../Block223Persistence.ump"
+  // line 52 "../../../../../Block223Persistence.ump"
    public static  void reinitializeUniqueName(List<Game> games){
     gamesByName = new HashMap<String, Game>();
     for (Game game : games) {
@@ -920,7 +920,7 @@ public class Game implements Serializable
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 49 "../../../../../Block223Persistence.ump"
+  // line 50 "../../../../../Block223Persistence.ump"
   private static final long serialVersionUID = -210105651472293481L ;
 
   

@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 11 "../../../../../Block223PlayMode.ump"
-// line 99 "../../../../../Block223Persistence.ump"
+// line 100 "../../../../../Block223Persistence.ump"
 // line 1 "../../../../../Block223States.ump"
 public class PlayedGame implements Serializable
 {
@@ -722,6 +722,18 @@ public class PlayedGame implements Serializable
     }
   }
 
+  // line 105 "../../../../../Block223Persistence.ump"
+   public static  void reinitializeAutouniqueID(List<PlayedGame> games){
+    nextId=0;
+  	for(PlayedGame game: games){
+  		
+  			if(game.getId()>nextId){
+  				nextId=game.getId();
+  			}
+  		}
+  		nextId++;
+  }
+
 
   /**
    * Guards
@@ -1139,7 +1151,7 @@ public class PlayedGame implements Serializable
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 102 "../../../../../Block223Persistence.ump"
+  // line 103 "../../../../../Block223Persistence.ump"
   private static final long serialVersionUID = 8597675110221231714L ;
 
   
