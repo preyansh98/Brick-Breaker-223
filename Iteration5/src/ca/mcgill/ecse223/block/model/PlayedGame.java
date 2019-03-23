@@ -736,8 +736,8 @@ public class PlayedGame implements Serializable
   // line 38 "../../../../../Block223States.ump"
    private boolean isOutOfBoundsAndLastLife(){
     boolean outOfBounds = false;
-    if (PlayedGame.NR_LIVES ==1) {
-    	outOfBounds = isOutOfBounds();
+    if (this.NR_LIVES ==1) {
+    	outOfBounds = isBallOutOfBounds();
     }
     return outOfBounds;
   }
@@ -892,7 +892,7 @@ public class PlayedGame implements Serializable
 
   // line 176 "../../../../../Block223States.ump"
    private void doGameOver(){
-    Block223 block223 = Block223Application.getBlock223();
+    Block223 block223 = this.getBlock223();
 	   Player p = this.getPlayer();
 	   
 	   if (p != null) {
