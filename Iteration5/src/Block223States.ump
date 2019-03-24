@@ -524,7 +524,7 @@ class PlayedGame {
 		  				bp.setHitBlock(block);
 	  					return bp;
 		  			}else{
-		  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIPXY);
+		  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
 		  				bp.setHitBlock(block);
 	  					return bp;
 		  			}
@@ -538,6 +538,10 @@ class PlayedGame {
 			  			double bounceY=a*bounceX+b;
 			  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
 			  			bp.setHitBlock(block);
+	  					return bp;
+			  		}else{
+			  			BouncePoint bp= new BouncePoint(currentX,y+length+radius,BounceDirection.FLIP_Y);
+	  					bp.setHitBlock(block);
 	  					return bp;
 			  		}
 		  		}

@@ -1251,11 +1251,11 @@ public class PlayedGame implements Serializable
 		  			double X=-B+delta;
 		  			double Y=a*X+b;
 		  			if (dX<0){
-		  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
+		  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
 		  				bp.setHitBlock(block);
 	  					return bp;
 		  			}else{
-		  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+		  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
 		  				bp.setHitBlock(block);
 	  					return bp;
 		  			}
@@ -1270,6 +1270,10 @@ public class PlayedGame implements Serializable
 			  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
 			  			bp.setHitBlock(block);
 	  					return bp;
+			  		}else{
+			  			BouncePoint bp= new BouncePoint(currentX,y+length+radius,BounceDirection.FLIP_Y);
+	  					bp.setHitBlock(block);
+	  					return bp;
 			  		}
 		  		}
 			  		else if(segment.intersects(rectH)){
@@ -1283,11 +1287,11 @@ public class PlayedGame implements Serializable
 				  			double X=-B+delta;
 				  			double Y=a*X+b;
 				  			if (dX<0){
-				  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+				  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
 				  				bp.setHitBlock(block);
 	  							return bp;
 				  			}else{
-				  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
+				  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
 				  				bp.setHitBlock(block);
 	  							return bp;
 				  			}
@@ -1296,7 +1300,7 @@ public class PlayedGame implements Serializable
 	  	return null;
   }
 
-  // line 570 "../../../../../Block223States.ump"
+  // line 574 "../../../../../Block223States.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     double ballPosX = getCurrentBallX(); 
 	    double ballPosY = getCurrentBallY(); 
