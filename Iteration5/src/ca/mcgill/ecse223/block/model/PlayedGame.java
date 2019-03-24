@@ -1108,7 +1108,7 @@ public class PlayedGame implements Serializable
 		return -1;
   }
 
-  // line 380 "../../../../../Block223States.ump"
+  // line 381 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
     int x=(int)block.getX();
 	  	int y=(int)block.getY();
@@ -1174,7 +1174,8 @@ public class PlayedGame implements Serializable
 	  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
 	  			}
 	  		}
-	  	}else if(segment.intersects(rectF)){
+	  	}
+	  	else if(segment.intersects(rectF)){
 	  		if(dX!=0){
 	  			float a=dY/dX;
 	  			float b=currentY-a*currentX;
@@ -1189,12 +1190,54 @@ public class PlayedGame implements Serializable
 	  			}else{
 	  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
 	  			}
+	  		}}
+	  		else if(segment.intersects(rectG)){
+		  		if(dX!=0){
+		  			float a=dY/dX;
+		  			float b=currentY-a*currentX;
+		  			double A=1+Math.pow(a,2);
+		  			double B=2*a*(b-y)-2*(x+length);
+		  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+		  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
+		  			double X=-B+delta;
+		  			double Y=a*X+b;
+		  			if (dX<0){
+		  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
+		  			}else{
+		  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+		  			}
+		  		}
 	  		}
+		  		else if(segment.intersects(rectD)){
+			  		if(dX!=0){
+			  			float a=dY/dX;
+			  			float b=currentY-a*currentX;
+			  			float bounceX=x-radius;
+			  			float bounceY=a*bounceX+b;
+			  			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
+			  		}
+		  		}
+			  		else if(segment.intersects(rectH)){
+				  		if(dX!=0){
+				  			float a=dY/dX;
+				  			float b=currentY-a*currentX;
+				  			double A=1+Math.pow(a,2);
+				  			double B=2*a*(b-y)-2*(x+length);
+				  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+				  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
+				  			double X=-B+delta;
+				  			double Y=a*X+b;
+				  			if (dX<0){
+				  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+				  			}else{
+				  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
+				  			}
+				  		}
 	  	}
 	  	return null;
   }
 
-  // line 467 "../../../../../Block223States.ump"
+  // line 510 "../../../../../Block223States.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     double ballPosX = getCurrentBallX(); 
 	    double ballPosY = getCurrentBallY(); 
