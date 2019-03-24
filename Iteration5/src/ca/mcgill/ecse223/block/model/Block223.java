@@ -588,6 +588,14 @@ public class Block223 implements Serializable
     
   }
 
+  // line 6 "../../../../../Block223PlayMode.ump"
+   public PlayedGame findPlayableGame(int id){
+    for(PlayedGame game: getPlayedGames()){
+   		if(game.getId()==id)return game;
+   	}
+   	return null;
+  }
+
   // line 10 "../../../../../Block223Persistence.ump"
    public void reinitialize(){
     Game.reinitializeUniqueName(this.getGames());

@@ -2,6 +2,7 @@ package ca.mcgill.ecse223.block.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import ca.mcgill.ecse223.block.application.Block223Application;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
@@ -23,7 +24,7 @@ import ca.mcgill.ecse223.block.model.PlayedGame.PlayStatus;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 import ca.mcgill.ecse223.block.view.Block223PlayModeInterface;
 import ca.mcgill.ecse223.block.view.PlayedModeClass;
-//import jdk.nashorn.internal.runtime.FindProperty;
+
 
 public class Block223Controller {
 
@@ -577,61 +578,73 @@ public class Block223Controller {
 	// play mode
 
 	public static void selectPlayableGame(String name, int id) throws InvalidInputException {
-		Game game = Game.getWithName(name);
-		if (game == null) {
-			throw new InvalidInputException("The game does not exist.");
+		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
+			throw new InvalidInputException("Player privileges are required to play a game.");
 		}
-		
-		Block223 block223 = Block223Application.getBlock223();
-
-		// Checks
-		if (!(Block223Application.getCurrentUserRole() instanceof Player)) {
-			throw new InvalidInputException("Player privileges are required to define game settings.");
-		}
-
-		// if (Game.getWithName(name) == null && Block223.findPlayableGame == null)
-
-		if (game != null) {
-
-			Player player = (Player) Block223Application.getCurrentUserRole();
-
-			String username = User.findUsername(player);
-
-			PlayedGame pgame = new PlayedGame(username, game, block223);
+		Block223 block223=Block223Application.getBlock223();
+		Game game=block223.findGame(name);
+		PlayedGame pgame=null;
+		if(game!=null) {
+			Player player=(Player)Block223Application.getCurrentUserRole();
+			String username=User.findUsername(player);
+			pgame= new PlayedGame(username, game, block223);
 			pgame.setPlayer(player);
-			
-		} else {
-			//Can't find the method
-			//PlayedGame pgame = Block223.findPlayableGame(id);
-			/* if (game == null) {
-			/  throw new InvalidInputException("The game does not exist.");
-			}
-			*/ 
+		}else {
+			 pgame=block223.findPlayableGame(id);
+			 if(pgame==null) {
+				 throw new InvalidInputException("The game does not exist.");
+			 }
+			 if(pgame.getPlayer()!=(Player)Block223Application.getCurrentUserRole()) {
+				 throw new InvalidInputException("Only the player that started a game can continue the game.");
+			 }
 		}
-
-		//Block223Application.setCurrentPlayableGame(pgame);
+		Block223Application.setCurrentPlayableGame(pgame);
 
 	}
 
 	public static void startGame(Block223PlayModeInterface ui) throws InvalidInputException {
 
-		PlayedGame game = (PlayedGame) Block223Application.getCurrentPlayableGame();
+		PlayedGame game=Block223Application.getCurrentPlayableGame();
 		game.play();
-
-		PlayedModeClass pl = new PlayedModeClass();
-		 //pl.takeInputs();
-		
-
-		while (game.getPlayStatus() == PlayStatus.Moving) {
-			// pl.takeinputs();
-			// Block223Controller.updatePaddlePosition
+		String userInputs=ui.takeInputs();
+		while(game.getPlayStatus()==PlayStatus.Moving) {
+			userInputs=ui.takeInputs();
+			updatePaddlePosition(userInputs);
 			game.move();
-			// NOT COMPLETE
+			if(userInputs.contains(" ")) {
+				game.pause();
+			}
+			try {
+				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime());
+			} catch (InterruptedException e) {
+				
+			}
+			ui.refresh();
+		}
+		if(game.getPlayStatus()==PlayStatus.GameOver) {
+			Block223Application.setCurrentPlayableGame(null);
+		}else if(game.getPlayer()!=null){
+			Block223 block223=Block223Application.getBlock223();
+			Block223Persistence.save(block223);
 		}
 	}
-	
-	public void doSetup() {
-		
+
+
+	private static void updatePaddlePosition(String userInputs) {
+		PlayedGame game=Block223Application.getCurrentPlayableGame();
+		for(int i=0; i<userInputs.length();i++) {
+			if(userInputs.charAt(i)=='l') {
+				if(game.getCurrentPaddleX()>=Math.abs(game.PADDLE_MOVE_LEFT)) {
+					game.setCurrentPaddleX(game.getCurrentPaddleX()+game.PADDLE_MOVE_LEFT);
+				}
+			}else if(userInputs.charAt(i)=='r') {
+				if(game.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-game.PADDLE_MOVE_RIGHT) {
+					game.setCurrentPaddleX(game.getCurrentPaddleX()+game.PADDLE_MOVE_RIGHT);
+				}
+			}else if(userInputs.charAt(i)==' ') {
+				break;
+			}
+		}
 	}
 
 	public static void testGame(Block223PlayModeInterface ui) throws InvalidInputException {

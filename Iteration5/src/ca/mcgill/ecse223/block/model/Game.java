@@ -5,7 +5,7 @@ package ca.mcgill.ecse223.block.model;
 import java.io.Serializable;
 import java.util.*;
 
-// line 6 "../../../../../Block223PlayMode.ump"
+// line 13 "../../../../../Block223PlayMode.ump"
 // line 47 "../../../../../Block223Persistence.ump"
 // line 61 "../../../../../Block223 v3.ump"
 public class Game implements Serializable
@@ -39,7 +39,7 @@ public class Game implements Serializable
   private boolean published;
   private String name;
   private int nrBlocksPerLevel;
-  private Comparator<HallOfFameEntry> hallOfFameEntriesPriority;
+  private transient Comparator<HallOfFameEntry> hallOfFameEntriesPriority;
 
   //Game Associations
   private HallOfFameEntry mostRecentEntry;
@@ -59,7 +59,7 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, Ball aBall, Paddle aPaddle, Block223 aBlock223)
   {
-    // line 77 "../../../../../Block223 v3.ump"
+    // line 78 "../../../../../Block223 v3.ump"
     if(aName == null || aName.isEmpty() == true){
        		throw new RuntimeException("The name of the game must be unique."); 
        	}
@@ -108,7 +108,7 @@ public class Game implements Serializable
 
   public Game(String aName, int aNrBlocksPerLevel, Admin aAdmin, int aMinBallSpeedXForBall, int aMinBallSpeedYForBall, double aBallSpeedIncreaseFactorForBall, int aMaxPaddleLengthForPaddle, int aMinPaddleLengthForPaddle, Block223 aBlock223)
   {
-    // line 77 "../../../../../Block223 v3.ump"
+    // line 78 "../../../../../Block223 v3.ump"
     if(aName == null || aName.isEmpty() == true){
        		throw new RuntimeException("The name of the game must be unique."); 
        	}
@@ -159,7 +159,7 @@ public class Game implements Serializable
   public boolean setName(String aName)
   {
     boolean wasSet = false;
-    // line 77 "../../../../../Block223 v3.ump"
+    // line 78 "../../../../../Block223 v3.ump"
     if(aName == null || aName.isEmpty() == true){
        		throw new RuntimeException("The name of the game must be unique."); 
        	}
@@ -892,7 +892,7 @@ public class Game implements Serializable
     }
   }
 
-  // line 83 "../../../../../Block223 v3.ump"
+  // line 84 "../../../../../Block223 v3.ump"
    public Block findBlock(int id){
     for(Block block: blocks){
    			if(id == block.getId()){
@@ -902,9 +902,9 @@ public class Game implements Serializable
    		return null;
   }
 
-  // line 92 "../../../../../Block223 v3.ump"
+  // line 93 "../../../../../Block223 v3.ump"
    public Block getRandomBlock(){
-    return null;
+    return getBlock( new Random().nextInt(getBlocks().size()));
   }
 
 

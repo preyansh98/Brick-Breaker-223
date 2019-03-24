@@ -7,7 +7,7 @@ package ca.mcgill.ecse223.block.model;
  * this class needs to be specified but the use of it is optional; it is also not added to the persistence file
  * you may implement bounce behavior differently
  */
-// line 76 "../../../../../Block223PlayMode.ump"
+// line 83 "../../../../../Block223PlayMode.ump"
 public class BouncePoint
 {
 

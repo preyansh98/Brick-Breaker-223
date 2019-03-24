@@ -5,7 +5,7 @@ package ca.mcgill.ecse223.block.model;
 import java.io.Serializable;
 
 // line 82 "../../../../../Block223Persistence.ump"
-// line 150 "../../../../../Block223 v3.ump"
+// line 151 "../../../../../Block223 v3.ump"
 public class BlockAssignment implements Serializable
 {
 
@@ -28,7 +28,7 @@ public class BlockAssignment implements Serializable
 
   public BlockAssignment(int aGridHorizontalPosition, int aGridVerticalPosition, Level aLevel, Block aBlock, Game aGame)
   {
-    // line 156 "../../../../../Block223 v3.ump"
+    // line 157 "../../../../../Block223 v3.ump"
     if (aGridHorizontalPosition <=0 || aGridHorizontalPosition > maxNrHorizontalBlocks()){
        throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrHorizontalBlocks() + ".");
     }
@@ -62,7 +62,7 @@ public class BlockAssignment implements Serializable
   public boolean setGridHorizontalPosition(int aGridHorizontalPosition)
   {
     boolean wasSet = false;
-    // line 164 "../../../../../Block223 v3.ump"
+    // line 165 "../../../../../Block223 v3.ump"
     if (aGridHorizontalPosition <= 0 || aGridHorizontalPosition > maxNrHorizontalBlocks()){
     throw new RuntimeException ("The horizontal position must be between 1 and " +maxNrHorizontalBlocks() + ".");
     }
@@ -75,7 +75,7 @@ public class BlockAssignment implements Serializable
   public boolean setGridVerticalPosition(int aGridVerticalPosition)
   {
     boolean wasSet = false;
-    // line 169 "../../../../../Block223 v3.ump"
+    // line 170 "../../../../../Block223 v3.ump"
     if (aGridVerticalPosition <= 0 || aGridVerticalPosition > maxNrVerticalBlocks()){
     throw new RuntimeException ("The vertical position must be between 1 and " +maxNrVerticalBlocks() + ".");
     }
@@ -189,13 +189,13 @@ public class BlockAssignment implements Serializable
     }
   }
 
-  // line 174 "../../../../../Block223 v3.ump"
+  // line 175 "../../../../../Block223 v3.ump"
    public static  int maxNrHorizontalBlocks(){
     int maxnumber = (390-20+5)/25;
 return maxnumber;
   }
 
-  // line 178 "../../../../../Block223 v3.ump"
+  // line 179 "../../../../../Block223 v3.ump"
    public static  int maxNrVerticalBlocks(){
     int maxnumber = (390-30-5-10-10+2) / 22;
 return maxnumber;

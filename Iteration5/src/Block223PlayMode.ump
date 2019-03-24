@@ -1,6 +1,13 @@
 class Block223 {
    1 <@>- * PlayedGame playedGames;
    1 <@>- * HallOfFameEntry entries;
+   
+   public PlayedGame findPlayableGame(int id){
+   	for(PlayedGame game: getPlayedGames()){
+   		if(game.getId()==id)return game;
+   	}
+   	return null;
+   }
 }
 
 class Game {

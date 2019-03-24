@@ -8,7 +8,7 @@ import ca.mcgill.ecse223.block.model.BouncePoint.BounceDirection;
 import java.io.Serializable;
 import java.util.*;
 
-// line 11 "../../../../../Block223PlayMode.ump"
+// line 18 "../../../../../Block223PlayMode.ump"
 // line 100 "../../../../../Block223Persistence.ump"
 // line 1 "../../../../../Block223States.ump"
 public class PlayedGame implements Serializable
@@ -82,7 +82,7 @@ public class PlayedGame implements Serializable
 
   public PlayedGame(String aPlayername, Game aGame, Block223 aBlock223)
   {
-    // line 50 "../../../../../Block223PlayMode.ump"
+    // line 57 "../../../../../Block223PlayMode.ump"
     boolean didAddGameResult = setGame(aGame);
           if (!didAddGameResult)
           {
@@ -770,7 +770,7 @@ public class PlayedGame implements Serializable
 	   return outofbounds;
   }
 
-  // line 59 "../../../../../Block223States.ump"
+  // line 60 "../../../../../Block223States.ump"
    private boolean hitLastBlockAndLastLevel(){
     Game game = this.getGame(); 
 	int nrLevels = game.numberOfLevels(); 
@@ -789,7 +789,7 @@ public class PlayedGame implements Serializable
     return false;
   }
 
-  // line 77 "../../../../../Block223States.ump"
+  // line 78 "../../../../../Block223States.ump"
    private boolean hitLastBlock(){
     int nrBlocks = numberOfBlocks(); 
 	setBounce(null); 
@@ -803,23 +803,24 @@ public class PlayedGame implements Serializable
     return false;
   }
 
-  // line 90 "../../../../../Block223States.ump"
+  // line 92 "../../../../../Block223States.ump"
    private boolean hitBlock(){
     int nrBlocks = numberOfBlocks();
 	   setBounce(null); 
 	   
-	   for(int index = 0; index < nrBlocks - 1; index++) {
-		   PlayedBlockAssignment block = getBlock(index); 
-		   
+	   for( PlayedBlockAssignment block : getBlocks()) {
 		   BouncePoint bp = calculateBouncePointBlock(block); 		   
 		   bounce = getBounce(); 
 		   boolean closer = isCloser(bp, bounce); 
-		   if(closer) setBounce(bp); 
+		   if(closer) {
+		   bp.setHitBlock(block);
+		   setBounce(bp);
+		   } 
 	   }
 	   return (getBounce()!=null);
   }
 
-  // line 105 "../../../../../Block223States.ump"
+  // line 108 "../../../../../Block223States.ump"
    private boolean hitWall(){
     BouncePoint bp=calculateBouncePointWall();
     setBounce(bp);
@@ -831,7 +832,7 @@ public class PlayedGame implements Serializable
    * Actions
    * TODO: this method has to be implemented.
    */
-  // line 115 "../../../../../Block223States.ump"
+  // line 118 "../../../../../Block223States.ump"
    private void doSetup(){
     resetCurrentBallX(); 
 	   resetCurrentBallY(); 
@@ -856,21 +857,28 @@ public class PlayedGame implements Serializable
 		   //pick x and y randomly: 
 		   //first pick a grid position randomly 
 		   //if its already taken, try next position starting from the randomly 
-		   
-		   int x = 0; 
-		   int y = 0; 
-		   
-		   PlayedBlockAssignment pblock = new PlayedBlockAssignment
-				   (x, y, game.getRandomBlock(), this); 
+		   Random rand=new Random();
+		   int x = game.WALL_PADDING + (Block.SIZE + game.COLUMNS_PADDING)*rand.nextInt(15); 
+		   int y =  game.WALL_PADDING +(Block.SIZE + game.ROW_PADDING)*rand.nextInt(15)+1; 
+		   boolean found=false;
+		   for (PlayedBlockAssignment blockassi:getBlocks()){
+		   		if(blockassi.getX()==x && blockassi.getY()==y){
+		   			found=true;
+		   			break;
+		   		}
+		   }
+		   if(!found){
+		   	PlayedBlockAssignment pblock = new PlayedBlockAssignment(x, y, game.getRandomBlock(), this);
+		   } 
 	   }
   }
 
-  // line 150 "../../../../../Block223States.ump"
+  // line 160 "../../../../../Block223States.ump"
    private void doHitPaddleOrWall(){
     bounceBall();
   }
 
-  // line 154 "../../../../../Block223States.ump"
+  // line 164 "../../../../../Block223States.ump"
    private void doOutOfBounds(){
     this.setLives(lives-1);
     this.resetCurrentBallX();
@@ -880,7 +888,7 @@ public class PlayedGame implements Serializable
     this.resetCurrentPaddleX();
   }
 
-  // line 163 "../../../../../Block223States.ump"
+  // line 173 "../../../../../Block223States.ump"
    private void doHitBlock(){
     int score = getScore(); 
 	   bounce = getBounce(); 
@@ -894,7 +902,7 @@ public class PlayedGame implements Serializable
 	   bounceBall();
   }
 
-  // line 176 "../../../../../Block223States.ump"
+  // line 186 "../../../../../Block223States.ump"
    private void doHitBlockNextLevel(){
     doHitBlock(); 
 	   int level = getCurrentLevel(); 
@@ -908,7 +916,7 @@ public class PlayedGame implements Serializable
 			   (getCurrentLevel() - 1)));
   }
 
-  // line 189 "../../../../../Block223States.ump"
+  // line 199 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
     double x = getCurrentBallX();
 	  double y = getCurrentBallY();
@@ -918,7 +926,7 @@ public class PlayedGame implements Serializable
 	  setCurrentBallY(y + dy);
   }
 
-  // line 197 "../../../../../Block223States.ump"
+  // line 207 "../../../../../Block223States.ump"
    private void doGameOver(){
     Block223 block223 = this.getBlock223();
 	   Player p = this.getPlayer();
@@ -935,54 +943,54 @@ public class PlayedGame implements Serializable
   /**
    * Helper methods
    */
-  // line 211 "../../../../../Block223States.ump"
+  // line 221 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointPaddle(){
-    int x=(int)getCurrentPaddleX();
-  	int y=(int)getCurrentPaddleY();
-  	int length=(int)getCurrentPaddleLength();
+    double x=getCurrentPaddleX();
+  	double y=getCurrentPaddleY();
+  	double length=getCurrentPaddleLength();
   	int radius=Ball.BALL_DIAMETER/2;
   	int width=Paddle.PADDLE_WIDTH;
-  	Rectangle2D rectA=new Rectangle2D.Float(x,y-radius,length,width );
-  	Rectangle2D rectB=new Rectangle2D.Float(x-radius,y,length,width );
-  	Rectangle2D rectC=new Rectangle2D.Float(x+length,y,length,width );
-  	Rectangle2D rectF=new Rectangle2D.Float(x+length,y-radius,length,width);
-  	Rectangle2D rectE=new Rectangle2D.Float(x-radius,y-radius,length,width);
-   	float currentX=(float)getCurrentBallX();
-    float currentY=(float)getCurrentBallY();
-   	float dX=(float)getBallDirectionX();
-    float dY=(float)getBallDirectionY();
-  	Line2D segment=new Line2D.Float(currentX,currentY,currentX+dX,currentY+dY);
+  	Rectangle2D rectA=new Rectangle2D.Double(x,y-radius,length,width );
+  	Rectangle2D rectB=new Rectangle2D.Double(x-radius,y,radius,width );
+  	Rectangle2D rectC=new Rectangle2D.Double(x+length,y,radius,width );
+  	Rectangle2D rectF=new Rectangle2D.Double(x+length,y-radius,radius,radius);
+  	Rectangle2D rectE=new Rectangle2D.Double(x-radius,y-radius,radius,radius);
+   	double currentX=getCurrentBallX();
+    double currentY=getCurrentBallY();
+   	double dX=getBallDirectionX();
+    double dY=getBallDirectionY();
+  	Line2D segment=new Line2D.Double(currentX,currentY,currentX+dX,currentY+dY);
   	
   	if(segment.intersects(rectA)){
   		if(dX==0){
   			return new BouncePoint(currentX,y-radius,BounceDirection.FLIP_Y);
   		}else{
-  			float a=dY/dX;
-  			float b=currentY-a*currentX;
-  			float bounceY=y-radius;
-  			float bounceX=(bounceY-b)/a;
+  			double a=dY/dX;
+  			double b=currentY-a*currentX;
+  			double bounceY=y-radius;
+  			double bounceX=(bounceY-b)/a;
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
   		}
   	}else if(segment.intersects(rectB)){
   		if(dX!=0){
-  			float a=dY/dX;
-  			float b=currentY-a*currentX;
-  			float bounceX=x-radius;
-  			float bounceY=a*bounceX+b;
+  			double a=dY/dX;
+  			double b=currentY-a*currentX;
+  			double bounceX=x-radius;
+  			double bounceY=a*bounceX+b;
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
   	}else if(segment.intersects(rectC)){
   		if(dX!=0){
-  			float a=dY/dX;
-  			float b=currentY-a*currentX;
-  			float bounceX=x-radius;
-  			float bounceY=a*bounceX+b;
+  			double a=dY/dX;
+  			double b=currentY-a*currentX;
+  			double bounceX=x-radius;
+  			double bounceY=a*bounceX+b;
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
   	}else if(segment.intersects(rectE)){
   		if(dX!=0){
-  			float a=dY/dX;
-  			float b=currentY-a*currentX;
+  			double a=dY/dX;
+  			double b=currentY-a*currentX;
   			double A=1+Math.pow(a,2);
   			double B=2*a*(b-y)-2*x;
   			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
@@ -997,8 +1005,8 @@ public class PlayedGame implements Serializable
   		}
   	}else if(segment.intersects(rectF)){
   		if(dX!=0){
-  			float a=dY/dX;
-  			float b=currentY-a*currentX;
+  			double a=dY/dX;
+  			double b=currentY-a*currentX;
   			double A=1+Math.pow(a,2);
   			double B=2*a*(b-y)-2*(x+length);
   			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
@@ -1015,12 +1023,12 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 290 "../../../../../Block223States.ump"
+  // line 300 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointWall(){
-    float currentX=(float)getCurrentBallX();
-   float currentY=(float)getCurrentBallY();
-   float dX=(float)getBallDirectionX();
-   float dY=(float)getBallDirectionY();
+    double currentX=getCurrentBallX();
+   double currentY=getCurrentBallY();
+   double dX=getBallDirectionX();
+   double dY=getBallDirectionY();
    
    if(currentY+dY<=5){
    		if(currentX+dX<=5){
@@ -1029,10 +1037,10 @@ public class PlayedGame implements Serializable
    			return  new BouncePoint(385.0f,5.0f, BounceDirection.FLIP_BOTH);
    		}else{
    			if(dX!=0){
-   				float a=dY/dX;
-  				float b=currentY-a*currentX;
-  				float bounceY=5.0f;
-  				float bounceX=(bounceY-b)/a;
+   				double a=dY/dX;
+  				double b=currentY-a*currentX;
+  				double bounceY=5.0f;
+  				double bounceX=(bounceY-b)/a;
   				return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
   			}else{
   				return new BouncePoint(currentX, 5.0f, BounceDirection.FLIP_Y);
@@ -1042,20 +1050,20 @@ public class PlayedGame implements Serializable
     
     if(currentX+dX<=5){
     	if(dX!=0){
-   				float a=dY/dX;
-  				float b=currentY-a*currentX;
-  				float bounceX=5.0f;
-  				float bounceY=a*bounceX+b;
+   				double a=dY/dX;
+  				double b=currentY-a*currentX;
+  				double bounceX=5.0f;
+  				double bounceY=a*bounceX+b;
   				
   				return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
     }
     if(currentX+dX>=385){
     	if(dX!=0){
-   				float a=dY/dX;
-  				float b=currentY-a*currentX;
-  				float bounceX=385.0f;
-  				float bounceY=a*bounceX+b;
+   				double a=dY/dX;
+  				double b=currentY-a*currentX;
+  				double bounceX=385.0f;
+  				double bounceY=a*bounceX+b;
   				
   				return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
@@ -1063,7 +1071,7 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 337 "../../../../../Block223States.ump"
+  // line 347 "../../../../../Block223States.ump"
    private void bounceBall(){
     BouncePoint bp=getBounce();
   	double currentX=getCurrentBallX();
@@ -1071,7 +1079,7 @@ public class PlayedGame implements Serializable
   	double incomingX=bp.getX()-currentX;
   	double incomingY=bp.getY()-currentY;
   	double remainingX=getBallDirectionX()-incomingX;
-  	double remainingY=getBallDirectionY()-incomingX;
+  	double remainingY=getBallDirectionY()-incomingY;
   	if(remainingX==0 && remainingY==0){
   		setCurrentBallX(bp.getX());
   		setCurrentBallY(bp.getY());
@@ -1080,27 +1088,52 @@ public class PlayedGame implements Serializable
   		if(bp.getDirection()==BounceDirection.FLIP_X){
   			 newDirX=-getBallDirectionX();
   			 newDirY=getBallDirectionY()+sign(getBallDirectionY())*0.1*Math.abs(newDirX);
+  			 if(getBallDirectionX()!=0){
   			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
-  			 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
+  			 }else {
+  			 newX=bp.getX()+remainingY*newDirX/getBallDirectionY();
+  			 }
+  			 if(getBallDirectionY()!=0){
+  				 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
+  			 }else{
+  			 	newY=bp.getY()+remainingX*newDirY/getBallDirectionX();
+  			 }
   		}else if (bp.getDirection()==BounceDirection.FLIP_Y){
   			 newDirY=-getBallDirectionY();
   			 newDirX=getBallDirectionX()+sign(getBallDirectionX())*0.1*Math.abs(newDirY);
-  			 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
-  			 newX=bp.getY()+remainingX*newDirX/getBallDirectionX();	
+  			if(getBallDirectionX()!=0){
+  			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
+  			 }else {
+  			 newX=bp.getX()+remainingY*newDirX/getBallDirectionY();
+  			 }
+  			 if(getBallDirectionY()!=0){
+  				 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
+  			 }else{
+  			 	newY=bp.getY()+remainingX*newDirY/getBallDirectionX();
+  			 }
   		}else{
   			 newDirX=-getBallDirectionX();
   			 newDirY=-getBallDirectionY();
+  			if(getBallDirectionX()!=0){
   			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
-  			 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
+  			 }else {
+  			 newX=bp.getX()+remainingY*newDirX/getBallDirectionY();
+  			 }
+  			 if(getBallDirectionY()!=0){
+  				 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
+  			 }else{
+  			 	newY=bp.getY()+remainingX*newDirY/getBallDirectionX();
+  			 }
   		}
   			setCurrentBallX(newX);
   			setCurrentBallY(newY);
   			setBallDirectionX(newDirX);
   			setBallDirectionY(newDirY);
   	}
+  	setBounce(null);
   }
 
-  // line 373 "../../../../../Block223States.ump"
+  // line 407 "../../../../../Block223States.ump"
    private int sign(double val){
     if(val>=0){
 			return 1;
@@ -1108,60 +1141,68 @@ public class PlayedGame implements Serializable
 		return -1;
   }
 
-  // line 381 "../../../../../Block223States.ump"
+  // line 415 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
-    int x=(int)block.getX();
-	  	int y=(int)block.getY();
+    int x=block.getX();
+	  	int y=block.getY();
 	  	int length=block.getBlock().SIZE;
 	  	int radius=Ball.BALL_DIAMETER/2;
 	  	int width=block.getBlock().SIZE;
 
-	  	Rectangle2D rectA=new Rectangle2D.Float(x,y-radius,length,width );
-	  	Rectangle2D rectB=new Rectangle2D.Float(x-radius,y,length,width );
-	  	Rectangle2D rectC=new Rectangle2D.Float(x+length,y,length,width );
-	  	Rectangle2D rectF=new Rectangle2D.Float(x+length,y-radius,length,width);  	
-	  	Rectangle2D rectE=new Rectangle2D.Float(x-radius,y-radius,length,width);
+	  	Rectangle2D rectA=new Rectangle2D.Double(x,y-radius,length,radius );
+	  	Rectangle2D rectB=new Rectangle2D.Double(x-radius,y,radius,length );
+	  	Rectangle2D rectC=new Rectangle2D.Double(x+length,y,radius,length );
+	  	Rectangle2D rectF=new Rectangle2D.Double(x+length,y-radius,radius,radius);  	
+	  	Rectangle2D rectE=new Rectangle2D.Double(x-radius,y-radius,radius,radius);
 	  	
-	  	Rectangle2D rectG=new Rectangle2D.Float(x-radius,y-radius,length,width);
-	  	Rectangle2D rectD=new Rectangle2D.Float(x-radius,y-radius,length,width);
-	  	Rectangle2D rectH=new Rectangle2D.Float(x-radius,y-radius,length,width);
+	  	Rectangle2D rectG=new Rectangle2D.Double(x-radius,y+length,radius,radius);
+	  	Rectangle2D rectD=new Rectangle2D.Double(x,y+length,radius,radius);
+	  	Rectangle2D rectH=new Rectangle2D.Double(x+length,y+length,radius,radius);
 	  	
-	   	float currentX=(float)getCurrentBallX();
-	    float currentY=(float)getCurrentBallY();
-	   	float dX=(float)getBallDirectionX();
-	    float dY=(float)getBallDirectionY();
-	  	Line2D segment=new Line2D.Float(currentX,currentY,currentX+dX,currentY+dY);
+	   	double currentX=getCurrentBallX();
+	    double currentY=getCurrentBallY();
+	   	double dX=getBallDirectionX();
+	    double dY=getBallDirectionY();
+	  	Line2D segment=new Line2D.Double(currentX,currentY,currentX+dX,currentY+dY);
 	  	
 	  	if(segment.intersects(rectA)){
 	  		if(dX==0){
-	  			return new BouncePoint(currentX,y-radius,BounceDirection.FLIP_Y);
+	  			BouncePoint bp= new BouncePoint(currentX,y-radius,BounceDirection.FLIP_Y);
+	  			bp.setHitBlock(block);
+	  			return bp;
 	  		}else{
-	  			float a=dY/dX;
-	  			float b=currentY-a*currentX;
-	  			float bounceY=y-radius;
-	  			float bounceX=(bounceY-b)/a;
-	  			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
+	  			double a=dY/dX;
+	  			double b=currentY-a*currentX;
+	  			double bounceY=y-radius;
+	  			double bounceX=(bounceY-b)/a;
+	  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
+	  			bp.setHitBlock(block);
+	  			return bp;
 	  		}
 	  	}else if(segment.intersects(rectB)){
 	  		if(dX!=0){
-	  			float a=dY/dX;
-	  			float b=currentY-a*currentX;
-	  			float bounceX=x-radius;
-	  			float bounceY=a*bounceX+b;
-	  			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
+	  			double a=dY/dX;
+	  			double b=currentY-a*currentX;
+	  			double bounceX=x-radius;
+	  			double bounceY=a*bounceX+b;
+	  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
+	  			bp.setHitBlock(block);
+	  			return bp;
 	  		}
 	  	}else if(segment.intersects(rectC)){
 	  		if(dX!=0){
-	  			float a=dY/dX;
-	  			float b=currentY-a*currentX;
-	  			float bounceX=x-radius;
-	  			float bounceY=a*bounceX+b;
-	  			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
+	  			double a=dY/dX;
+	  			double b=currentY-a*currentX;
+	  			double bounceX=x-radius;
+	  			double bounceY=a*bounceX+b;
+	  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
+	  			bp.setHitBlock(block);
+	  			return bp;
 	  		}
 	  	}else if(segment.intersects(rectE)){
 	  		if(dX!=0){
-	  			float a=dY/dX;
-	  			float b=currentY-a*currentX;
+	  			double a=dY/dX;
+	  			double b=currentY-a*currentX;
 	  			double A=1+Math.pow(a,2);
 	  			double B=2*a*(b-y)-2*x;
 	  			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
@@ -1169,16 +1210,20 @@ public class PlayedGame implements Serializable
 	  			double X=-B-delta;
 	  			double Y=a*X+b;
 	  			if (dX<0){
-	  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+	  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+	  				bp.setHitBlock(block);
+	  				return bp;
 	  			}else{
-	  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
+	  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
+	  				bp.setHitBlock(block);
+	  				return bp;
 	  			}
 	  		}
 	  	}
 	  	else if(segment.intersects(rectF)){
 	  		if(dX!=0){
-	  			float a=dY/dX;
-	  			float b=currentY-a*currentX;
+	  			double a=dY/dX;
+	  			double b=currentY-a*currentX;
 	  			double A=1+Math.pow(a,2);
 	  			double B=2*a*(b-y)-2*(x+length);
 	  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
@@ -1186,15 +1231,19 @@ public class PlayedGame implements Serializable
 	  			double X=-B+delta;
 	  			double Y=a*X+b;
 	  			if (dX<0){
-	  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
+	  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
+	  				bp.setHitBlock(block);
+	  				return bp;
 	  			}else{
-	  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+	  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+	  				bp.setHitBlock(block);
+	  					return bp;
 	  			}
 	  		}}
 	  		else if(segment.intersects(rectG)){
 		  		if(dX!=0){
-		  			float a=dY/dX;
-		  			float b=currentY-a*currentX;
+		  			double a=dY/dX;
+		  			double b=currentY-a*currentX;
 		  			double A=1+Math.pow(a,2);
 		  			double B=2*a*(b-y)-2*(x+length);
 		  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
@@ -1202,25 +1251,31 @@ public class PlayedGame implements Serializable
 		  			double X=-B+delta;
 		  			double Y=a*X+b;
 		  			if (dX<0){
-		  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
+		  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
+		  				bp.setHitBlock(block);
+	  					return bp;
 		  			}else{
-		  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+		  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+		  				bp.setHitBlock(block);
+	  					return bp;
 		  			}
 		  		}
 	  		}
 		  		else if(segment.intersects(rectD)){
 			  		if(dX!=0){
-			  			float a=dY/dX;
-			  			float b=currentY-a*currentX;
-			  			float bounceX=x-radius;
-			  			float bounceY=a*bounceX+b;
-			  			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
+			  			double a=dY/dX;
+			  			double b=currentY-a*currentX;
+			  			double bounceX=x-radius;
+			  			double bounceY=a*bounceX+b;
+			  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
+			  			bp.setHitBlock(block);
+	  					return bp;
 			  		}
 		  		}
 			  		else if(segment.intersects(rectH)){
 				  		if(dX!=0){
-				  			float a=dY/dX;
-				  			float b=currentY-a*currentX;
+				  			double a=dY/dX;
+				  			double b=currentY-a*currentX;
 				  			double A=1+Math.pow(a,2);
 				  			double B=2*a*(b-y)-2*(x+length);
 				  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
@@ -1228,16 +1283,20 @@ public class PlayedGame implements Serializable
 				  			double X=-B+delta;
 				  			double Y=a*X+b;
 				  			if (dX<0){
-				  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+				  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+				  				bp.setHitBlock(block);
+	  							return bp;
 				  			}else{
-				  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
+				  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
+				  				bp.setHitBlock(block);
+	  							return bp;
 				  			}
 				  		}
 	  	}
 	  	return null;
   }
 
-  // line 510 "../../../../../Block223States.ump"
+  // line 570 "../../../../../Block223States.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     double ballPosX = getCurrentBallX(); 
 	    double ballPosY = getCurrentBallY(); 
