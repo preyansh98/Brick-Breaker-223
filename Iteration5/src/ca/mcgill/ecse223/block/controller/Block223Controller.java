@@ -577,6 +577,10 @@ public class Block223Controller {
 
 	public static void selectPlayableGame(String name, int id) throws InvalidInputException {
 		Game game = Game.getWithName(name);
+		if (game == null) {
+			throw new InvalidInputException("The game does not exist.");
+		}
+		
 		Block223 block223 = Block223Application.getBlock223();
 
 		// Checks
@@ -594,12 +598,18 @@ public class Block223Controller {
 
 			PlayedGame pgame = new PlayedGame(username, game, block223);
 			pgame.setPlayer(player);
+			
 		} else {
-
-			// block223.findPlayableGame(ID);
+			//Can't find the method
+			//PlayedGame pgame = Block223.findPlayableGame(id);
+			/* if (game == null) {
+			/  throw new InvalidInputException("The game does not exist.");
+			}
+			*/ 
+		
 		}
 
-		// Block223Application.setCurrentPlayableGame(pgame);
+		//Block223Application.setCurrentPlayableGame(pgame);
 
 	}
 
@@ -816,6 +826,12 @@ public class Block223Controller {
 	public static List<TOPlayableGame> getPlayableGames() throws InvalidInputException {
 
 		Block223 block223 = Block223Application.getBlock223();
+		
+		//Check
+		if (!(Block223Application.getCurrentUserRole() instanceof Player)) {
+			throw new InvalidInputException("Player privileges are required to define game settings.");
+		}
+		
 		Player player = (Player) Block223Application.getCurrentUserRole(); // checks
 
 		List<TOPlayableGame> result = new ArrayList<TOPlayableGame>();
