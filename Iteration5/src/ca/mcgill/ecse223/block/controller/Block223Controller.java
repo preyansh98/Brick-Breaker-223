@@ -603,8 +603,25 @@ public class Block223Controller {
 	}
 
 	public static void startGame(Block223PlayModeInterface ui) throws InvalidInputException {
-
+		if (Block223Application.getCurrentUserRole()==null) {
+			throw new InvalidInputException("Player privileges are required to play a game.");
+		}
 		PlayedGame game=Block223Application.getCurrentPlayableGame();
+		if(game==null) {
+			throw new InvalidInputException("A game must be selected to play it.");
+		}
+		if((Block223Application.getCurrentUserRole() instanceof Admin)
+				&& game.getPlayer()!=null) {
+			throw new InvalidInputException("Player privileges are required to play a game.");
+		}
+		if((Block223Application.getCurrentUserRole() instanceof Admin)
+				&& game.getGame().getAdmin()!=Block223Application.getCurrentUserRole()) {
+			throw new InvalidInputException("Only the admin of a game can test the game.");
+		}
+		if((Block223Application.getCurrentUserRole() instanceof Player)
+				&& game.getPlayer()==null) {
+			throw new InvalidInputException("Admin privileges are required to test a game.");
+		}
 		game.play();
 		String userInputs=ui.takeInputs();
 		while(game.getPlayStatus()==PlayStatus.Moving) {
@@ -841,7 +858,7 @@ public class Block223Controller {
 		
 		//Check
 		if (!(Block223Application.getCurrentUserRole() instanceof Player)) {
-			throw new InvalidInputException("Player pre are required to define game settings.");
+			throw new InvalidInputException("Player privileges are required to play a game.");
 		}
 		
 		Player player = (Player) Block223Application.getCurrentUserRole(); // checks
@@ -871,7 +888,27 @@ public class Block223Controller {
 	}
 
 	public static TOCurrentlyPlayedGame getCurrentPlayableGame() throws InvalidInputException {
-
+		if(Block223Application.getCurrentUserRole()==null) {
+			throw new InvalidInputException("Player privileges are required to play a game.");
+		}
+		if(Block223Application.getCurrentPlayableGame()==null) {
+			throw new InvalidInputException("A game must be selected to play it.");
+		}
+		if((Block223Application.getCurrentUserRole() instanceof Admin)
+				&& Block223Application.getCurrentPlayableGame()!=null){
+			throw new InvalidInputException("Player privileges are required to play a game.");
+			
+		}
+		if((Block223Application.getCurrentUserRole() instanceof Admin)
+				&& Block223Application.getCurrentPlayableGame().getGame().getAdmin()!=Block223Application.getCurrentUserRole()){
+			throw new InvalidInputException("Only the admin of a game can test the game.");
+			
+		}
+		if((Block223Application.getCurrentUserRole() instanceof Player)
+				&& Block223Application.getCurrentPlayableGame().getPlayer()==null){
+			throw new InvalidInputException("Admin privileges are required to test a game.");
+			
+		}
 		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
 
 		boolean paused = (pgame.getPlayStatus() == PlayStatus.Ready || pgame.getPlayStatus() == PlayStatus.Paused);
@@ -892,7 +929,13 @@ public class Block223Controller {
 	}
 
 	public static TOHallOfFame getHallOfFame(int start, int end) throws InvalidInputException {
-
+		
+		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
+			throw new InvalidInputException("Player privileges are required to access a game's hall of fame.");
+		}
+		if(Block223Application.getCurrentPlayableGame()==null) {
+			throw new InvalidInputException("A game must be selected to view its hall of fame.");
+		}
 		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
 		Game game = pgame.getGame();
 
@@ -914,6 +957,12 @@ public class Block223Controller {
 	}
 
 	public static TOHallOfFame getHallOfFameWithMostRecentEntry(int numberOfEntries) throws InvalidInputException {
+		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
+			throw new InvalidInputException("Player privileges are required to access a game's hall of fame.");
+		}
+		if(Block223Application.getCurrentPlayableGame()==null) {
+			throw new InvalidInputException("A game must be selected to view its hall of fame.");
+		}
 		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
 		Game game = pgame.getGame();
 
