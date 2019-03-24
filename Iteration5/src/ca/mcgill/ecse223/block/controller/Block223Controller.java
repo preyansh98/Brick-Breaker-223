@@ -619,12 +619,12 @@ public class Block223Controller {
 		game.play();
 
 		PlayedModeClass pl = new PlayedModeClass();
-		// pl.takeInputs();
-		// METHOD IS UNDEFINED
+		 //pl.takeInputs();
+		
 
 		while (game.getPlayStatus() == PlayStatus.Moving) {
 
-			// Block223PlayModeInterface.takeinputs()
+			// pl.takeinputs();
 
 			// Block223Controller.updatePaddlePosition
 
@@ -633,6 +633,13 @@ public class Block223Controller {
 			// NOT COMPLETE
 		}
 
+	}
+	
+	public void doSetup() {
+		
+		
+		
+		
 	}
 
 	public static void testGame(Block223PlayModeInterface ui) throws InvalidInputException {
