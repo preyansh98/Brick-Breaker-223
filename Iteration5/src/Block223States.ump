@@ -55,8 +55,7 @@ class PlayedGame {
 	   return outofbounds;
    }
   
-  private boolean hitLastBlockAndLastLevel() {
-    
+   private boolean hitLastBlockAndLastLevel(){
     Game game = this.getGame(); 
 	int nrLevels = game.numberOfLevels(); 
 	
@@ -68,58 +67,40 @@ class PlayedGame {
 			PlayedBlockAssignment block = this.getBlock(0); 
 			BouncePoint bp = calculateBouncePointBlock(block); 
 			setBounce(bp); 
-			return true; 
+			return (bp!=null); 
 		}
 	}
     return false;
   }
   
-  private boolean hitLastBlock(){
-
-	int nrBlocks = numberOfBlocks(); 
+    private boolean hitLastBlock(){
+    int nrBlocks = numberOfBlocks(); 
 	setBounce(null); 
 	
 	if(nrBlocks == 1) {
 		PlayedBlockAssignment block = this.getBlock(0); 
-		BouncePoint bp = null; 
-		
-		try{
-			bp = calculateBouncePointBlock(block);
-		}
-		catch(NullPointerException e) {
-			return false; //no bounce point found. 
-		}
+		BouncePoint bp = calculateBouncePointBlock(block);
 		setBounce(bp); 
-		return true; 
+		return (bp!=null); 
 	}
     return false;
-    
   }
-  
-  private boolean hitBlock() {
-	   int nrBlocks = numberOfBlocks();
+    
+   private boolean hitBlock(){
+    int nrBlocks = numberOfBlocks();
 	   setBounce(null); 
 	   
 	   for(int index = 0; index < nrBlocks - 1; index++) {
 		   PlayedBlockAssignment block = getBlock(index); 
 		   
-		   BouncePoint bp = null; 
-		   try {
-			   bp = calculateBouncePointBlock(block); 
-		   }
-		   catch(NullPointerException e) {
-			   //what happens if its null?
-		   }
-		   
+		   BouncePoint bp = calculateBouncePointBlock(block); 		   
 		   bounce = getBounce(); 
 		   boolean closer = isCloser(bp, bounce); 
-		   
 		   if(closer) setBounce(bp); 
-		  
 	   }
-	   return (getBounce()!=null); 
+	   return (getBounce()!=null);
   }
-  
+    
   private boolean hitWall() {
     BouncePoint bp=calculateBouncePointWall();
     setBounce(bp);
