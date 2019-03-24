@@ -55,8 +55,7 @@ class PlayedGame {
 	   return outofbounds;
    }
   
-  private boolean hitLastBlockAndLastLevel() {
-    
+   private boolean hitLastBlockAndLastLevel(){
     Game game = this.getGame(); 
 	int nrLevels = game.numberOfLevels(); 
 	
@@ -68,58 +67,40 @@ class PlayedGame {
 			PlayedBlockAssignment block = this.getBlock(0); 
 			BouncePoint bp = calculateBouncePointBlock(block); 
 			setBounce(bp); 
-			return true; 
+			return (bp!=null); 
 		}
 	}
     return false;
   }
   
-  private boolean hitLastBlock(){
-
-	int nrBlocks = numberOfBlocks(); 
+    private boolean hitLastBlock(){
+    int nrBlocks = numberOfBlocks(); 
 	setBounce(null); 
 	
 	if(nrBlocks == 1) {
 		PlayedBlockAssignment block = this.getBlock(0); 
-		BouncePoint bp = null; 
-		
-		try{
-			bp = calculateBouncePointBlock(block);
-		}
-		catch(NullPointerException e) {
-			return false; //no bounce point found. 
-		}
+		BouncePoint bp = calculateBouncePointBlock(block);
 		setBounce(bp); 
-		return true; 
+		return (bp!=null); 
 	}
     return false;
-    
   }
-  
-  private boolean hitBlock() {
-	   int nrBlocks = numberOfBlocks();
+    
+   private boolean hitBlock(){
+    int nrBlocks = numberOfBlocks();
 	   setBounce(null); 
 	   
 	   for(int index = 0; index < nrBlocks - 1; index++) {
 		   PlayedBlockAssignment block = getBlock(index); 
 		   
-		   BouncePoint bp = null; 
-		   try {
-			   bp = calculateBouncePointBlock(block); 
-		   }
-		   catch(NullPointerException e) {
-			   //what happens if its null?
-		   }
-		   
+		   BouncePoint bp = calculateBouncePointBlock(block); 		   
 		   bounce = getBounce(); 
 		   boolean closer = isCloser(bp, bounce); 
-		   
 		   if(closer) setBounce(bp); 
-		  
 	   }
-	   return (getBounce()!=null); 
+	   return (getBounce()!=null);
   }
-  
+    
   private boolean hitWall() {
     BouncePoint bp=calculateBouncePointWall();
     setBounce(bp);
@@ -395,9 +376,135 @@ class PlayedGame {
 		return -1;
   
   }
-  private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
-  	return null;
+  
+     private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
+    int x=(int)block.getX();
+	  	int y=(int)block.getY();
+	  	int length=block.getBlock().SIZE;
+	  	int radius=Ball.BALL_DIAMETER/2;
+	  	int width=block.getBlock().SIZE;
+
+	  	Rectangle2D rectA=new Rectangle2D.Float(x,y-radius,length,width );
+	  	Rectangle2D rectB=new Rectangle2D.Float(x-radius,y,length,width );
+	  	Rectangle2D rectC=new Rectangle2D.Float(x+length,y,length,width );
+	  	Rectangle2D rectF=new Rectangle2D.Float(x+length,y-radius,length,width);  	
+	  	Rectangle2D rectE=new Rectangle2D.Float(x-radius,y-radius,length,width);
+	  	
+	  	Rectangle2D rectG=new Rectangle2D.Float(x-radius,y-radius,length,width);
+	  	Rectangle2D rectD=new Rectangle2D.Float(x-radius,y-radius,length,width);
+	  	Rectangle2D rectH=new Rectangle2D.Float(x-radius,y-radius,length,width);
+	  	
+	   	float currentX=(float)getCurrentBallX();
+	    float currentY=(float)getCurrentBallY();
+	   	float dX=(float)getBallDirectionX();
+	    float dY=(float)getBallDirectionY();
+	  	Line2D segment=new Line2D.Float(currentX,currentY,currentX+dX,currentY+dY);
+	  	
+	  	if(segment.intersects(rectA)){
+	  		if(dX==0){
+	  			return new BouncePoint(currentX,y-radius,BounceDirection.FLIP_Y);
+	  		}else{
+	  			float a=dY/dX;
+	  			float b=currentY-a*currentX;
+	  			float bounceY=y-radius;
+	  			float bounceX=(bounceY-b)/a;
+	  			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
+	  		}
+	  	}else if(segment.intersects(rectB)){
+	  		if(dX!=0){
+	  			float a=dY/dX;
+	  			float b=currentY-a*currentX;
+	  			float bounceX=x-radius;
+	  			float bounceY=a*bounceX+b;
+	  			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
+	  		}
+	  	}else if(segment.intersects(rectC)){
+	  		if(dX!=0){
+	  			float a=dY/dX;
+	  			float b=currentY-a*currentX;
+	  			float bounceX=x-radius;
+	  			float bounceY=a*bounceX+b;
+	  			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
+	  		}
+	  	}else if(segment.intersects(rectE)){
+	  		if(dX!=0){
+	  			float a=dY/dX;
+	  			float b=currentY-a*currentX;
+	  			double A=1+Math.pow(a,2);
+	  			double B=2*a*(b-y)-2*x;
+	  			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
+	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
+	  			double X=-B-delta;
+	  			double Y=a*X+b;
+	  			if (dX<0){
+	  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+	  			}else{
+	  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
+	  			}
+	  		}
+	  	}
+	  	else if(segment.intersects(rectF)){
+	  		if(dX!=0){
+	  			float a=dY/dX;
+	  			float b=currentY-a*currentX;
+	  			double A=1+Math.pow(a,2);
+	  			double B=2*a*(b-y)-2*(x+length);
+	  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
+	  			double X=-B+delta;
+	  			double Y=a*X+b;
+	  			if (dX<0){
+	  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
+	  			}else{
+	  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+	  			}
+	  		}}
+	  		else if(segment.intersects(rectG)){
+		  		if(dX!=0){
+		  			float a=dY/dX;
+		  			float b=currentY-a*currentX;
+		  			double A=1+Math.pow(a,2);
+		  			double B=2*a*(b-y)-2*(x+length);
+		  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+		  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
+		  			double X=-B+delta;
+		  			double Y=a*X+b;
+		  			if (dX<0){
+		  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
+		  			}else{
+		  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+		  			}
+		  		}
+	  		}
+		  		else if(segment.intersects(rectD)){
+			  		if(dX!=0){
+			  			float a=dY/dX;
+			  			float b=currentY-a*currentX;
+			  			float bounceX=x-radius;
+			  			float bounceY=a*bounceX+b;
+			  			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
+			  		}
+		  		}
+			  		else if(segment.intersects(rectH)){
+				  		if(dX!=0){
+				  			float a=dY/dX;
+				  			float b=currentY-a*currentX;
+				  			double A=1+Math.pow(a,2);
+				  			double B=2*a*(b-y)-2*(x+length);
+				  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+				  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
+				  			double X=-B+delta;
+				  			double Y=a*X+b;
+				  			if (dX<0){
+				  				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
+				  			}else{
+				  				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
+				  			}
+				  		}
+	  	}
+	  	return null;
   }
+
   
    private boolean isCloser(BouncePoint first, BouncePoint second) {
 	    double ballPosX = getCurrentBallX(); 
