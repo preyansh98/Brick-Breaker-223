@@ -87,6 +87,12 @@ class Game {
    		}
    		return null;
    	}	
+   	
+   	public Block getRandomBlock(){
+   		return null; 
+   	}
+   	
+   	
 }
 
 class Block {

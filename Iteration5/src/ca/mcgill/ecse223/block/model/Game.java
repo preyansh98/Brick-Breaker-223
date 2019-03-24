@@ -39,7 +39,7 @@ public class Game implements Serializable
   private boolean published;
   private String name;
   private int nrBlocksPerLevel;
-  private transient Comparator<HallOfFameEntry> hallOfFameEntriesPriority;
+  private Comparator<HallOfFameEntry> hallOfFameEntriesPriority;
 
   //Game Associations
   private HallOfFameEntry mostRecentEntry;
@@ -900,6 +900,11 @@ public class Game implements Serializable
    			}
    		}
    		return null;
+  }
+
+  // line 92 "../../../../../Block223 v3.ump"
+   public Block getRandomBlock(){
+    return null;
   }
 
 

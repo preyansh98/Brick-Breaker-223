@@ -128,9 +128,42 @@ class PlayedGame {
   
   // Actions
   
-  private void doSetup() {
-    // TODO implement
+  //TODO: this method has to be implemented. 	
+   private void doSetup(){
+	   
+	   resetCurrentBallX(); 
+	   resetCurrentBallY(); 
+	   resetBallDirectionX(); 
+	   resetBallDirectionY(); 
+	   resetCurrentPaddleX(); 
+	   
+	   Game game = getGame(); 
+	   
+	   Level level = game.getLevel(currentLevel - 1); 
+	   List<BlockAssignment> assignments = level.getBlockAssignments(); 
+	   
+	   for(BlockAssignment a : assignments) {
+		   PlayedBlockAssignment pblock = new PlayedBlockAssignment
+				   (game.WALL_PADDING + (Block.SIZE + game.COLUMNS_PADDING)*
+						   (a.getGridHorizontalPosition() - 1), game.WALL_PADDING +
+						   (Block.SIZE + game.ROW_PADDING)*(a.getGridVerticalPosition() - 1),
+						   a.getBlock(), this); 
+	   }
+	   
+	   while(numberOfBlocks() < game.getNrBlocksPerLevel()) {
+		   //pick x and y randomly: 
+		   //first pick a grid position randomly 
+		   //if its already taken, try next position starting from the randomly 
+		   
+		   int x = 0; 
+		   int y = 0; 
+		   
+		   PlayedBlockAssignment pblock = new PlayedBlockAssignment
+				   (x, y, game.getRandomBlock(), this); 
+	   }
+	   
   }
+
   
   private void doHitPaddleOrWall() {
      bounceBall();
