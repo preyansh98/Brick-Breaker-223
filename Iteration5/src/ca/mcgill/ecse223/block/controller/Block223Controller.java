@@ -560,6 +560,7 @@ public class Block223Controller {
 				if (role.getPassword().equals(password)) {
 					Block223Application.setCurrentUserRole(role);
 					return;
+					
 				}
 			}
 			error = "The username and password do not match.";
@@ -606,7 +607,6 @@ public class Block223Controller {
 			/  throw new InvalidInputException("The game does not exist.");
 			}
 			*/ 
-		
 		}
 
 		//Block223Application.setCurrentPlayableGame(pgame);
@@ -623,22 +623,14 @@ public class Block223Controller {
 		
 
 		while (game.getPlayStatus() == PlayStatus.Moving) {
-
 			// pl.takeinputs();
-
 			// Block223Controller.updatePaddlePosition
-
 			game.move();
-
 			// NOT COMPLETE
 		}
-
 	}
 	
 	public void doSetup() {
-		
-		
-		
 		
 	}
 
@@ -836,7 +828,7 @@ public class Block223Controller {
 		
 		//Check
 		if (!(Block223Application.getCurrentUserRole() instanceof Player)) {
-			throw new InvalidInputException("Player privileges are required to define game settings.");
+			throw new InvalidInputException("Player pre are required to define game settings.");
 		}
 		
 		Player player = (Player) Block223Application.getCurrentUserRole(); // checks
