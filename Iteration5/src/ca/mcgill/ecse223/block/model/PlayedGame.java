@@ -999,7 +999,7 @@ public class PlayedGame implements Serializable
   			double B=2*a*(b-y)-2*x;
   			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-  			double X=-B-delta;
+  			double X=(-B-delta)/2*A;
   			double Y=a*X+b;
   			if (dX<0){
   				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
@@ -1019,7 +1019,7 @@ public class PlayedGame implements Serializable
   			double B=2*a*(b-y)-2*(x+length);
   			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-  			double X=-B+delta;
+  			double X=(-B+delta)/2*A;
   			double Y=a*X+b;
   			if (dX<0){
   				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
@@ -1220,7 +1220,7 @@ public class PlayedGame implements Serializable
 	  			double B=2*a*(b-y)-2*x;
 	  			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-	  			double X=-B-delta;
+	  			double X=(-B-delta)/2*A;
 	  			double Y=a*X+b;
 	  			if (dX<0){
 	  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
@@ -1246,7 +1246,7 @@ public class PlayedGame implements Serializable
 	  			double B=2*a*(b-y)-2*(x+length);
 	  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-	  			double X=-B+delta;
+	  			double X=(-B+delta)/2*A;
 	  			double Y=a*X+b;
 	  			if (dX<0){
 	  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
@@ -1270,7 +1270,7 @@ public class PlayedGame implements Serializable
 		  			double B=2*a*(b-y)-2*(x+length);
 		  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
 		  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-		  			double X=-B+delta;
+		  			double X=(-B-delta)/2*A;
 		  			double Y=a*X+b;
 		  			if (dX<0){
 		  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
@@ -1310,7 +1310,7 @@ public class PlayedGame implements Serializable
 				  			double B=2*a*(b-y)-2*(x+length);
 				  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
 				  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-				  			double X=-B+delta;
+				  			double X=(-B+delta)/2*A;
 				  			double Y=a*X+b;
 				  			if (dX<0){
 				  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
