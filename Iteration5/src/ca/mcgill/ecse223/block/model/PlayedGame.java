@@ -748,7 +748,7 @@ public class PlayedGame implements Serializable
   // line 38 "../../../../../Block223States.ump"
    private boolean isOutOfBoundsAndLastLife(){
     boolean outOfBounds = false;
-     if (this.NR_LIVES ==1) {
+     if (this.getLives() ==1) {
     	outOfBounds = isBallOutOfBounds();
     }
     return outOfBounds;

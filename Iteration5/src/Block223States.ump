@@ -36,7 +36,7 @@ class PlayedGame {
 
   private boolean isOutOfBoundsAndLastLife() {
    boolean outOfBounds = false;
-     if (this.NR_LIVES ==1) {
+     if (this.getLives() ==1) {
     	outOfBounds = isBallOutOfBounds();
     }
     return outOfBounds;
