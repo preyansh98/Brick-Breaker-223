@@ -933,7 +933,7 @@ public class PlayedGame implements Serializable
 	   
 	   if (p != null) {
 		   Game game = this.getGame();
-		   HallOfFameEntry hof = new HallOfFameEntry(this.score, p.toString(), p, game, block223);
+		   HallOfFameEntry hof = new HallOfFameEntry(this.score, this.getPlayername(), p, game, block223);
 		   game.setMostRecentEntry(hof);
 	   }
 	   this.delete();
