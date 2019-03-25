@@ -261,8 +261,12 @@ class PlayedGame {
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
   	}else if(segment.intersects(rectE)){
-  		if(dX!=0){
-  			double a=dY/dX;
+  			double a;
+  			if(dX!=0){
+  				a=dY/dX;
+  			}else {
+  				a=0;
+  			}
   			double b=currentY-a*currentX;
   			double A=1+Math.pow(a,2);
   			double B=2*a*(b-y)-2*x;
@@ -275,10 +279,14 @@ class PlayedGame {
   			}else{
   				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
   			}
-  		}
+  		
   	}else if(segment.intersects(rectF)){
-  		if(dX!=0){
-  			double a=dY/dX;
+  			double a;
+  			if(dX!=0){
+  				a=dY/dX;
+  			}else {
+  				a=0;
+  			}
   			double b=currentY-a*currentX;
   			double A=1+Math.pow(a,2);
   			double B=2*a*(b-y)-2*(x+length);
@@ -291,7 +299,7 @@ class PlayedGame {
   			}else{
   				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
   			}
-  		}
+  		
   	}
   	return null;
   }
@@ -304,9 +312,9 @@ class PlayedGame {
    
    if(currentY+dY<=5){
    		if(currentX+dX<=5){
-   			return  new BouncePoint(5.0f,5.0f, BounceDirection.FLIP_BOTH);
+   			return  new BouncePoint(5.0,5.0, BounceDirection.FLIP_BOTH);
    		}else if(currentX+dX<=385){
-   			return  new BouncePoint(385.0f,5.0f, BounceDirection.FLIP_BOTH);
+   			return  new BouncePoint(385.0,5.0, BounceDirection.FLIP_BOTH);
    		}else{
    			if(dX!=0){
    				double a=dY/dX;
@@ -315,7 +323,7 @@ class PlayedGame {
   				double bounceX=(bounceY-b)/a;
   				return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
   			}else{
-  				return new BouncePoint(currentX, 5.0f, BounceDirection.FLIP_Y);
+  				return new BouncePoint(currentX, 5.0, BounceDirection.FLIP_Y);
   			}
    		}
     }
@@ -469,8 +477,13 @@ class PlayedGame {
 	  			return bp;
 	  		}
 	  	}else if(segment.intersects(rectE)){
-	  		if(dX!=0){
-	  			double a=dY/dX;
+	  		double a;
+  			if(dX!=0){
+  				a=dY/dX;
+  			}else {
+  				a=0;
+  			}
+	  			
 	  			double b=currentY-a*currentX;
 	  			double A=1+Math.pow(a,2);
 	  			double B=2*a*(b-y)-2*x;
@@ -487,11 +500,16 @@ class PlayedGame {
 	  				bp.setHitBlock(block);
 	  				return bp;
 	  			}
-	  		}
+	  		
 	  	}
 	  	else if(segment.intersects(rectF)){
-	  		if(dX!=0){
-	  			double a=dY/dX;
+	  		double a;
+  			if(dX!=0){
+  				a=dY/dX;
+  			}else {
+  				a=0;
+  			}
+	  			
 	  			double b=currentY-a*currentX;
 	  			double A=1+Math.pow(a,2);
 	  			double B=2*a*(b-y)-2*(x+length);
@@ -508,10 +526,14 @@ class PlayedGame {
 	  				bp.setHitBlock(block);
 	  					return bp;
 	  			}
-	  		}}
+	  		}
 	  		else if(segment.intersects(rectG)){
-		  		if(dX!=0){
-		  			double a=dY/dX;
+		  			double a;
+  					if(dX!=0){
+  						a=dY/dX;
+  					}else {
+  						a=0;
+  					}
 		  			double b=currentY-a*currentX;
 		  			double A=1+Math.pow(a,2);
 		  			double B=2*a*(b-y)-2*(x+length);
@@ -528,7 +550,7 @@ class PlayedGame {
 		  				bp.setHitBlock(block);
 	  					return bp;
 		  			}
-		  		}
+		  		
 	  		}
 		  		else if(segment.intersects(rectD)){
 			  		if(dX!=0){
@@ -546,8 +568,12 @@ class PlayedGame {
 			  		}
 		  		}
 			  		else if(segment.intersects(rectH)){
-				  		if(dX!=0){
-				  			double a=dY/dX;
+				  			double a;
+  							if(dX!=0){
+  								a=dY/dX;
+  							}else {
+  								a=0;
+  							}
 				  			double b=currentY-a*currentX;
 				  			double A=1+Math.pow(a,2);
 				  			double B=2*a*(b-y)-2*(x+length);
@@ -564,7 +590,7 @@ class PlayedGame {
 				  				bp.setHitBlock(block);
 	  							return bp;
 				  			}
-				  		}
+				  		
 	  	}
 	  	return null;
   }

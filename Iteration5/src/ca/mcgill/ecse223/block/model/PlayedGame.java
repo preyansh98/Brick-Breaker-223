@@ -988,8 +988,12 @@ public class PlayedGame implements Serializable
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
   	}else if(segment.intersects(rectE)){
-  		if(dX!=0){
-  			double a=dY/dX;
+  			double a;
+  			if(dX!=0){
+  				a=dY/dX;
+  			}else {
+  				a=0;
+  			}
   			double b=currentY-a*currentX;
   			double A=1+Math.pow(a,2);
   			double B=2*a*(b-y)-2*x;
@@ -1002,10 +1006,14 @@ public class PlayedGame implements Serializable
   			}else{
   				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
   			}
-  		}
+  		
   	}else if(segment.intersects(rectF)){
-  		if(dX!=0){
-  			double a=dY/dX;
+  			double a;
+  			if(dX!=0){
+  				a=dY/dX;
+  			}else {
+  				a=0;
+  			}
   			double b=currentY-a*currentX;
   			double A=1+Math.pow(a,2);
   			double B=2*a*(b-y)-2*(x+length);
@@ -1018,12 +1026,12 @@ public class PlayedGame implements Serializable
   			}else{
   				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
   			}
-  		}
+  		
   	}
   	return null;
   }
 
-  // line 300 "../../../../../Block223States.ump"
+  // line 308 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointWall(){
     double currentX=getCurrentBallX();
    double currentY=getCurrentBallY();
@@ -1032,9 +1040,9 @@ public class PlayedGame implements Serializable
    
    if(currentY+dY<=5){
    		if(currentX+dX<=5){
-   			return  new BouncePoint(5.0f,5.0f, BounceDirection.FLIP_BOTH);
+   			return  new BouncePoint(5.0,5.0, BounceDirection.FLIP_BOTH);
    		}else if(currentX+dX<=385){
-   			return  new BouncePoint(385.0f,5.0f, BounceDirection.FLIP_BOTH);
+   			return  new BouncePoint(385.0,5.0, BounceDirection.FLIP_BOTH);
    		}else{
    			if(dX!=0){
    				double a=dY/dX;
@@ -1043,7 +1051,7 @@ public class PlayedGame implements Serializable
   				double bounceX=(bounceY-b)/a;
   				return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
   			}else{
-  				return new BouncePoint(currentX, 5.0f, BounceDirection.FLIP_Y);
+  				return new BouncePoint(currentX, 5.0, BounceDirection.FLIP_Y);
   			}
    		}
     }
@@ -1071,7 +1079,7 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 347 "../../../../../Block223States.ump"
+  // line 355 "../../../../../Block223States.ump"
    private void bounceBall(){
     BouncePoint bp=getBounce();
   	double currentX=getCurrentBallX();
@@ -1133,7 +1141,7 @@ public class PlayedGame implements Serializable
   	setBounce(null);
   }
 
-  // line 407 "../../../../../Block223States.ump"
+  // line 415 "../../../../../Block223States.ump"
    private int sign(double val){
     if(val>=0){
 			return 1;
@@ -1141,7 +1149,7 @@ public class PlayedGame implements Serializable
 		return -1;
   }
 
-  // line 415 "../../../../../Block223States.ump"
+  // line 423 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
     int x=block.getX();
 	  	int y=block.getY();
@@ -1200,8 +1208,13 @@ public class PlayedGame implements Serializable
 	  			return bp;
 	  		}
 	  	}else if(segment.intersects(rectE)){
-	  		if(dX!=0){
-	  			double a=dY/dX;
+	  		double a;
+  			if(dX!=0){
+  				a=dY/dX;
+  			}else {
+  				a=0;
+  			}
+	  			
 	  			double b=currentY-a*currentX;
 	  			double A=1+Math.pow(a,2);
 	  			double B=2*a*(b-y)-2*x;
@@ -1218,11 +1231,16 @@ public class PlayedGame implements Serializable
 	  				bp.setHitBlock(block);
 	  				return bp;
 	  			}
-	  		}
+	  		
 	  	}
 	  	else if(segment.intersects(rectF)){
-	  		if(dX!=0){
-	  			double a=dY/dX;
+	  		double a;
+  			if(dX!=0){
+  				a=dY/dX;
+  			}else {
+  				a=0;
+  			}
+	  			
 	  			double b=currentY-a*currentX;
 	  			double A=1+Math.pow(a,2);
 	  			double B=2*a*(b-y)-2*(x+length);
@@ -1239,10 +1257,14 @@ public class PlayedGame implements Serializable
 	  				bp.setHitBlock(block);
 	  					return bp;
 	  			}
-	  		}}
+	  		}
 	  		else if(segment.intersects(rectG)){
-		  		if(dX!=0){
-		  			double a=dY/dX;
+		  			double a;
+  					if(dX!=0){
+  						a=dY/dX;
+  					}else {
+  						a=0;
+  					}
 		  			double b=currentY-a*currentX;
 		  			double A=1+Math.pow(a,2);
 		  			double B=2*a*(b-y)-2*(x+length);
@@ -1259,7 +1281,7 @@ public class PlayedGame implements Serializable
 		  				bp.setHitBlock(block);
 	  					return bp;
 		  			}
-		  		}
+		  		
 	  		}
 		  		else if(segment.intersects(rectD)){
 			  		if(dX!=0){
@@ -1277,8 +1299,12 @@ public class PlayedGame implements Serializable
 			  		}
 		  		}
 			  		else if(segment.intersects(rectH)){
-				  		if(dX!=0){
-				  			double a=dY/dX;
+				  			double a;
+  							if(dX!=0){
+  								a=dY/dX;
+  							}else {
+  								a=0;
+  							}
 				  			double b=currentY-a*currentX;
 				  			double A=1+Math.pow(a,2);
 				  			double B=2*a*(b-y)-2*(x+length);
@@ -1295,12 +1321,12 @@ public class PlayedGame implements Serializable
 				  				bp.setHitBlock(block);
 	  							return bp;
 				  			}
-				  		}
+				  		
 	  	}
 	  	return null;
   }
 
-  // line 574 "../../../../../Block223States.ump"
+  // line 600 "../../../../../Block223States.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     double ballPosX = getCurrentBallX(); 
 	    double ballPosY = getCurrentBallY(); 
