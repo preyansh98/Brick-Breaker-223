@@ -631,6 +631,7 @@ public class Block223Controller {
 			if(userInputs.contains(" ")) {
 				game.pause();
 			}
+			System.out.println(game.getCurrentBallX()+"   "+ game.getCurrentBallY());
 			try {
 				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime());
 			} catch (InterruptedException e) {
@@ -895,7 +896,7 @@ public class Block223Controller {
 			throw new InvalidInputException("A game must be selected to play it.");
 		}
 		if((Block223Application.getCurrentUserRole() instanceof Admin)
-				&& Block223Application.getCurrentPlayableGame()!=null){
+				&& Block223Application.getCurrentPlayableGame().getPlayer()!=null){
 			throw new InvalidInputException("Player privileges are required to play a game.");
 			
 		}
@@ -947,9 +948,9 @@ public class Block223Controller {
 		start = start - 1;
 		end = end - 1;
 
-		for (int i = start; i < end; i++) {
-			String username = pgame.getPlayername();
-			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, username, game.getHallOfFameEntry(i).getScore(),
+		for (int i = start; i <end; i++) {
+			//String username = pgame.getPlayername();
+			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, game.getHallOfFameEntry(i).getPlayername(), game.getHallOfFameEntry(i).getScore(),
 					result);
 		}
 
@@ -981,8 +982,8 @@ public class Block223Controller {
 		end = end - 1;
 
 		for (int i = start; i < end; i++) {
-			String username = pgame.getPlayername();
-			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, username, game.getHallOfFameEntry(i).getScore(),
+			//String username = pgame.getPlayername();
+			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, game.getHallOfFameEntry(i).getPlayername(), game.getHallOfFameEntry(i).getScore(),
 					result);
 		}
 

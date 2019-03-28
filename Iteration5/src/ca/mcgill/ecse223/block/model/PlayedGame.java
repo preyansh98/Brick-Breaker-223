@@ -1041,7 +1041,7 @@ public class PlayedGame implements Serializable
    if(currentY+dY<=5){
    		if(currentX+dX<=5){
    			return  new BouncePoint(5.0,5.0, BounceDirection.FLIP_BOTH);
-   		}else if(currentX+dX<=385){
+   		}else if(currentX+dX>=385){
    			return  new BouncePoint(385.0,5.0, BounceDirection.FLIP_BOTH);
    		}else{
    			if(dX!=0){
