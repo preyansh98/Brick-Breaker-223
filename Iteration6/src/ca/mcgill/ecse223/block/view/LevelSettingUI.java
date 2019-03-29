@@ -37,6 +37,7 @@ public class LevelSettingUI {
 	private static JComboBox<String> blocks;
 	private static JLabel errorMsg;
 	private static HashMap<Integer, TOBlock> map;
+	private static Rectangle2D[][] rectangles;
 	private static Grid layeredPane;
 	
 	private static JLabel lblSelectBlockInfo;

@@ -632,7 +632,7 @@ public class Block223Controller {
 				game.pause();
 			}
 			try {
-				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime());
+				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime()/15);
 			} catch (InterruptedException e) {
 				
 			}
@@ -641,6 +641,7 @@ public class Block223Controller {
 		if(game.getPlayStatus()==PlayStatus.GameOver) {
 			Block223Application.setCurrentPlayableGame(null);
 		}else if(game.getPlayer()!=null){
+			game.setBounce(null);
 			Block223 block223=Block223Application.getBlock223();
 			Block223Persistence.save(block223);
 		}
@@ -651,12 +652,12 @@ public class Block223Controller {
 		PlayedGame game=Block223Application.getCurrentPlayableGame();
 		for(int i=0; i<userInputs.length();i++) {
 			if(userInputs.charAt(i)=='l') {
-				if(game.getCurrentPaddleX()>=Math.abs(game.PADDLE_MOVE_LEFT)) {
-					game.setCurrentPaddleX(game.getCurrentPaddleX()+game.PADDLE_MOVE_LEFT);
+				if(game.getCurrentPaddleX()>=Math.abs(PlayedGame.PADDLE_MOVE_LEFT)) {
+					game.setCurrentPaddleX(game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_LEFT);
 				}
 			}else if(userInputs.charAt(i)=='r') {
-				if(game.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-game.PADDLE_MOVE_RIGHT) {
-					game.setCurrentPaddleX(game.getCurrentPaddleX()+game.PADDLE_MOVE_RIGHT);
+				if(game.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-PlayedGame.PADDLE_MOVE_RIGHT-game.getCurrentPaddleLength()) {
+					game.setCurrentPaddleX(game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_RIGHT);
 				}
 			}else if(userInputs.charAt(i)==' ') {
 				break;
@@ -912,10 +913,10 @@ public class Block223Controller {
 		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
 
 		boolean paused = (pgame.getPlayStatus() == PlayStatus.Ready || pgame.getPlayStatus() == PlayStatus.Paused);
-
+		
 		TOCurrentlyPlayedGame result = new TOCurrentlyPlayedGame(pgame.getGame().getName(), paused, pgame.getScore(),
-				pgame.getLives(), pgame.getCurrentLevel(), pgame.getPlayername(), (int) pgame.getCurrentBallX(),
-				(int) pgame.getCurrentBallY(), (int) pgame.getCurrentPaddleLength(), (int) pgame.getCurrentPaddleX());
+				pgame.getLives(), pgame.getCurrentLevel(), pgame.getPlayername(), (int) Math.round(pgame.getCurrentBallX()),
+				(int)Math.round( pgame.getCurrentBallY()), (int) Math.round(pgame.getCurrentPaddleLength()), (int) Math.round(pgame.getCurrentPaddleX()));
 
 		List<PlayedBlockAssignment> blocks = pgame.getBlocks();
 
@@ -944,10 +945,10 @@ public class Block223Controller {
 			start = 1;
 		if (end > game.numberOfHallOfFameEntries())
 			end = game.numberOfHallOfFameEntries();
-		start = start - 1;
-		end = end - 1;
+		start = game.numberOfHallOfFameEntries()-start;
+		end = game.numberOfHallOfFameEntries()-end;
 
-		for (int i = start; i <end; i++) {
+		for (int i = start; i >=end; i--) {
 			//String username = pgame.getPlayername();
 			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, game.getHallOfFameEntry(i).getPlayername(), game.getHallOfFameEntry(i).getScore(),
 					result);
@@ -977,10 +978,10 @@ public class Block223Controller {
 		int end = start + numberOfEntries - 1;
 		if (end > game.numberOfHallOfFameEntries())
 			end = game.numberOfHallOfFameEntries();
-		start = start - 1;
-		end = end - 1;
+		start = game.numberOfHallOfFameEntries()-start;
+		end = game.numberOfHallOfFameEntries()-end;
 
-		for (int i = start; i < end; i++) {
+		for (int i = start; i >=end; i--) {
 			//String username = pgame.getPlayername();
 			TOHallOfFameEntry to = new TOHallOfFameEntry(i + 1, game.getHallOfFameEntry(i).getPlayername(), game.getHallOfFameEntry(i).getScore(),
 					result);

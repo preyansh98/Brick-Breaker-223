@@ -286,7 +286,8 @@ public class GameSettingUI {
 	
 	protected static void testGame() {
 		frame.dispose();
-		TestGameUI.init();
+		TestGameUI testing=new TestGameUI();
+		
 	}
 
 	protected static void publishGame() {
@@ -316,7 +317,7 @@ public class GameSettingUI {
 		}
 		try {
 			Block223Controller.updateGame(nameTXT.getText(),levels,numBlocks,xspeed,yspeed,
-					speedFactor,minLength,maxLength);
+					speedFactor,maxLength,minLength);
 		} catch (Exception e) {
 			errorMsg.setText(e.getMessage());
 			return;

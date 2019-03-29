@@ -1001,6 +1001,9 @@ public class PlayedGame implements Serializable
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
   			double X=(-B-delta)/2*A;
   			double Y=a*X+b;
+  			if(Double.isNaN(X) || Double.isNaN(Y)){
+				  				return null;
+				  			}
   			if (dX<0){
   				return new BouncePoint(X,Y, BounceDirection.FLIP_Y);
   			}else{
@@ -1021,6 +1024,9 @@ public class PlayedGame implements Serializable
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
   			double X=(-B+delta)/2*A;
   			double Y=a*X+b;
+  			if(Double.isNaN(X) || Double.isNaN(Y)){
+				  				return null;
+				  			}
   			if (dX<0){
   				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
   			}else{
@@ -1031,7 +1037,7 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 308 "../../../../../Block223States.ump"
+  // line 314 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointWall(){
     double currentX=getCurrentBallX();
    double currentY=getCurrentBallY();
@@ -1079,7 +1085,7 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 355 "../../../../../Block223States.ump"
+  // line 361 "../../../../../Block223States.ump"
    private void bounceBall(){
     BouncePoint bp=getBounce();
   	double currentX=getCurrentBallX();
@@ -1141,7 +1147,7 @@ public class PlayedGame implements Serializable
   	setBounce(null);
   }
 
-  // line 415 "../../../../../Block223States.ump"
+  // line 421 "../../../../../Block223States.ump"
    private int sign(double val){
     if(val>=0){
 			return 1;
@@ -1149,7 +1155,7 @@ public class PlayedGame implements Serializable
 		return -1;
   }
 
-  // line 423 "../../../../../Block223States.ump"
+  // line 429 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
     int x=block.getX();
 	  	int y=block.getY();
@@ -1222,6 +1228,9 @@ public class PlayedGame implements Serializable
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 	  			double X=(-B-delta)/2*A;
 	  			double Y=a*X+b;
+	  			if(Double.isNaN(X) || Double.isNaN(Y)){
+				  				return null;
+				  			}
 	  			if (dX<0){
 	  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
 	  				bp.setHitBlock(block);
@@ -1248,6 +1257,9 @@ public class PlayedGame implements Serializable
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 	  			double X=(-B+delta)/2*A;
 	  			double Y=a*X+b;
+	  			if(Double.isNaN(X) || Double.isNaN(Y)){
+				  				return null;
+				  			}
 	  			if (dX<0){
 	  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
 	  				bp.setHitBlock(block);
@@ -1267,11 +1279,14 @@ public class PlayedGame implements Serializable
   					}
 		  			double b=currentY-a*currentX;
 		  			double A=1+Math.pow(a,2);
-		  			double B=2*a*(b-y)-2*(x+length);
-		  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+		  			double B=2*a*(b-y-length)-2*(x);
+		  			double C=Math.pow((x),2)+Math.pow(b-y-length,2)-radius;
 		  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 		  			double X=(-B-delta)/2*A;
 		  			double Y=a*X+b;
+		  			if(Double.isNaN(X) || Double.isNaN(Y)){
+				  				return null;
+				  			}
 		  			if (dX<0){
 		  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_Y);
 		  				bp.setHitBlock(block);
@@ -1307,11 +1322,14 @@ public class PlayedGame implements Serializable
   							}
 				  			double b=currentY-a*currentX;
 				  			double A=1+Math.pow(a,2);
-				  			double B=2*a*(b-y)-2*(x+length);
-				  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+				  			double B=2*a*(b-y-length)-2*(x+length);
+				  			double C=Math.pow((x+length),2)+Math.pow(b-y-length,2)-radius;
 				  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 				  			double X=(-B+delta)/2*A;
 				  			double Y=a*X+b;
+				  			if(Double.isNaN(X) || Double.isNaN(Y)){
+				  				return null;
+				  			}
 				  			if (dX<0){
 				  				BouncePoint bp= new BouncePoint(X,Y, BounceDirection.FLIP_X);
 				  				bp.setHitBlock(block);
@@ -1326,7 +1344,7 @@ public class PlayedGame implements Serializable
 	  	return null;
   }
 
-  // line 600 "../../../../../Block223States.ump"
+  // line 618 "../../../../../Block223States.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     double ballPosX = getCurrentBallX(); 
 	    double ballPosY = getCurrentBallY(); 
