@@ -293,6 +293,7 @@ public class GameSettingUI {
 	protected static void publishGame() {
 		try {
 			Block223Controller.publishGame();
+			Block223Controller.saveGame();
 			frame.dispose();
 			AdminDashBoardUI.init();
 		} catch (InvalidInputException e) {

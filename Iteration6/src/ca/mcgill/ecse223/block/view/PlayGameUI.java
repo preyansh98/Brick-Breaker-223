@@ -26,6 +26,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 	private JLabel lblScore;
 	private JLabel lblLives;
 	private JLabel lblLevel;
+	private JButton btnStartGame;
 	/**
 	 * Create the application.
 	 */
@@ -44,7 +45,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 		frame.setVisible(true);
 		 playArea = new PlayAreaUI();
 		
-		JButton btnStartGame = new JButton("Start Game");
+		 btnStartGame = new JButton("Start Game");
 		btnStartGame.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
 		
 		 lblLevel = new JLabel("Level: ");
@@ -60,12 +61,25 @@ public class PlayGameUI implements Block223PlayModeInterface{
 		
 		JButton btnGoBack = new JButton("Go Back");
 		btnGoBack.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
-		
+		btnGoBack.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				goBack();
+			}
+		});
 		JButton btnPrevious = new JButton("Prev.");
 		btnPrevious.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
-		
+		btnPrevious.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				((HallOfFame) hallOfFame).prevPage();
+			}
+		});
 		JButton btnNext = new JButton("Next");
 		btnNext.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		btnNext.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				((HallOfFame) hallOfFame).nextPage();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -167,6 +181,15 @@ public class PlayGameUI implements Block223PlayModeInterface{
 		frame.pack();
 	}
 
+	protected void goBack() {
+		// TODO Auto-generated method stub
+		if(btnStartGame.isVisible()) {
+			frame.dispose();
+			PlayerDashUI.init();
+			
+		}
+	}
+
 	@Override
 	public String takeInputs() {
 		String passString = keyString;
@@ -178,6 +201,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 	public void refresh() {
 		playArea.repaint();
 		lblScore.setText("Score: " +((PlayAreaUI)playArea).getScore());
-		
+		lblLives.setText("Lives: "+ ((PlayAreaUI)playArea).getLives());
+		lblLevel.setText("Level: "+ ((PlayAreaUI)playArea).getLevel());
 	}
 }

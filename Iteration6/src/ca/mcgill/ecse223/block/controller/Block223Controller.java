@@ -632,7 +632,7 @@ public class Block223Controller {
 				game.pause();
 			}
 			try {
-				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime());
+				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime()/30);
 			} catch (InterruptedException e) {
 				
 			}

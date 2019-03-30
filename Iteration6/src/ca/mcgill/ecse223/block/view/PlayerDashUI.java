@@ -12,21 +12,28 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
+import ca.mcgill.ecse223.block.controller.InvalidInputException;
+import ca.mcgill.ecse223.block.controller.TOPlayableGame;
 
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class PlayerDashUI {
 
 	private static JFrame frame;
 	private static JComboBox<String> newGameBox;
 	private static JComboBox<String> oldGameBox;
-	
+	private static int[] ids;
+	private static PlayGameUI test;
+	private static JLabel errorMsg;
 	/**
 	 * Initialize the contents of the frame.
 	 * @wbp.parser.entryPoint
 	 */
 	public static void init() {
+		test=null;
 		frame = new JFrame();
 		frame.setBounds(100, 100, 749, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,34 +76,43 @@ public class PlayerDashUI {
 			}
 		});
 		
+		 errorMsg = new JLabel("");
+		errorMsg.setForeground(Color.RED);
+		errorMsg.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 15));
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addGap(214)
 							.addComponent(lblWelcome, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addGap(27)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblStartANew)
-								.addComponent(lblFinishAPrevious)
-								.addComponent(btnLogout))
-							.addGap(32)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(oldGameBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(newGameBox, 0, 247, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnFinish)
-								.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(errorMsg, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblStartANew)
+										.addComponent(lblFinishAPrevious)
+										.addComponent(btnLogout))
+									.addGap(32)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(oldGameBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(newGameBox, 0, 247, Short.MAX_VALUE))
+									.addPreferredGap(ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnFinish)
+										.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE))))))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(55)
+					.addContainerGap()
+					.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(lblWelcome, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
 					.addGap(47)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
@@ -110,19 +126,20 @@ public class PlayerDashUI {
 						.addComponent(btnFinish))
 					.addGap(90)
 					.addComponent(btnLogout)
-					.addContainerGap(180, Short.MAX_VALUE))
+					.addContainerGap(45, Short.MAX_VALUE))
 		);
 		frame.getContentPane().setLayout(groupLayout);
+		setUpCombos();
 	}
 	
-	protected static void continueGame() {
-		// TODO Auto-generated method stub
+	public static void continueGame() {
+		
 		
 	}
 
-	protected static void startGame() {
+	public static void startGame() {
 		frame.dispose();
-		PlayGameUI test=new PlayGameUI();
+		test=new PlayGameUI();
 		
 	}
 
@@ -134,5 +151,25 @@ public class PlayerDashUI {
 	}
 	private static void delete() {
 		frame.dispose();
+	}
+	private static void setUpCombos() {
+		try {
+			List<TOPlayableGame> playables=Block223Controller.getPlayableGames();
+			int i=0;
+			for(TOPlayableGame game:playables) {
+				if(game.getNumber()==-1) {
+					newGameBox.addItem(game.getName());
+				}else{
+					ids[i]=game.getNumber();
+					oldGameBox.addItem(game.getName()+"  "+ game.getCurrentLevel());
+					i++;
+				}
+			}
+			newGameBox.setSelectedItem(-1);
+			oldGameBox.setSelectedItem(-1);
+		} catch (InvalidInputException e) {
+			errorMsg.setText(e.getMessage());
+		}
+		
 	}
 }

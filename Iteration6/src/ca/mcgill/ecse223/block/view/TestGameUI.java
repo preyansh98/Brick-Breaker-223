@@ -19,7 +19,6 @@ import ca.mcgill.ecse223.block.controller.InvalidInputException;
 public class TestGameUI implements Block223PlayModeInterface{
 
 	private  JFrame frame;
-	private  Listeners keyListen;
 	private  JLabel errorMsg;
 	private JLayeredPane playArea;
 	private JButton btnBack;
