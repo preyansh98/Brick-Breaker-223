@@ -291,8 +291,13 @@ public class GameSettingUI {
 	}
 
 	protected static void publishGame() {
-		// TODO Auto-generated method stub
-		
+		try {
+			Block223Controller.publishGame();
+			frame.dispose();
+			AdminDashBoardUI.init();
+		} catch (InvalidInputException e) {
+			errorMsg.setText(e.getMessage());
+		}
 	}
 
 	protected static void updateGame() {

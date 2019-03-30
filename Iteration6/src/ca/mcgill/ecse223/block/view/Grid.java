@@ -49,7 +49,7 @@ public class Grid extends JLayeredPane{
 	}
 	private void doDrawing(Graphics g) {
 		// TODO Auto-generated method stub
-			int y=5;
+			int y=10;
 			int x=10;
 			g2d=(Graphics2D)g.create();
 			TOGridCell[][] temp=LevelSettingUI.getGrid();

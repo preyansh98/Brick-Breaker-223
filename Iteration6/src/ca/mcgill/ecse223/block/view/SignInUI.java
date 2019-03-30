@@ -134,7 +134,7 @@ public class SignInUI {
 			Block223Controller.login(usernameTextEntry.getText(), passwordTextEntry.getText());
 			if(Block223Controller.getUserMode().getMode()==Mode.Play) {
 				delete();
-				PlayerUI.init();
+				PlayerDashUI.init();
 			}else if(Block223Controller.getUserMode().getMode()==Mode.Design){
 				delete();
 				AdminDashBoardUI.init();

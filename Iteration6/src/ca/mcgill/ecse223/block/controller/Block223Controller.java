@@ -632,7 +632,7 @@ public class Block223Controller {
 				game.pause();
 			}
 			try {
-				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime()/15);
+				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime());
 			} catch (InterruptedException e) {
 				
 			}
@@ -653,11 +653,11 @@ public class Block223Controller {
 		for(int i=0; i<userInputs.length();i++) {
 			if(userInputs.charAt(i)=='l') {
 				if(game.getCurrentPaddleX()>=Math.abs(PlayedGame.PADDLE_MOVE_LEFT)) {
-					game.setCurrentPaddleX(game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_LEFT);
+					game.setCurrentPaddleX(game.getCurrentPaddleX()+3*PlayedGame.PADDLE_MOVE_LEFT);
 				}
 			}else if(userInputs.charAt(i)=='r') {
 				if(game.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-PlayedGame.PADDLE_MOVE_RIGHT-game.getCurrentPaddleLength()) {
-					game.setCurrentPaddleX(game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_RIGHT);
+					game.setCurrentPaddleX(game.getCurrentPaddleX()+3*PlayedGame.PADDLE_MOVE_RIGHT);
 				}
 			}else if(userInputs.charAt(i)==' ') {
 				break;

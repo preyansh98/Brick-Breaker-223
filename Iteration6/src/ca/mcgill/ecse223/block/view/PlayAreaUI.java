@@ -28,6 +28,8 @@ public class PlayAreaUI extends JLayeredPane {
 	private static final long serialVersionUID = 1L;
 	Graphics2D g2d;
 	private int score=0;
+	private int lives=0;
+	private int level=0;
 	public PlayAreaUI () {
 		super();
 		this.setSize(390,390);
@@ -54,6 +56,8 @@ public class PlayAreaUI extends JLayeredPane {
 			if(game!=null) {
 			List<TOCurrentBlock> blocks=game.getBlocks();
 			score=game.getScore();
+			lives=game.getLives();
+			level=game.getCurrentLevel();
 			for(TOCurrentBlock block:blocks) {
 				Rectangle2D rect=new Rectangle2D.Double(block.getX(),block.getY(),20,20);
 				Color color=new Color(block.getRed(),block.getGreen(), block.getBlue());
@@ -73,7 +77,12 @@ public class PlayAreaUI extends JLayeredPane {
 	public int getScore() {
 		return score;
 	}
-	
+	public int getLives() {
+		return lives;
+	}
+	public int getLevel() {
+		return level;
+	}
 
 
 }

@@ -847,9 +847,8 @@ public class PlayedGame implements Serializable
 	   
 	   for(BlockAssignment a : assignments) {
 		   PlayedBlockAssignment pblock = new PlayedBlockAssignment(
-				   game.WALL_PADDING +(Block.SIZE + game.ROW_PADDING)*(a.getGridVerticalPosition() - 1),
-						   game.WALL_PADDING + (Block.SIZE + game.COLUMNS_PADDING)*
-						   (a.getGridHorizontalPosition() - 1), 
+				   game.WALL_PADDING + (Block.SIZE + game.COLUMNS_PADDING)* (a.getGridHorizontalPosition() - 1),
+				   game.WALL_PADDING +(Block.SIZE + game.ROW_PADDING)*(a.getGridVerticalPosition() - 1), 
 						   a.getBlock(), this); 
 	   }
 	   
@@ -859,7 +858,7 @@ public class PlayedGame implements Serializable
 		   //if its already taken, try next position starting from the randomly 
 		   Random rand=new Random();
 		   int x = game.WALL_PADDING + (Block.SIZE + game.COLUMNS_PADDING)*rand.nextInt(15); 
-		   int y =  game.WALL_PADDING +(Block.SIZE + game.ROW_PADDING)*rand.nextInt(15)+1; 
+		   int y =  game.WALL_PADDING +(Block.SIZE + game.ROW_PADDING)*rand.nextInt(15); 
 		   boolean found=false;
 		   for (PlayedBlockAssignment blockassi:getBlocks()){
 		   		if(blockassi.getX()==x && blockassi.getY()==y){
@@ -873,12 +872,12 @@ public class PlayedGame implements Serializable
 	   }
   }
 
-  // line 160 "../../../../../Block223States.ump"
+  // line 159 "../../../../../Block223States.ump"
    private void doHitPaddleOrWall(){
     bounceBall();
   }
 
-  // line 164 "../../../../../Block223States.ump"
+  // line 163 "../../../../../Block223States.ump"
    private void doOutOfBounds(){
     this.setLives(lives-1);
     this.resetCurrentBallX();
@@ -888,7 +887,7 @@ public class PlayedGame implements Serializable
     this.resetCurrentPaddleX();
   }
 
-  // line 173 "../../../../../Block223States.ump"
+  // line 172 "../../../../../Block223States.ump"
    private void doHitBlock(){
     int score = getScore(); 
 	   bounce = getBounce(); 
@@ -902,7 +901,7 @@ public class PlayedGame implements Serializable
 	   bounceBall();
   }
 
-  // line 186 "../../../../../Block223States.ump"
+  // line 185 "../../../../../Block223States.ump"
    private void doHitBlockNextLevel(){
     doHitBlock(); 
 	   int level = getCurrentLevel(); 
@@ -916,7 +915,7 @@ public class PlayedGame implements Serializable
 			   (getCurrentLevel() - 1)));
   }
 
-  // line 199 "../../../../../Block223States.ump"
+  // line 198 "../../../../../Block223States.ump"
    private void doHitNothingAndNotOutOfBounds(){
     double x = getCurrentBallX();
 	  double y = getCurrentBallY();
@@ -926,7 +925,7 @@ public class PlayedGame implements Serializable
 	  setCurrentBallY(y + dy);
   }
 
-  // line 207 "../../../../../Block223States.ump"
+  // line 206 "../../../../../Block223States.ump"
    private void doGameOver(){
     Block223 block223 = this.getBlock223();
 	   Player p = this.getPlayer();
@@ -943,7 +942,7 @@ public class PlayedGame implements Serializable
   /**
    * Helper methods
    */
-  // line 221 "../../../../../Block223States.ump"
+  // line 220 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointPaddle(){
     double x=getCurrentPaddleX();
   	double y=getCurrentPaddleY();
@@ -983,7 +982,7 @@ public class PlayedGame implements Serializable
   		if(dX!=0){
   			double a=dY/dX;
   			double b=currentY-a*currentX;
-  			double bounceX=x-radius;
+  			double bounceX=x+length+radius;
   			double bounceY=a*bounceX+b;
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
@@ -999,7 +998,7 @@ public class PlayedGame implements Serializable
   			double B=2*a*(b-y)-2*x;
   			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-  			double X=(-B-delta)/2*A;
+  			double X=(-B-delta)/(2*A);
   			double Y=a*X+b;
   			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
@@ -1022,7 +1021,7 @@ public class PlayedGame implements Serializable
   			double B=2*a*(b-y)-2*(x+length);
   			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-  			double X=(-B+delta)/2*A;
+  			double X=(-B+delta)/(2*A);
   			double Y=a*X+b;
   			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
@@ -1037,7 +1036,7 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 314 "../../../../../Block223States.ump"
+  // line 313 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointWall(){
     double currentX=getCurrentBallX();
    double currentY=getCurrentBallY();
@@ -1085,7 +1084,7 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 361 "../../../../../Block223States.ump"
+  // line 360 "../../../../../Block223States.ump"
    private void bounceBall(){
     BouncePoint bp=getBounce();
   	double currentX=getCurrentBallX();
@@ -1147,7 +1146,7 @@ public class PlayedGame implements Serializable
   	setBounce(null);
   }
 
-  // line 421 "../../../../../Block223States.ump"
+  // line 420 "../../../../../Block223States.ump"
    private int sign(double val){
     if(val>=0){
 			return 1;
@@ -1155,7 +1154,7 @@ public class PlayedGame implements Serializable
 		return -1;
   }
 
-  // line 429 "../../../../../Block223States.ump"
+  // line 428 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
     int x=block.getX();
 	  	int y=block.getY();
@@ -1207,7 +1206,7 @@ public class PlayedGame implements Serializable
 	  		if(dX!=0){
 	  			double a=dY/dX;
 	  			double b=currentY-a*currentX;
-	  			double bounceX=x-radius;
+	  			double bounceX=x+radius+length;
 	  			double bounceY=a*bounceX+b;
 	  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
 	  			bp.setHitBlock(block);
@@ -1226,7 +1225,7 @@ public class PlayedGame implements Serializable
 	  			double B=2*a*(b-y)-2*x;
 	  			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-	  			double X=(-B-delta)/2*A;
+	  			double X=(-B-delta)/(2*A);
 	  			double Y=a*X+b;
 	  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
@@ -1255,7 +1254,7 @@ public class PlayedGame implements Serializable
 	  			double B=2*a*(b-y)-2*(x+length);
 	  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-	  			double X=(-B+delta)/2*A;
+	  			double X=(-B+delta)/(2*A);
 	  			double Y=a*X+b;
 	  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
@@ -1282,7 +1281,7 @@ public class PlayedGame implements Serializable
 		  			double B=2*a*(b-y-length)-2*(x);
 		  			double C=Math.pow((x),2)+Math.pow(b-y-length,2)-radius;
 		  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-		  			double X=(-B-delta)/2*A;
+		  			double X=(-B-delta)/(2*A);
 		  			double Y=a*X+b;
 		  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
@@ -1302,8 +1301,8 @@ public class PlayedGame implements Serializable
 			  		if(dX!=0){
 			  			double a=dY/dX;
 			  			double b=currentY-a*currentX;
-			  			double bounceX=x-radius;
-			  			double bounceY=a*bounceX+b;
+			  			double bounceY=y+length+radius;
+			  			double bounceX=(bounceY-b)/a;
 			  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
 			  			bp.setHitBlock(block);
 	  					return bp;
@@ -1325,7 +1324,7 @@ public class PlayedGame implements Serializable
 				  			double B=2*a*(b-y-length)-2*(x+length);
 				  			double C=Math.pow((x+length),2)+Math.pow(b-y-length,2)-radius;
 				  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-				  			double X=(-B+delta)/2*A;
+				  			double X=(-B+delta)/(2*A);
 				  			double Y=a*X+b;
 				  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
@@ -1344,7 +1343,7 @@ public class PlayedGame implements Serializable
 	  	return null;
   }
 
-  // line 618 "../../../../../Block223States.ump"
+  // line 617 "../../../../../Block223States.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     double ballPosX = getCurrentBallX(); 
 	    double ballPosY = getCurrentBallY(); 

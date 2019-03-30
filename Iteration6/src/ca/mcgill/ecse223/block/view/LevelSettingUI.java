@@ -340,7 +340,7 @@ public class LevelSettingUI {
 				return;
 			}
 			try {
-				Block223Controller.removeBlock(levels.getSelectedIndex()+1, y, x);
+				Block223Controller.removeBlock(levels.getSelectedIndex()+1, x, y);
 				layeredPane.repaint();
 			} catch (InvalidInputException e) {
 				errorMsg.setText(e.getMessage());
@@ -376,7 +376,7 @@ public class LevelSettingUI {
 				return;
 			}
 			try {
-				Block223Controller.moveBlock(levels.getSelectedIndex()+1, oldY, oldX, newY, newX);
+				Block223Controller.moveBlock(levels.getSelectedIndex()+1, oldX, oldY, newX, newY);
 				layeredPane.repaint();
 			} catch (InvalidInputException e) {
 				errorMsg.setText(e.getMessage());
@@ -408,7 +408,7 @@ public class LevelSettingUI {
 				return;
 			}
 			try {
-				Block223Controller.positionBlock(block.getId(), levels.getSelectedIndex()+1, y, x);
+				Block223Controller.positionBlock(block.getId(), levels.getSelectedIndex()+1, x, y);
 				
 				layeredPane.repaint();
 			} catch (InvalidInputException e) {
@@ -474,7 +474,7 @@ public class LevelSettingUI {
 				List<TOGridCell> cells=Block223Controller.getBlocksAtLevelOfCurrentDesignableGame(levels.getSelectedIndex()+1);
 				
 				for(TOGridCell cell: cells) {
-					to[cell.getGridHorizontalPosition()-1][cell.getGridVerticalPosition()-1]=cell;
+					to[cell.getGridVerticalPosition()-1][cell.getGridHorizontalPosition()-1]=cell;
 				}
 				return to;
 			} catch (InvalidInputException e) {
