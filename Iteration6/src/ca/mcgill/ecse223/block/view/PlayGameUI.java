@@ -17,6 +17,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
+import javax.swing.JPanel;
 
 public class PlayGameUI implements Block223PlayModeInterface{
 
@@ -57,7 +58,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 		 lblLives = new JLabel("Lives: ");
 		lblLives.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
 		
-		JLayeredPane hallOfFame = new HallOfFame();
+		JPanel hallOfFame = new HallOfFame();
 		
 		JButton btnGoBack = new JButton("Go Back");
 		btnGoBack.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
@@ -80,50 +81,45 @@ public class PlayGameUI implements Block223PlayModeInterface{
 				((HallOfFame) hallOfFame).nextPage();
 			}
 		});
+		
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
 							.addComponent(btnStartGame)
 							.addGap(119)
 							.addComponent(btnGoBack, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblLives, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblScore, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblLevel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(playArea, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(lblLives, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblScore, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblLevel, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+						.addComponent(playArea, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(hallOfFame, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnPrevious, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
 							.addGap(95)
-							.addComponent(btnNext)))
-					.addContainerGap(10, Short.MAX_VALUE))
+							.addComponent(btnNext))
+						.addComponent(hallOfFame, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(19, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(23)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(hallOfFame, GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(23)
 							.addComponent(lblLevel, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(lblScore)
 							.addGap(18)
 							.addComponent(lblLives)
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(playArea, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(playArea, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE))
+						.addComponent(hallOfFame, GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(btnNext, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

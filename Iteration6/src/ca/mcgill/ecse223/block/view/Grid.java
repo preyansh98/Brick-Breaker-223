@@ -28,7 +28,7 @@ public class Grid extends JLayeredPane{
 				for(int row=0; row<15;row++) {
 					for(int column=0;column<15;column++) {
 					if (rectangles[row][column].contains(x, y)) {
-						LevelSettingUI.displayBlockInfo( column+1,  row+1);
+						LevelSettingUI.displayBlockInfo( row+1,column+1  );
 						break;
 					}
 				}

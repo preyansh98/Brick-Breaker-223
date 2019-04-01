@@ -1,14 +1,12 @@
 package ca.mcgill.ecse223.block.application;
 import ca.mcgill.ecse223.block.model.Game;
 
-import ca.mcgill.ecse223.block.model.Admin;
+import javax.swing.UIManager;
+
 import ca.mcgill.ecse223.block.model.Block223;
-import ca.mcgill.ecse223.block.model.Game;
-import ca.mcgill.ecse223.block.model.Level;
 import ca.mcgill.ecse223.block.model.PlayedGame;
 import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
-import ca.mcgill.ecse223.block.view.NewBlockUI;
 import ca.mcgill.ecse223.block.view.SignInUI;
 
 public class Block223Application {
@@ -25,6 +23,11 @@ public class Block223Application {
 		Block223Application.currentPlayableGame = currentPlayableGame;
 	}
 	public static void main(String [] args) {
+		try { 
+		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 		SignInUI.init();
 	}
 	public static Game getCurrentGame() {

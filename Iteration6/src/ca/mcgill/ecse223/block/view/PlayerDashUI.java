@@ -26,14 +26,14 @@ public class PlayerDashUI {
 	private static JComboBox<String> newGameBox;
 	private static JComboBox<String> oldGameBox;
 	private static int[] ids;
-	private static PlayGameUI test;
+	private static PlayGameUI playArea;
 	private static JLabel errorMsg;
 	/**
 	 * Initialize the contents of the frame.
 	 * @wbp.parser.entryPoint
 	 */
 	public static void init() {
-		test=null;
+		playArea=null;
 		frame = new JFrame();
 		frame.setBounds(100, 100, 749, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,13 +133,29 @@ public class PlayerDashUI {
 	}
 	
 	public static void continueGame() {
-		
-		
+		if(oldGameBox.getSelectedIndex()!=-1) {
+			try {
+				Block223Controller.selectPlayableGame( null, ids[oldGameBox.getSelectedIndex()]);
+				frame.dispose();
+				playArea=new PlayGameUI();
+			} catch (InvalidInputException e) {
+				errorMsg.setText(e.getMessage());
+				System.out.println(e.getMessage());
+			}
+		}
 	}
 
 	public static void startGame() {
-		frame.dispose();
-		test=new PlayGameUI();
+		
+		if(newGameBox.getSelectedIndex()!=-1) {
+			try {
+				Block223Controller.selectPlayableGame( newGameBox.getSelectedItem().toString(), -1);
+				frame.dispose();
+				playArea=new PlayGameUI();
+			} catch (InvalidInputException e) {
+				errorMsg.setText(e.getMessage());
+			}
+		}
 		
 	}
 
@@ -157,6 +173,13 @@ public class PlayerDashUI {
 			List<TOPlayableGame> playables=Block223Controller.getPlayableGames();
 			int i=0;
 			for(TOPlayableGame game:playables) {
+				if(game.getNumber()!=-1) {
+					i++;
+				}
+			}
+			ids=new int[i];
+			i=0;
+			for(TOPlayableGame game:playables) {
 				if(game.getNumber()==-1) {
 					newGameBox.addItem(game.getName());
 				}else{
@@ -165,8 +188,8 @@ public class PlayerDashUI {
 					i++;
 				}
 			}
-			newGameBox.setSelectedItem(-1);
-			oldGameBox.setSelectedItem(-1);
+			newGameBox.setSelectedIndex(-1);
+			oldGameBox.setSelectedIndex(-1);
 		} catch (InvalidInputException e) {
 			errorMsg.setText(e.getMessage());
 		}

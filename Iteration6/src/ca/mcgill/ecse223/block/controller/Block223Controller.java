@@ -640,7 +640,8 @@ public class Block223Controller {
 		}
 		if(game.getPlayStatus()==PlayStatus.GameOver) {
 			Block223Application.setCurrentPlayableGame(null);
-		}else if(game.getPlayer()!=null){
+		}
+		if(game.getPlayer()!=null){
 			game.setBounce(null);
 			Block223 block223=Block223Application.getBlock223();
 			Block223Persistence.save(block223);
@@ -650,14 +651,15 @@ public class Block223Controller {
 
 	private static void updatePaddlePosition(String userInputs) {
 		PlayedGame game=Block223Application.getCurrentPlayableGame();
+		int coef=3;
 		for(int i=0; i<userInputs.length();i++) {
 			if(userInputs.charAt(i)=='l') {
-				if(game.getCurrentPaddleX()>=Math.abs(PlayedGame.PADDLE_MOVE_LEFT)) {
-					game.setCurrentPaddleX(game.getCurrentPaddleX()+3*PlayedGame.PADDLE_MOVE_LEFT);
+				if(game.getCurrentPaddleX()>=Math.abs(coef*PlayedGame.PADDLE_MOVE_LEFT)) {
+					game.setCurrentPaddleX(game.getCurrentPaddleX()+coef*PlayedGame.PADDLE_MOVE_LEFT);
 				}
 			}else if(userInputs.charAt(i)=='r') {
-				if(game.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-PlayedGame.PADDLE_MOVE_RIGHT-game.getCurrentPaddleLength()) {
-					game.setCurrentPaddleX(game.getCurrentPaddleX()+3*PlayedGame.PADDLE_MOVE_RIGHT);
+				if(game.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-coef*PlayedGame.PADDLE_MOVE_RIGHT-game.getCurrentPaddleLength()) {
+					game.setCurrentPaddleX(game.getCurrentPaddleX()+coef*PlayedGame.PADDLE_MOVE_RIGHT);
 				}
 			}else if(userInputs.charAt(i)==' ') {
 				break;

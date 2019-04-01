@@ -1169,7 +1169,7 @@ public class PlayedGame implements Serializable
 	  	Rectangle2D rectE=new Rectangle2D.Double(x-radius,y-radius,radius,radius);
 	  	
 	  	Rectangle2D rectG=new Rectangle2D.Double(x-radius,y+length,radius,radius);
-	  	Rectangle2D rectD=new Rectangle2D.Double(x,y+length,radius,radius);
+	  	Rectangle2D rectD=new Rectangle2D.Double(x,y+length,length,radius);
 	  	Rectangle2D rectH=new Rectangle2D.Double(x+length,y+length,radius,radius);
 	  	
 	   	double currentX=getCurrentBallX();
