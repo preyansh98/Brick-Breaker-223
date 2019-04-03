@@ -598,7 +598,7 @@ public class Block223 implements Serializable
 
   // line 10 "../../../../../Block223Persistence.ump"
    public void reinitialize(){
-    Game.reinitializeUniqueName(this.getGames());
+    Game.reinitializeUniqueNameAndHOFPriority(this.getGames());
 	User.reinitializeUniqueUsername(this.getUsers());
 	Block.reinitializeAutouniqueID(this.getGames());
 	PlayedGame.reinitializeAutouniqueID(this.getPlayedGames());

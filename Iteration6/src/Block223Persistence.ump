@@ -7,7 +7,7 @@ class Block223 {
   isA Serializable;
   private static final long serialVersionUID = 6181302407834705923L;
   public void reinitialize() {
-	Game.reinitializeUniqueName(this.getGames());
+	Game.reinitializeUniqueNameAndHOFPriority(this.getGames());
 	User.reinitializeUniqueUsername(this.getUsers());
 	Block.reinitializeAutouniqueID(this.getGames());
 	PlayedGame.reinitializeAutouniqueID(this.getPlayedGames());
@@ -48,11 +48,20 @@ class Game {
   depend java.io.Serializable;
   isA Serializable;
   private static final long serialVersionUID = -210105651472293481L;
-  public static void reinitializeUniqueName(List<Game> games) {
+  public static void reinitializeUniqueNameAndHOFPriority(List<Game> games) {
     gamesByName = new HashMap<String, Game>();
     for (Game game : games) {
       gamesByName.put(game.getName(), game);
+      game.setHallOfFameEntriesPriority(new Comparator<HallOfFameEntry>(){
+        @Override
+        public int compare(HallOfFameEntry arg0, HallOfFameEntry arg1)
+        {
+          return ((Integer)arg0.getScore()).compareTo(
+                 ((Integer)arg1.getScore()));
+        }
+      });
     }
+      
   }
 }
 

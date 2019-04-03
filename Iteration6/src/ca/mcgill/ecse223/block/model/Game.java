@@ -885,10 +885,18 @@ public class Game implements Serializable
   }
 
   // line 52 "../../../../../Block223Persistence.ump"
-   public static  void reinitializeUniqueName(List<Game> games){
+   public static  void reinitializeUniqueNameAndHOFPriority(List<Game> games){
     gamesByName = new HashMap<String, Game>();
     for (Game game : games) {
       gamesByName.put(game.getName(), game);
+      game.setHallOfFameEntriesPriority(new Comparator<HallOfFameEntry>(){
+        @Override
+        public int compare(HallOfFameEntry arg0, HallOfFameEntry arg1)
+        {
+          return ((Integer)arg0.getScore()).compareTo(
+                 ((Integer)arg1.getScore()));
+        }
+      });
     }
   }
 

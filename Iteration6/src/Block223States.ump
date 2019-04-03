@@ -49,7 +49,7 @@ class PlayedGame {
   }
    private boolean isBallOutOfBounds() {
 	   boolean outofbounds= false;
-	   if (this.getCurrentBallY() + this.getBallDirectionY() + 5 > 355) {
+	   if (this.getCurrentBallY() + this.getBallDirectionY() > 360) {
 		   outofbounds=true;
 	   }
 	   return outofbounds;
@@ -241,6 +241,9 @@ class PlayedGame {
   			double b=currentY-a*currentX;
   			double bounceY=y-radius;
   			double bounceX=(bounceY-b)/a;
+  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
   		}
   	}else if(segment.intersects(rectB)){
@@ -249,6 +252,9 @@ class PlayedGame {
   			double b=currentY-a*currentX;
   			double bounceX=x-radius;
   			double bounceY=a*bounceX+b;
+  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
   	}else if(segment.intersects(rectC)){
@@ -257,6 +263,9 @@ class PlayedGame {
   			double b=currentY-a*currentX;
   			double bounceX=x+length+radius;
   			double bounceY=a*bounceX+b;
+  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
   	}else if(segment.intersects(rectE)){
@@ -269,10 +278,13 @@ class PlayedGame {
   			double b=currentY-a*currentX;
   			double A=1+Math.pow(a,2);
   			double B=2*a*(b-y)-2*x;
-  			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
+  			double C=Math.pow(x,2)+Math.pow(b-y,2)-Math.pow(radius,2);
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
   			double X=(-B-delta)/(2*A);
   			double Y=a*X+b;
+  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
   			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -292,10 +304,13 @@ class PlayedGame {
   			double b=currentY-a*currentX;
   			double A=1+Math.pow(a,2);
   			double B=2*a*(b-y)-2*(x+length);
-  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-Math.pow(radius,2);
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
   			double X=(-B+delta)/(2*A);
   			double Y=a*X+b;
+  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
   			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -457,6 +472,9 @@ class PlayedGame {
 	  			double b=currentY-a*currentX;
 	  			double bounceY=y-radius;
 	  			double bounceX=(bounceY-b)/a;
+	  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
 	  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
 	  			bp.setHitBlock(block);
 	  			return bp;
@@ -467,6 +485,9 @@ class PlayedGame {
 	  			double b=currentY-a*currentX;
 	  			double bounceX=x-radius;
 	  			double bounceY=a*bounceX+b;
+	  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
 	  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
 	  			bp.setHitBlock(block);
 	  			return bp;
@@ -477,6 +498,9 @@ class PlayedGame {
 	  			double b=currentY-a*currentX;
 	  			double bounceX=x+radius+length;
 	  			double bounceY=a*bounceX+b;
+	  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
 	  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
 	  			bp.setHitBlock(block);
 	  			return bp;
@@ -492,10 +516,13 @@ class PlayedGame {
 	  			double b=currentY-a*currentX;
 	  			double A=1+Math.pow(a,2);
 	  			double B=2*a*(b-y)-2*x;
-	  			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
+	  			double C=Math.pow(x,2)+Math.pow(b-y,2)-Math.pow(radius,2);
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 	  			double X=(-B-delta)/(2*A);
 	  			double Y=a*X+b;
+	  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
 	  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -521,10 +548,13 @@ class PlayedGame {
 	  			double b=currentY-a*currentX;
 	  			double A=1+Math.pow(a,2);
 	  			double B=2*a*(b-y)-2*(x+length);
-	  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+	  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-Math.pow(radius,2);
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 	  			double X=(-B+delta)/(2*A);
 	  			double Y=a*X+b;
+	  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
 	  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -548,10 +578,13 @@ class PlayedGame {
 		  			double b=currentY-a*currentX;
 		  			double A=1+Math.pow(a,2);
 		  			double B=2*a*(b-y-length)-2*(x);
-		  			double C=Math.pow((x),2)+Math.pow(b-y-length,2)-radius;
+		  			double C=Math.pow((x),2)+Math.pow(b-y-length,2)-Math.pow(radius,2);
 		  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 		  			double X=(-B-delta)/(2*A);
 		  			double Y=a*X+b;
+		  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
 		  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -572,6 +605,9 @@ class PlayedGame {
 			  			double b=currentY-a*currentX;
 			  			double bounceY=y+length+radius;
 			  			double bounceX=(bounceY-b)/a;
+			  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
 			  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
 			  			bp.setHitBlock(block);
 	  					return bp;
@@ -591,10 +627,13 @@ class PlayedGame {
 				  			double b=currentY-a*currentX;
 				  			double A=1+Math.pow(a,2);
 				  			double B=2*a*(b-y-length)-2*(x+length);
-				  			double C=Math.pow((x+length),2)+Math.pow(b-y-length,2)-radius;
+				  			double C=Math.pow((x+length),2)+Math.pow(b-y-length,2)-Math.pow(radius,2);
 				  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 				  			double X=(-B+delta)/(2*A);
 				  			double Y=a*X+b;
+				  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
 				  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}

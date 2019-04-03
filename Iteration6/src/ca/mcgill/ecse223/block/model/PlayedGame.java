@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.*;
 
 // line 18 "../../../../../Block223PlayMode.ump"
-// line 100 "../../../../../Block223Persistence.ump"
+// line 109 "../../../../../Block223Persistence.ump"
 // line 1 "../../../../../Block223States.ump"
 public class PlayedGame implements Serializable
 {
@@ -722,7 +722,7 @@ public class PlayedGame implements Serializable
     }
   }
 
-  // line 105 "../../../../../Block223Persistence.ump"
+  // line 114 "../../../../../Block223Persistence.ump"
    public static  void reinitializeAutouniqueID(List<PlayedGame> games){
     nextId=0;
   	for(PlayedGame game: games){
@@ -764,7 +764,7 @@ public class PlayedGame implements Serializable
   // line 51 "../../../../../Block223States.ump"
    private boolean isBallOutOfBounds(){
     boolean outofbounds= false;
-	   if (this.getCurrentBallY() + this.getBallDirectionY() + 5 > 355) {
+	   if (this.getCurrentBallY() + this.getBallDirectionY() > 360) {
 		   outofbounds=true;
 	   }
 	   return outofbounds;
@@ -968,6 +968,9 @@ public class PlayedGame implements Serializable
   			double b=currentY-a*currentX;
   			double bounceY=y-radius;
   			double bounceX=(bounceY-b)/a;
+  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
   		}
   	}else if(segment.intersects(rectB)){
@@ -976,6 +979,9 @@ public class PlayedGame implements Serializable
   			double b=currentY-a*currentX;
   			double bounceX=x-radius;
   			double bounceY=a*bounceX+b;
+  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
   	}else if(segment.intersects(rectC)){
@@ -984,9 +990,12 @@ public class PlayedGame implements Serializable
   			double b=currentY-a*currentX;
   			double bounceX=x+length+radius;
   			double bounceY=a*bounceX+b;
+  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
-  	}else if(segment.intersects(rectE)){
+  	}else if(checkIntersect(x,y,currentX+dX, currentY+dY,radius)){//E
   			double a;
   			if(dX!=0){
   				a=dY/dX;
@@ -996,10 +1005,13 @@ public class PlayedGame implements Serializable
   			double b=currentY-a*currentX;
   			double A=1+Math.pow(a,2);
   			double B=2*a*(b-y)-2*x;
-  			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
+  			double C=Math.pow(x,2)+Math.pow(b-y,2)-Math.pow(radius,2);
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
   			double X=(-B-delta)/(2*A);
   			double Y=a*X+b;
+  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
   			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -1009,7 +1021,7 @@ public class PlayedGame implements Serializable
   				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
   			}
   		
-  	}else if(segment.intersects(rectF)){
+  	}else if(checkIntersect(x+length,y,currentX+dX, currentY+dY,radius)){//F
   			double a;
   			if(dX!=0){
   				a=dY/dX;
@@ -1019,10 +1031,13 @@ public class PlayedGame implements Serializable
   			double b=currentY-a*currentX;
   			double A=1+Math.pow(a,2);
   			double B=2*a*(b-y)-2*(x+length);
-  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-Math.pow(radius,2);
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
   			double X=(-B+delta)/(2*A);
   			double Y=a*X+b;
+  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
   			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -1036,7 +1051,7 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 313 "../../../../../Block223States.ump"
+  // line 328 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointWall(){
     double currentX=getCurrentBallX();
    double currentY=getCurrentBallY();
@@ -1084,7 +1099,7 @@ public class PlayedGame implements Serializable
   	return null;
   }
 
-  // line 360 "../../../../../Block223States.ump"
+  // line 375 "../../../../../Block223States.ump"
    private void bounceBall(){
     BouncePoint bp=getBounce();
   	double currentX=getCurrentBallX();
@@ -1146,7 +1161,7 @@ public class PlayedGame implements Serializable
   	setBounce(null);
   }
 
-  // line 420 "../../../../../Block223States.ump"
+  // line 435 "../../../../../Block223States.ump"
    private int sign(double val){
     if(val>=0){
 			return 1;
@@ -1154,7 +1169,7 @@ public class PlayedGame implements Serializable
 		return -1;
   }
 
-  // line 428 "../../../../../Block223States.ump"
+  // line 443 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
     int x=block.getX();
 	  	int y=block.getY();
@@ -1188,6 +1203,9 @@ public class PlayedGame implements Serializable
 	  			double b=currentY-a*currentX;
 	  			double bounceY=y-radius;
 	  			double bounceX=(bounceY-b)/a;
+	  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
 	  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
 	  			bp.setHitBlock(block);
 	  			return bp;
@@ -1198,6 +1216,9 @@ public class PlayedGame implements Serializable
 	  			double b=currentY-a*currentX;
 	  			double bounceX=x-radius;
 	  			double bounceY=a*bounceX+b;
+	  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
 	  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
 	  			bp.setHitBlock(block);
 	  			return bp;
@@ -1208,11 +1229,14 @@ public class PlayedGame implements Serializable
 	  			double b=currentY-a*currentX;
 	  			double bounceX=x+radius+length;
 	  			double bounceY=a*bounceX+b;
+	  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
 	  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
 	  			bp.setHitBlock(block);
 	  			return bp;
 	  		}
-	  	}else if(segment.intersects(rectE)){
+	  	}else if(checkIntersect(x,y,currentX+dX, currentY+dY,radius)){//E
 	  		double a;
   			if(dX!=0){
   				a=dY/dX;
@@ -1223,10 +1247,13 @@ public class PlayedGame implements Serializable
 	  			double b=currentY-a*currentX;
 	  			double A=1+Math.pow(a,2);
 	  			double B=2*a*(b-y)-2*x;
-	  			double C=Math.pow(x,2)+Math.pow(b-y,2)-radius;
+	  			double C=Math.pow(x,2)+Math.pow(b-y,2)-Math.pow(radius,2);
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 	  			double X=(-B-delta)/(2*A);
 	  			double Y=a*X+b;
+	  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
 	  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -1241,7 +1268,7 @@ public class PlayedGame implements Serializable
 	  			}
 	  		
 	  	}
-	  	else if(segment.intersects(rectF)){
+	  	else if(checkIntersect(x+length,y,currentX+dX, currentY+dY,radius)){//F
 	  		double a;
   			if(dX!=0){
   				a=dY/dX;
@@ -1252,10 +1279,13 @@ public class PlayedGame implements Serializable
 	  			double b=currentY-a*currentX;
 	  			double A=1+Math.pow(a,2);
 	  			double B=2*a*(b-y)-2*(x+length);
-	  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-radius;
+	  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-Math.pow(radius,2);
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 	  			double X=(-B+delta)/(2*A);
 	  			double Y=a*X+b;
+	  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
 	  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -1269,7 +1299,7 @@ public class PlayedGame implements Serializable
 	  					return bp;
 	  			}
 	  		}
-	  		else if(segment.intersects(rectG)){
+	  		else if(checkIntersect(x,y+length,currentX+dX, currentY+dY,radius)){//G
 		  			double a;
   					if(dX!=0){
   						a=dY/dX;
@@ -1279,10 +1309,13 @@ public class PlayedGame implements Serializable
 		  			double b=currentY-a*currentX;
 		  			double A=1+Math.pow(a,2);
 		  			double B=2*a*(b-y-length)-2*(x);
-		  			double C=Math.pow((x),2)+Math.pow(b-y-length,2)-radius;
+		  			double C=Math.pow((x),2)+Math.pow(b-y-length,2)-Math.pow(radius,2);
 		  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 		  			double X=(-B-delta)/(2*A);
 		  			double Y=a*X+b;
+		  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
 		  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -1303,6 +1336,9 @@ public class PlayedGame implements Serializable
 			  			double b=currentY-a*currentX;
 			  			double bounceY=y+length+radius;
 			  			double bounceX=(bounceY-b)/a;
+			  			if((currentX+dX)==bounceX && (currentY+dY)==bounceY){
+	  				return null;
+	  			}
 			  			BouncePoint bp= new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_Y);
 			  			bp.setHitBlock(block);
 	  					return bp;
@@ -1312,7 +1348,7 @@ public class PlayedGame implements Serializable
 	  					return bp;
 			  		}
 		  		}
-			  		else if(segment.intersects(rectH)){
+			  		else if(checkIntersect(x+length,y+length,currentX+dX, currentY+dY,radius)){//H
 				  			double a;
   							if(dX!=0){
   								a=dY/dX;
@@ -1322,10 +1358,13 @@ public class PlayedGame implements Serializable
 				  			double b=currentY-a*currentX;
 				  			double A=1+Math.pow(a,2);
 				  			double B=2*a*(b-y-length)-2*(x+length);
-				  			double C=Math.pow((x+length),2)+Math.pow(b-y-length,2)-radius;
+				  			double C=Math.pow((x+length),2)+Math.pow(b-y-length,2)-Math.pow(radius,2);
 				  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
 				  			double X=(-B+delta)/(2*A);
 				  			double Y=a*X+b;
+				  			if((currentX+dX)==X && (currentY+dY)==Y){
+	  				return null;
+	  			}
 				  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
@@ -1342,8 +1381,10 @@ public class PlayedGame implements Serializable
 	  	}
 	  	return null;
   }
-
-  // line 617 "../../../../../Block223States.ump"
+   private boolean checkIntersect(double Xs, double Ys, double x, double y, double radius) {
+	   return (Math.pow(Xs-x,2)+Math.pow(Ys-y,2))<=Math.pow(radius,2);
+   }
+  // line 656 "../../../../../Block223States.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     double ballPosX = getCurrentBallX(); 
 	    double ballPosY = getCurrentBallY(); 
@@ -1395,7 +1436,7 @@ public class PlayedGame implements Serializable
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 103 "../../../../../Block223Persistence.ump"
+  // line 112 "../../../../../Block223Persistence.ump"
   private static final long serialVersionUID = 8597675110221231714L ;
 
   

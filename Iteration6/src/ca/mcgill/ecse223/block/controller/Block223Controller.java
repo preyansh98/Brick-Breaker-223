@@ -638,6 +638,7 @@ public class Block223Controller {
 			}
 			ui.refresh();
 		}
+		System.out.println("Done");
 		if(game.getPlayStatus()==PlayStatus.GameOver) {
 			Block223Application.setCurrentPlayableGame(null);
 		}
@@ -651,7 +652,7 @@ public class Block223Controller {
 
 	private static void updatePaddlePosition(String userInputs) {
 		PlayedGame game=Block223Application.getCurrentPlayableGame();
-		int coef=3;
+		int coef=1;
 		for(int i=0; i<userInputs.length();i++) {
 			if(userInputs.charAt(i)=='l') {
 				if(game.getCurrentPaddleX()>=Math.abs(coef*PlayedGame.PADDLE_MOVE_LEFT)) {
