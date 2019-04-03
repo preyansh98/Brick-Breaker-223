@@ -268,7 +268,7 @@ class PlayedGame {
 	  			}
   			return new BouncePoint(bounceX,bounceY,BounceDirection.FLIP_X);
   		}
-  	}else if(segment.intersects(rectE)){
+  	}else if(segment.intersects(rectE) && !(dX<0 &&dY<0)){
   			double a;
   			if(dX!=0){
   				a=dY/dX;
@@ -280,7 +280,14 @@ class PlayedGame {
   			double B=2*a*(b-y)-2*x;
   			double C=Math.pow(x,2)+Math.pow(b-y,2)-Math.pow(radius,2);
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-  			double X=(-B-delta)/(2*A);
+  			double X1=(-B-delta)/(2*A);
+  			double X2=(-B+delta)/(2*A);
+  			double X=0;
+  			if(Math.abs(currentX-X1)< Math.abs(currentX-X2)) {
+  				X=X1;
+  			}else {
+  				X=X2;
+  			}
   			double Y=a*X+b;
   			if((currentX+dX)==X && (currentY+dY)==Y){
 	  				return null;
@@ -294,7 +301,7 @@ class PlayedGame {
   				return new BouncePoint(X,Y, BounceDirection.FLIP_X);
   			}
   		
-  	}else if(segment.intersects(rectF)){
+  	}else if(segment.intersects(rectF) && !(dX>0 &&dY<0)){
   			double a;
   			if(dX!=0){
   				a=dY/dX;
@@ -306,7 +313,14 @@ class PlayedGame {
   			double B=2*a*(b-y)-2*(x+length);
   			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-Math.pow(radius,2);
   			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-  			double X=(-B+delta)/(2*A);
+  			double X1=(-B-delta)/(2*A);
+  			double X2=(-B+delta)/(2*A);
+  			double X=0;
+  			if(Math.abs(currentX-X1)< Math.abs(currentX-X2)) {
+  				X=X1;
+  			}else {
+  				X=X2;
+  			}
   			double Y=a*X+b;
   			if((currentX+dX)==X && (currentY+dY)==Y){
 	  				return null;
@@ -461,7 +475,6 @@ class PlayedGame {
 	   	double dX=getBallDirectionX();
 	    double dY=getBallDirectionY();
 	  	Line2D segment=new Line2D.Double(currentX,currentY,currentX+dX,currentY+dY);
-	  	
 	  	if(segment.intersects(rectA)){
 	  		if(dX==0){
 	  			BouncePoint bp= new BouncePoint(currentX,y-radius,BounceDirection.FLIP_Y);
@@ -479,7 +492,8 @@ class PlayedGame {
 	  			bp.setHitBlock(block);
 	  			return bp;
 	  		}
-	  	}else if(segment.intersects(rectB)){
+	  	}
+		 if(segment.intersects(rectB)){
 	  		if(dX!=0){
 	  			double a=dY/dX;
 	  			double b=currentY-a*currentX;
@@ -492,7 +506,8 @@ class PlayedGame {
 	  			bp.setHitBlock(block);
 	  			return bp;
 	  		}
-	  	}else if(segment.intersects(rectC)){
+	  	}
+		 if(segment.intersects(rectC)){
 	  		if(dX!=0){
 	  			double a=dY/dX;
 	  			double b=currentY-a*currentX;
@@ -505,7 +520,8 @@ class PlayedGame {
 	  			bp.setHitBlock(block);
 	  			return bp;
 	  		}
-	  	}else if(segment.intersects(rectE)){
+	  	}	
+	  	 if(segment.intersects(rectE) && !(dX<0 &&dY<0)){
 	  		double a;
   			if(dX!=0){
   				a=dY/dX;
@@ -518,7 +534,14 @@ class PlayedGame {
 	  			double B=2*a*(b-y)-2*x;
 	  			double C=Math.pow(x,2)+Math.pow(b-y,2)-Math.pow(radius,2);
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-	  			double X=(-B-delta)/(2*A);
+	  			double X1=(-B-delta)/(2*A);
+  			double X2=(-B+delta)/(2*A);
+  			double X=0;
+  			if(Math.abs(currentX-X1)< Math.abs(currentX-X2)) {
+  				X=X1;
+  			}else {
+  				X=X2;
+  			}
 	  			double Y=a*X+b;
 	  			if((currentX+dX)==X && (currentY+dY)==Y){
 	  				return null;
@@ -537,7 +560,7 @@ class PlayedGame {
 	  			}
 	  		
 	  	}
-	  	else if(segment.intersects(rectF)){
+	  		 if(segment.intersects(rectF) && !(dX>0 &&dY<0)){
 	  		double a;
   			if(dX!=0){
   				a=dY/dX;
@@ -550,7 +573,14 @@ class PlayedGame {
 	  			double B=2*a*(b-y)-2*(x+length);
 	  			double C=Math.pow((x+length),2)+Math.pow(b-y,2)-Math.pow(radius,2);
 	  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-	  			double X=(-B+delta)/(2*A);
+	  			double X1=(-B-delta)/(2*A);
+  			double X2=(-B+delta)/(2*A);
+  			double X=0;
+  			if(Math.abs(currentX-X1)< Math.abs(currentX-X2)) {
+  				X=X1;
+  			}else {
+  				X=X2;
+  			}
 	  			double Y=a*X+b;
 	  			if((currentX+dX)==X && (currentY+dY)==Y){
 	  				return null;
@@ -568,7 +598,7 @@ class PlayedGame {
 	  					return bp;
 	  			}
 	  		}
-	  		else if(segment.intersects(rectG)){
+	  		 if(segment.intersects(rectG)&& !(dX<0 &&dY>0)){
 		  			double a;
   					if(dX!=0){
   						a=dY/dX;
@@ -580,7 +610,14 @@ class PlayedGame {
 		  			double B=2*a*(b-y-length)-2*(x);
 		  			double C=Math.pow((x),2)+Math.pow(b-y-length,2)-Math.pow(radius,2);
 		  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-		  			double X=(-B-delta)/(2*A);
+		  			double X1=(-B-delta)/(2*A);
+  			double X2=(-B+delta)/(2*A);
+  			double X=0;
+  			if(Math.abs(currentX-X1)< Math.abs(currentX-X2)) {
+  				X=X1;
+  			}else {
+  				X=X2;
+  			}
 		  			double Y=a*X+b;
 		  			if((currentX+dX)==X && (currentY+dY)==Y){
 	  				return null;
@@ -599,7 +636,7 @@ class PlayedGame {
 		  			}
 		  		
 	  		}
-		  		else if(segment.intersects(rectD)){
+		  		 if(segment.intersects(rectD)){
 			  		if(dX!=0){
 			  			double a=dY/dX;
 			  			double b=currentY-a*currentX;
@@ -617,7 +654,7 @@ class PlayedGame {
 	  					return bp;
 			  		}
 		  		}
-			  		else if(segment.intersects(rectH)){
+			  	 if(segment.intersects(rectH)&& !(dX>0 &&dY>0)){
 				  			double a;
   							if(dX!=0){
   								a=dY/dX;
@@ -629,11 +666,18 @@ class PlayedGame {
 				  			double B=2*a*(b-y-length)-2*(x+length);
 				  			double C=Math.pow((x+length),2)+Math.pow(b-y-length,2)-Math.pow(radius,2);
 				  			double delta=Math.sqrt(Math.pow(B,2)-4*A*C);
-				  			double X=(-B+delta)/(2*A);
+				  			double X1=(-B-delta)/(2*A);
+  							double X2=(-B+delta)/(2*A);
+  							double X=0;
+  							if(Math.abs(currentX-X1)< Math.abs(currentX-X2)) {
+  								X=X1;
+  							}else {
+  								X=X2;
+  								}
 				  			double Y=a*X+b;
 				  			if((currentX+dX)==X && (currentY+dY)==Y){
-	  				return null;
-	  			}
+	  							return null;
+	  						}
 				  			if(Double.isNaN(X) || Double.isNaN(Y)){
 				  				return null;
 				  			}
