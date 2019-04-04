@@ -24,6 +24,7 @@ public class RegistrationUI {
 	private static JPasswordField adminTXT;
 	private static JButton btnCancel;
 	private static JLabel errorMsg;
+	private static JLabel lblBlock;
 
 
 	/**
@@ -32,18 +33,22 @@ public class RegistrationUI {
 	 */
 	public static void init() {
 		frame = new JFrame("Sign Up");
+		frame.getContentPane().setBackground(new Color(102, 102, 102));
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 742, 621);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblUsername.setForeground(new Color(255, 255, 255));
+		lblUsername.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		JLabel lblPlayerPassword = new JLabel("Player password:");
-		lblPlayerPassword.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblPlayerPassword.setForeground(new Color(255, 255, 255));
+		lblPlayerPassword.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		JLabel lblAdminPassword = new JLabel("Admin password: ");
-		lblAdminPassword.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblAdminPassword.setForeground(new Color(255, 255, 255));
+		lblAdminPassword.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		usernameTXT = new JTextField();
 		usernameTXT.setColumns(10);
@@ -55,14 +60,15 @@ public class RegistrationUI {
 		adminTXT.setColumns(10);
 		
 		JButton btnRegister = new JButton("Register");
-		btnRegister.setFont(new Font("Arial Narrow", Font.PLAIN, 15));
+		btnRegister.setForeground(new Color(0, 153, 0));
+		btnRegister.setFont(new Font("Century Gothic", Font.BOLD, 19));
 		btnRegister.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				registerButtonActionPerformed(evt, usernameTXT, playerTXT,adminTXT,errorMsg);
 			}
 		});
 		btnCancel = new JButton("Cancel");
-		btnCancel.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnCancel.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		btnCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				returnButtonActionPerformed(evt);
@@ -70,9 +76,13 @@ public class RegistrationUI {
 		});
 		errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
+		
+		lblBlock = new JLabel("BLOCK223");
+		lblBlock.setForeground(new Color(255, 204, 204));
+		lblBlock.setFont(new Font("Century Gothic", Font.BOLD, 38));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
@@ -87,20 +97,27 @@ public class RegistrationUI {
 								.addComponent(playerTXT)
 								.addComponent(usernameTXT, GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(285)
-							.addComponent(btnRegister))
-						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(42)
 							.addComponent(btnCancel))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(190)
 							.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 338, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(152, Short.MAX_VALUE))
+					.addContainerGap(162, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(279, Short.MAX_VALUE)
+					.addComponent(lblBlock)
+					.addGap(259))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(344, Short.MAX_VALUE)
+					.addComponent(btnRegister)
+					.addGap(277))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(95)
+					.addGap(48)
+					.addComponent(lblBlock)
+					.addGap(33)
 					.addComponent(errorMsg)
 					.addGap(62)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
@@ -116,7 +133,7 @@ public class RegistrationUI {
 						.addComponent(adminTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(46)
 					.addComponent(btnRegister)
-					.addPreferredGap(ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
 					.addComponent(btnCancel)
 					.addGap(55))
 		);
