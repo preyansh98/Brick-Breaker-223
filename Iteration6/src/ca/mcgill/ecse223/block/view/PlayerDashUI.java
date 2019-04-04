@@ -35,33 +35,37 @@ public class PlayerDashUI {
 	public static void init() {
 		playArea=null;
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(102, 102, 102));
 		frame.setBounds(100, 100, 749, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		JLabel lblWelcome = new JLabel("Welcome back!");
-		lblWelcome.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		JLabel lblWelcome = new JLabel("Player Dashboard");
+		lblWelcome.setForeground(new Color(255, 255, 255));
+		lblWelcome.setFont(new Font("Century Gothic", Font.BOLD, 22));
 		
 		JLabel lblStartANew = new JLabel("Start a new game: ");
-		lblStartANew.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		lblStartANew.setForeground(new Color(255, 255, 255));
+		lblStartANew.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		 newGameBox = new JComboBox<String>();
 		newGameBox.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
 		
 		JButton btnStart = new JButton("Start");
-		btnStart.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		btnStart.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				startGame();
 			}
 		});
 		JLabel lblFinishAPrevious = new JLabel("Finish a previous game:");
-		lblFinishAPrevious.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		lblFinishAPrevious.setForeground(new Color(255, 255, 255));
+		lblFinishAPrevious.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		 oldGameBox = new JComboBox<String>();
 		oldGameBox.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
 		
-		JButton btnFinish = new JButton("Finish it!!!!!!!");
-		btnFinish.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		JButton btnFinish = new JButton("Finish");
+		btnFinish.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				continueGame();
@@ -69,7 +73,8 @@ public class PlayerDashUI {
 		});
 		
 		JButton btnLogout = new JButton("Logout");
-		btnLogout.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		btnLogout.setBackground(new Color(255, 0, 0));
+		btnLogout.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		btnLogout.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				registerButtonActionPerformed(evt);
@@ -82,39 +87,38 @@ public class PlayerDashUI {
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addGap(214)
-							.addComponent(lblWelcome, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addGap(27)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(27)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(errorMsg, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(errorMsg, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblStartANew)
-										.addComponent(lblFinishAPrevious)
-										.addComponent(btnLogout))
-									.addGap(32)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(oldGameBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(newGameBox, 0, 247, Short.MAX_VALUE))
-									.addPreferredGap(ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnFinish)
-										.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE))))))
+								.addComponent(lblStartANew)
+								.addComponent(lblFinishAPrevious)
+								.addComponent(btnLogout, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE))
+							.addGap(32)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(oldGameBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(newGameBox, 0, 247, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnFinish, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnStart, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))))
 					.addContainerGap())
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(271, Short.MAX_VALUE)
+					.addComponent(lblWelcome, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
+					.addGap(265))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblWelcome, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-					.addGap(47)
+					.addGap(52)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblStartANew)
 						.addComponent(newGameBox, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
@@ -124,9 +128,9 @@ public class PlayerDashUI {
 						.addComponent(lblFinishAPrevious)
 						.addComponent(oldGameBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnFinish))
-					.addGap(90)
+					.addPreferredGap(ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
 					.addComponent(btnLogout)
-					.addContainerGap(45, Short.MAX_VALUE))
+					.addGap(69))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 		setUpCombos();
