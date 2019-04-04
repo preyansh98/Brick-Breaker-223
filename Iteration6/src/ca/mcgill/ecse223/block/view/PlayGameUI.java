@@ -18,6 +18,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import javax.swing.JPanel;
+import java.awt.Color;
 
 public class PlayGameUI implements Block223PlayModeInterface{
 
@@ -47,35 +48,36 @@ public class PlayGameUI implements Block223PlayModeInterface{
 		 playArea = new PlayAreaUI();
 		
 		 btnStartGame = new JButton("Start Game");
-		btnStartGame.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		 btnStartGame.setBackground(new Color(51, 153, 102));
+		btnStartGame.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		 lblLevel = new JLabel("Level: ");
-		lblLevel.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		lblLevel.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		 lblScore = new JLabel("Score:");
-		lblScore.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		lblScore.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		 lblLives = new JLabel("Lives: ");
-		lblLives.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		lblLives.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		JPanel hallOfFame = new HallOfFame();
 		
 		JButton btnGoBack = new JButton("Go Back");
-		btnGoBack.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		btnGoBack.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		btnGoBack.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				goBack();
 			}
 		});
-		JButton btnPrevious = new JButton("Prev.");
-		btnPrevious.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		JButton btnPrevious = new JButton("< Prev");
+		btnPrevious.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		btnPrevious.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				((HallOfFame) hallOfFame).prevPage();
 			}
 		});
-		JButton btnNext = new JButton("Next");
-		btnNext.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		JButton btnNext = new JButton(" Next >");
+		btnNext.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		btnNext.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				((HallOfFame) hallOfFame).nextPage();
