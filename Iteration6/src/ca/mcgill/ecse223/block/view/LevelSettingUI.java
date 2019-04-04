@@ -53,17 +53,18 @@ public class LevelSettingUI {
 		levels = new JComboBox<String>();
 		
 		JLabel lblSelectLevel = new JLabel("Select Level:");
-		lblSelectLevel.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblSelectLevel.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		JLabel lblSelectBlock = new JLabel("Select Block :");
-		lblSelectBlock.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblSelectBlock.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		blocks = new JComboBox<String>();
 		
 		layeredPane = new Grid();
 		
 		JButton btnGoBack = new JButton("Go Back");
-		btnGoBack.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnGoBack.setForeground(new Color(255, 51, 0));
+		btnGoBack.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		btnGoBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -71,11 +72,13 @@ public class LevelSettingUI {
 			}
 		});
 		JLabel lblPositionANew = new JLabel("Position a new Block:");
-		lblPositionANew.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblPositionANew.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		JLabel lblXPosition = new JLabel("X position: ");
+		lblXPosition.setFont(new Font("Century Gothic", Font.PLAIN, 13));
 		
 		JLabel lblYPosition = new JLabel("Y position: ");
+		lblYPosition.setFont(new Font("Century Gothic", Font.PLAIN, 13));
 		
 		newXposTXT = new JTextField();
 		newXposTXT.setColumns(10);
@@ -84,27 +87,34 @@ public class LevelSettingUI {
 		newYposTXT.setColumns(10);
 		
 		JLabel lblMoveAnExisting = new JLabel("Move an existing Block:");
-		lblMoveAnExisting.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblMoveAnExisting.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		JButton btnPosition = new JButton("Position");
+		btnPosition.setBackground(new Color(0, 0, 255));
+		btnPosition.setForeground(new Color(0, 0, 0));
+		btnPosition.setFont(new Font("Century Gothic", Font.BOLD, 13));
 		btnPosition.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				positionButtonActionPerformed();
 			}
 		});
 		JLabel lblXPosition_1 = new JLabel("Old X:");
+		lblXPosition_1.setFont(new Font("Century Gothic", Font.PLAIN, 13));
 		
 		oldXmoveTXT = new JTextField();
 		oldXmoveTXT.setColumns(10);
 		
 		JLabel lblOldY = new JLabel("Old Y:");
+		lblOldY.setFont(new Font("Century Gothic", Font.PLAIN, 13));
 		
 		oldYmoveTXT = new JTextField();
 		oldYmoveTXT.setColumns(10);
 		
 		JLabel lblNewX = new JLabel("New X:");
+		lblNewX.setFont(new Font("Century Gothic", Font.PLAIN, 13));
 		
 		JLabel lblNewY = new JLabel("New Y:");
+		lblNewY.setFont(new Font("Century Gothic", Font.PLAIN, 13));
 		
 		newXmoveTXT = new JTextField();
 		newXmoveTXT.setColumns(10);
@@ -113,17 +123,21 @@ public class LevelSettingUI {
 		newYmoveTXT.setColumns(10);
 		
 		JButton btnMove = new JButton("Move");
+		btnMove.setBackground(new Color(0, 102, 255));
+		btnMove.setFont(new Font("Century Gothic", Font.BOLD, 13));
 		btnMove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				moveButtonActionPerformed();
 			}
 		});
 		JLabel lblDeleteABlock = new JLabel("Delete a Block:");
-		lblDeleteABlock.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblDeleteABlock.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		JLabel lblX = new JLabel("Current X:");
+		lblX.setFont(new Font("Century Gothic", Font.PLAIN, 13));
 		
 		JLabel lblCurrentY = new JLabel("Current Y:");
+		lblCurrentY.setFont(new Font("Century Gothic", Font.PLAIN, 13));
 		
 		XdeleteTXT = new JTextField();
 		XdeleteTXT.setColumns(10);
@@ -132,26 +146,30 @@ public class LevelSettingUI {
 		YdeleteTXT.setColumns(10);
 		
 		JButton btnDelete = new JButton("Delete");
+		btnDelete.setBackground(new Color(0, 102, 255));
+		btnDelete.setFont(new Font("Century Gothic", Font.BOLD, 13));
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				deleteButtonActionPerformed();
 			}
 		});
 		JButton btnSave = new JButton("Save");
-		btnSave.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnSave.setForeground(new Color(0, 153, 0));
+		btnSave.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				saveButtonActionPerformed();
 			}
 		});
 		JLabel lblEnterValuesBetween = new JLabel("Enter values between 0 and 15 for all the positions:");
-		lblEnterValuesBetween.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		lblEnterValuesBetween.setForeground(new Color(51, 102, 255));
+		lblEnterValuesBetween.setFont(new Font("Century Gothic", Font.ITALIC, 15));
 		
 		 errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
 		
 		lblSelectBlockInfo = new JLabel("Select Block info:");
-		lblSelectBlockInfo.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblSelectBlockInfo.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -172,66 +190,63 @@ public class LevelSettingUI {
 									.addGap(85)))
 							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnSave)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(lblXPosition_1)
+										.addGap(18)
+										.addComponent(oldXmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(lblNewY)
+										.addPreferredGap(ComponentPlacement.UNRELATED)
+										.addComponent(newYmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addGroup(groupLayout.createSequentialGroup()
 										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 											.addGroup(groupLayout.createSequentialGroup()
-												.addComponent(lblXPosition_1)
+												.addComponent(lblOldY)
 												.addGap(18)
-												.addComponent(oldXmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+												.addComponent(oldYmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 											.addGroup(groupLayout.createSequentialGroup()
-												.addComponent(lblNewY)
+												.addComponent(lblNewX)
 												.addPreferredGap(ComponentPlacement.UNRELATED)
-												.addComponent(newYmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+												.addComponent(newXmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(lblXPosition)
+												.addPreferredGap(ComponentPlacement.UNRELATED)
+												.addComponent(newXposTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+											.addComponent(lblMoveAnExisting)
+											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(lblYPosition)
+												.addPreferredGap(ComponentPlacement.UNRELATED)
+												.addComponent(newYposTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+											.addGroup(groupLayout.createSequentialGroup()
+												.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+													.addComponent(lblX)
+													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+														.addComponent(btnGoBack)
+														.addComponent(lblCurrentY)))
+												.addPreferredGap(ComponentPlacement.UNRELATED)
 												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-													.addGroup(groupLayout.createSequentialGroup()
-														.addComponent(lblOldY)
-														.addGap(18)
-														.addComponent(oldYmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-													.addGroup(groupLayout.createSequentialGroup()
-														.addComponent(lblNewX)
-														.addPreferredGap(ComponentPlacement.UNRELATED)
-														.addComponent(newXmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-													.addGroup(groupLayout.createSequentialGroup()
-														.addComponent(lblXPosition)
-														.addPreferredGap(ComponentPlacement.UNRELATED)
-														.addComponent(newXposTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-													.addComponent(lblMoveAnExisting)
-													.addGroup(groupLayout.createSequentialGroup()
-														.addComponent(lblYPosition)
-														.addPreferredGap(ComponentPlacement.UNRELATED)
-														.addComponent(newYposTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-													.addGroup(groupLayout.createSequentialGroup()
-														.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-															.addComponent(lblCurrentY)
-															.addComponent(lblX))
-														.addPreferredGap(ComponentPlacement.UNRELATED)
-														.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-															.addComponent(YdeleteTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-															.addComponent(XdeleteTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-													.addComponent(lblPositionANew))
-												.addPreferredGap(ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-													.addComponent(btnDelete)
-													.addComponent(btnPosition)
-													.addComponent(btnMove))))
-										.addComponent(lblDeleteABlock))
-									.addGap(47)
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 391, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblSelectBlockInfo, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE))))
+													.addComponent(YdeleteTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addComponent(XdeleteTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+											.addComponent(lblPositionANew))
+										.addPreferredGap(ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addComponent(btnPosition)
+											.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+												.addComponent(btnDelete)
+												.addComponent(btnMove)))))
+								.addComponent(lblDeleteABlock))
+							.addGap(47)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblSelectBlockInfo, GroupLayout.PREFERRED_SIZE, 424, GroupLayout.PREFERRED_SIZE)
+								.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 391, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnSave))
 							.addGap(111))))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(btnGoBack)
-					.addContainerGap(785, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
 					.addComponent(lblEnterValuesBetween)
-					.addContainerGap(412, Short.MAX_VALUE))
+					.addContainerGap(503, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -247,8 +262,8 @@ public class LevelSettingUI {
 					.addGap(18)
 					.addComponent(lblEnterValuesBetween)
 					.addGap(24)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(lblPositionANew)
@@ -263,29 +278,25 @@ public class LevelSettingUI {
 									.addGap(18)
 									.addComponent(lblMoveAnExisting))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(53)
+									.addGap(41)
 									.addComponent(btnPosition)))
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblXPosition_1)
-										.addComponent(oldXmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-									.addGap(24)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblOldY)
-										.addComponent(oldYmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblNewX)
-										.addComponent(newXmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblNewY)
-										.addComponent(newYmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(63)
-									.addComponent(btnMove)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblXPosition_1)
+								.addComponent(oldXmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(24)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblOldY)
+								.addComponent(oldYmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNewX)
+								.addComponent(newXmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNewY)
+								.addComponent(newYmoveTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnMove))
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -299,17 +310,18 @@ public class LevelSettingUI {
 										.addComponent(lblCurrentY)
 										.addComponent(YdeleteTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(67)
+									.addGap(71)
 									.addComponent(btnDelete))))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblSelectBlockInfo)
-							.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-							.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 418, GroupLayout.PREFERRED_SIZE)))
-					.addGap(18)
+							.addPreferredGap(ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+							.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 362, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnGoBack)
 						.addComponent(btnSave))
-					.addGap(32))
+					.addGap(51))
 		);
 		layeredPane.setLayout(null);
 		layeredPane.setSize(390, 390);
