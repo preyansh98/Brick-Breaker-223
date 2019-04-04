@@ -35,39 +35,43 @@ public class AdminDashBoardUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnAddAGame = new JButton("Add a Game");
-		btnAddAGame.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnAddAGame.setBackground(new Color(51, 204, 153));
+		btnAddAGame.setForeground(new Color(51, 153, 0));
+		btnAddAGame.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		btnAddAGame.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				addGameButtonActionPerformed(evt);
 			}
 		});
 		JLabel lblCreateANew = new JLabel("Create a new Game ");
-		lblCreateANew.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblCreateANew.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		JLabel lblName = new JLabel("Name: ");
-		lblName.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblName.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		textField = new JTextField();
 		textField.setColumns(10);
 		
 		JLabel lblOrUpdateExisting = new JLabel("Or Update Existing Game");
-		lblOrUpdateExisting.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblOrUpdateExisting.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		games = new JComboBox<String>();
+		games.setFont(new Font("Century Gothic", Font.PLAIN, 12));
 		try {
 			refreshGames();
 		} catch (InvalidInputException e) {
 			e.printStackTrace();
 		}
 		JButton btnUpdateGame = new JButton("Update Game");
-		btnUpdateGame.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnUpdateGame.setFont(new Font("Century Gothic", Font.PLAIN, 15));
 		btnUpdateGame.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				updateGameButtonActionPerformed(evt);
 			}
 		});
 		JButton btnDeleteGame = new JButton("Delete Game");
-		btnDeleteGame.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnDeleteGame.setForeground(new Color(204, 0, 0));
+		btnDeleteGame.setFont(new Font("Century Gothic", Font.PLAIN, 15));
 		btnDeleteGame.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
@@ -78,7 +82,7 @@ public class AdminDashBoardUI {
 			}
 		});
 		JButton btnLogout = new JButton("Logout");
-		btnLogout.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnLogout.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		btnLogout.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				logout();
@@ -86,13 +90,17 @@ public class AdminDashBoardUI {
 		});
 		 errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
+		
+		JLabel lblBlock = new JLabel("BLOCK");
+		lblBlock.setForeground(new Color(51, 102, 255));
+		lblBlock.setFont(new Font("Century Gothic", Font.BOLD, 18));
+		
+		JLabel label = new JLabel("223");
+		label.setForeground(new Color(153, 0, 0));
+		label.setFont(new Font("Century Gothic", Font.PLAIN, 25));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(115)
-					.addComponent(games, GroupLayout.PREFERRED_SIZE, 293, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(222, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(26)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -103,47 +111,63 @@ public class AdminDashBoardUI {
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(lblCreateANew)
-									.addContainerGap(436, Short.MAX_VALUE))
+									.addContainerGap(444, Short.MAX_VALUE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblName)
-									.addGap(52)
-									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 257, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnUpdateGame)
-										.addComponent(btnAddAGame)
-										.addComponent(btnDeleteGame))
-									.addGap(39)))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(lblName)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(textField, GroupLayout.PREFERRED_SIZE, 257, GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(50)
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addComponent(games, GroupLayout.PREFERRED_SIZE, 293, GroupLayout.PREFERRED_SIZE)
+												.addGroup(groupLayout.createSequentialGroup()
+													.addComponent(btnUpdateGame)
+													.addGap(18)
+													.addComponent(btnDeleteGame)))))
+									.addPreferredGap(ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+									.addComponent(btnAddAGame)
+									.addGap(55)))
 							.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(lblOrUpdateExisting)
 								.addContainerGap()))))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(77)
 					.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(187, Short.MAX_VALUE))
+					.addContainerGap(189, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(220)
+					.addComponent(lblBlock)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(label)
+					.addContainerGap(306, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(52)
+					.addGap(20)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblBlock, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(errorMsg)
 					.addGap(18)
 					.addComponent(lblCreateANew)
 					.addGap(35)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnAddAGame)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblName)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(55)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblName)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnAddAGame))
+					.addGap(61)
 					.addComponent(lblOrUpdateExisting)
 					.addGap(45)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(games, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnUpdateGame))
-					.addGap(25)
-					.addComponent(btnDeleteGame)
-					.addPreferredGap(ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+					.addComponent(games, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addGap(42)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnUpdateGame)
+						.addComponent(btnDeleteGame))
+					.addPreferredGap(ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
 					.addComponent(btnLogout)
 					.addGap(37))
 		);
