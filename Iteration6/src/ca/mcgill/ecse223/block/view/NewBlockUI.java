@@ -31,19 +31,19 @@ public class NewBlockUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblR = new JLabel("R:");
-		lblR.setFont(new Font("Arial Black", Font.BOLD, 15));
+		lblR.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		JLabel lblB = new JLabel("G:");
-		lblB.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblB.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		JLabel lblG = new JLabel("B:");
-		lblG.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblG.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		JLabel lblPoints = new JLabel("Points:");
-		lblPoints.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblPoints.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		JLabel lblPleaseEnterThe = new JLabel("Please enter the parameters of the Block");
-		lblPleaseEnterThe.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblPleaseEnterThe.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		JSlider Rvalue = new JSlider();
 		Rvalue.setToolTipText("");
@@ -72,30 +72,42 @@ public class NewBlockUI {
 		point.setPaintLabels(true);
 		
 		JLabel label = new JLabel("0");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel label_1 = new JLabel("0");
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel label_2 = new JLabel("0");
+		label_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel label_3 = new JLabel("1");
+		label_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel label_4 = new JLabel("255");
+		label_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel label_5 = new JLabel("255");
+		label_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel label_6 = new JLabel("255");
+		label_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel label_7 = new JLabel("1000");
+		label_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnCancel.setBackground(new Color(0, 0, 0));
+		btnCancel.setForeground(new Color(204, 0, 0));
+		btnCancel.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		btnCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				cancelButtonActionPerformed(evt);
 			}
 		});
 		JButton btnAddBlock = new JButton("Add Block");
-		btnAddBlock.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		btnAddBlock.setBackground(new Color(0, 0, 0));
+		btnAddBlock.setForeground(new Color(51, 102, 0));
+		btnAddBlock.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		btnAddBlock.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				addButtonActionPerformed(evt, Rvalue, Gvalue, Bvalue, point);
@@ -103,12 +115,19 @@ public class NewBlockUI {
 		});
 		
 		JLabel label_8 = new JLabel("50");
+		label_8.setForeground(new Color(255, 51, 0));
+		label_8.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel label_9 = new JLabel("50");
+		label_9.setForeground(new Color(0, 153, 0));
+		label_9.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel label_10 = new JLabel("50");
+		label_10.setForeground(new Color(0, 102, 255));
+		label_10.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JLabel label_11 = new JLabel("50");
+		label_11.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		Rvalue.addChangeListener((new ChangeListener() {
 			@Override
@@ -152,9 +171,10 @@ public class NewBlockUI {
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblR, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblG)
 										.addComponent(lblPoints)
-										.addComponent(lblB))
+										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+											.addComponent(lblB)
+											.addComponent(lblG)))
 									.addGap(21)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -194,7 +214,7 @@ public class NewBlockUI {
 							.addComponent(lblPleaseEnterThe))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(55)
-							.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)))
+							.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)))
 					.addGap(10))
 		);
 		groupLayout.setVerticalGroup(
@@ -241,7 +261,7 @@ public class NewBlockUI {
 									.addComponent(label_11))
 								.addComponent(label_7)
 								.addComponent(point, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(btnCancel)
 								.addComponent(btnAddBlock))
