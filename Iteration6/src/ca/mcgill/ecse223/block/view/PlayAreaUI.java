@@ -1,23 +1,21 @@
 package ca.mcgill.ecse223.block.view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOCurrentBlock;
 import ca.mcgill.ecse223.block.controller.TOCurrentlyPlayedGame;
-import ca.mcgill.ecse223.block.controller.TOGridCell;
 
 public class PlayAreaUI extends JLayeredPane {
 
@@ -93,6 +91,44 @@ public class PlayAreaUI extends JLayeredPane {
 	}
 	public int getLevel() {
 		return level;
+	}
+	public void displayGameOver() {
+		JLabel gameOver=new JLabel("Game Over!");
+		gameOver.setLocation(180,180);
+		gameOver.setSize(300,300);
+		for (int i=0; i<50;i++) {
+			gameOver.setFont(new Font("Century Gothic", Font.BOLD, i));
+			gameOver.setSize(10+i*6,10+i*6);
+			gameOver.setLocation(180-(i*7)/2,180-(i*7)/2);
+			gameOver.setForeground(Color.RED);
+			this.add(gameOver);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (i<49)this.remove(gameOver);
+		}
+	}
+	public void displayCongratulations() {
+		JLabel congrats=new JLabel("Congratulations!");
+		congrats.setLocation(180,180);
+		congrats.setSize(300,300);
+		for (int i=0; i<50;i++) {
+			congrats.setFont(new Font("Century Gothic", Font.BOLD, i));
+			congrats.setSize(10+i*6,10+i*6);
+			congrats.setLocation(180-(i*7)/2,180-(i*7)/2);
+			congrats.setForeground(Color.RED);
+			this.add(congrats);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (i<49)this.remove(congrats);
+		}
 	}
 
 

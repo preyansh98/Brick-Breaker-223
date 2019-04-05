@@ -28,7 +28,7 @@ public class HallOfFame extends JPanel {
 		
 		try {
 			
-			TOHallOfFame to=Block223Controller.getHallOfFame(0+HOFpage*10, 9+HOFpage*10);
+			TOHallOfFame to=Block223Controller.getHallOfFame(1+HOFpage*10, 10+HOFpage*10);
 			name=new JLabel("Hall of Fame: "+ to.getGamename());
 			name.setSize(169,50);
 			name.setLocation(10, 10);
@@ -55,7 +55,7 @@ public class HallOfFame extends JPanel {
 			}
 		}
 		try {
-			TOHallOfFame to=Block223Controller.getHallOfFame(0+HOFpage*10, 9+HOFpage*10);
+			TOHallOfFame to=Block223Controller.getHallOfFame(1+HOFpage*10, 10+HOFpage*10);
 			int i=0;
 			for (TOHallOfFameEntry entry: to.getEntries()) {
 				userScores[i]=new JLabel((HOFpage*10+i)+". "+entry.getPlayername()+ " : "+ entry.getScore());
@@ -64,7 +64,6 @@ public class HallOfFame extends JPanel {
 				userScores[i].setLocation(10,60+i*20);
 				this.add(userScores[i]);
 				i++;
-				System.out.println(" "+ i);
 			}
 			
 			while(i<10) {

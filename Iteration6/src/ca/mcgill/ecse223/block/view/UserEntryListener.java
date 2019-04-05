@@ -30,13 +30,14 @@ public class UserEntryListener implements KeyListener {
 		}else if (location == KeyEvent.VK_D) {
 			keyD=true;
 		} else {
-			// ignore all other keys
+			if (location == KeyEvent.VK_SPACE) {
+				keyString += " ";
+			}
 		}
-		try {
-			keyInputs(e);
-		} catch (InvalidInputException e1) {
-			System.out.print(e1);
-		}
+		/*
+		 * try { keyInputs(e); } catch (InvalidInputException e1) {
+		 * System.out.print(e1); }
+		 */
 	}
 
 	private synchronized String keyInputs(KeyEvent e) throws InvalidInputException {
@@ -66,6 +67,23 @@ public class UserEntryListener implements KeyListener {
 	public synchronized String takeInputs() {
 		String passString = keyString;
 		keyString = "";
+		if (passString.contains(" ")) {
+			return passString;
+		}else {
+			if (keyL) {
+				passString += "l";
+			} 
+			if (keyR) {
+				passString += "r";
+			} 
+			if (keyA){
+				passString+="a";
+			}
+			if (keyD) {
+				passString+="d";
+			} 
+		}
+		
 		return passString;
 	}
 

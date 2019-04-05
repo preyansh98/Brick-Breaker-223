@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -50,10 +51,36 @@ public class TestGameUI implements Block223PlayModeInterface{
 		
 		btnBack = new JButton("Go Back");
 		btnBack.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
-		btnBack.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-					actionGoBack();
-				}
+		btnBack.addMouseListener(new java.awt.event.MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if ( btnStart.isVisible()) actionGoBack();
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 		 lblScore = new JLabel("Score: 0");
 		lblScore.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
@@ -66,7 +93,7 @@ public class TestGameUI implements Block223PlayModeInterface{
 		lblLives = new JLabel("Lives: 3");
 		lblLives.setEnabled(false);
 		lblLives.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
-		
+		refresh();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -111,7 +138,7 @@ public class TestGameUI implements Block223PlayModeInterface{
 		btnStart.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				btnStart.setVisible(false);
-	
+				
 				KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher() {
 					  @Override
 					  public synchronized boolean dispatchKeyEvent(final KeyEvent e) {
@@ -183,7 +210,11 @@ public class TestGameUI implements Block223PlayModeInterface{
 
 	@Override
 	public void endGame(int nrOfLives, TOHallOfFameEntry hof) {
-		// TODO Auto-generated method stub
+		if(nrOfLives>0) {
+			((PlayAreaUI) playArea).displayCongratulations();
+		}else {
+			((PlayAreaUI) playArea).displayGameOver();
+		}
 		
 	}
 	

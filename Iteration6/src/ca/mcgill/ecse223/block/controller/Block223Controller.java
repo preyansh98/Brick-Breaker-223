@@ -90,7 +90,7 @@ public class Block223Controller {
 
 
 		}
-		game.setNrBlocksPerLevel(nrBlocksPerLevel);
+	
 
 		// Ball Settings
 		Ball ball = game.getBall();
@@ -100,31 +100,36 @@ public class Block223Controller {
 		if (minBallSpeedX < 0) {
 			throw new InvalidInputException("The minimum speed of the ball must be greater than zero.");
 		}
-		ball.setMinBallSpeedX(minBallSpeedX);
+		
 
 		if (minBallSpeedY < 0) {
 			throw new InvalidInputException("The minimum speed of the ball must be greater than zero.");
 		}
-		ball.setMinBallSpeedY(minBallSpeedY);
+		
 
 		if (ballSpeedIncreaseFactor <= 0) {
 			throw new InvalidInputException("The speed increase factor of the ball must be greater than zero.");
 		}
-		ball.setBallSpeedIncreaseFactor(ballSpeedIncreaseFactor);
-
-		// Paddle Settings
-		Paddle paddle = game.getPaddle();
-
 		if (maxPaddleLength <= 0 || maxPaddleLength > 390) {
 			throw new InvalidInputException(
 					"The maximum length of the paddle must be greater than zero and less than or equal to 390.");
 		}
-		paddle.setMaxPaddleLength(maxPaddleLength);
+		
 
 		if (minPaddleLength <= 0) {
 			throw new InvalidInputException("The minimum length of the paddle must be greater than zero.");
 		}
+		game.setNrBlocksPerLevel(nrBlocksPerLevel);
+		
+		ball.setBallSpeedIncreaseFactor(ballSpeedIncreaseFactor);
+		
+		ball.setMinBallSpeedX(minBallSpeedX);
+		ball.setMinBallSpeedY(minBallSpeedY);
+		
+		// Paddle Settings
+		Paddle paddle = game.getPaddle();
 
+		paddle.setMaxPaddleLength(maxPaddleLength);
 		paddle.setMinPaddleLength(minPaddleLength);
 
 		// Level Settings
@@ -601,8 +606,14 @@ public class Block223Controller {
 		Block223Application.setCurrentPlayableGame(pgame);
 
 	}
-
 	public static void startGame(Block223PlayModeInterface ui) throws InvalidInputException {
+		startPlayGame(ui);
+		PlayedGame game=Block223Application.getCurrentPlayableGame();
+		if(game!=null && game.getPlayStatus()==PlayStatus.GameOver) {
+			unselectGame();
+		}
+	}
+	public static void startPlayGame(Block223PlayModeInterface ui) throws InvalidInputException {
 		if (Block223Application.getCurrentUserRole()==null) {
 			throw new InvalidInputException("Player privileges are required to play a game.");
 		}
@@ -622,7 +633,9 @@ public class Block223Controller {
 				&& game.getPlayer()==null) {
 			throw new InvalidInputException("Admin privileges are required to test a game.");
 		}
+		Game initialGame=game.getGame();
 		game.play();
+		boolean gameHasPlayer=game.getPlayer()!=null;
 		String userInputs=ui.takeInputs();
 		while(game.getPlayStatus()==PlayStatus.Moving) {
 			userInputs=ui.takeInputs();
@@ -632,7 +645,7 @@ public class Block223Controller {
 				game.pause();
 			}
 			try {
-				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime()/30);
+				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime());
 			} catch (InterruptedException e) {
 				
 			}
@@ -641,16 +654,23 @@ public class Block223Controller {
 			}
 			
 		}
+		
 		if(game.getPlayStatus()==PlayStatus.GameOver) {
-			Block223Application.setCurrentPlayableGame(null);
+			Block223Application.setCurrentGame(initialGame);
+			ui.endGame(game.getLives(),null );
 		}
-		if(game.getPlayer()!=null){
+		if(gameHasPlayer){
 			game.setBounce(null);
 			Block223 block223=Block223Application.getBlock223();
 			Block223Persistence.save(block223);
+			System.out.println("saved");
+			
 		}
 	}
-
+	public static void unselectGame() {
+		Block223Application.setCurrentPlayableGame(null);
+		Block223Application.setCurrentGame(null);
+	}
 
 	private static void updatePaddlePosition(String userInputs) {
 		PlayedGame game=Block223Application.getCurrentPlayableGame();
@@ -685,7 +705,14 @@ public class Block223Controller {
 		if (Block223Application.getCurrentUserRole() != Block223Application.getCurrentGame().getAdmin()) {
 			throw new InvalidInputException("Only the admin who created the game can test it.");
 		}
-
+		
+		if (Block223Application.getCurrentGame().getBlocks().size() < 1) {
+			throw new InvalidInputException("At least one block must be defined for a game to be tested.");
+		}
+		if (Block223Application.getCurrentGame().getLevels().size() < 1) {
+			throw new InvalidInputException("The game needs to have at least one level.");
+		}
+		
 		Game game = Block223Application.getCurrentGame();
 		Admin admin = (Admin) Block223Application.getCurrentUserRole();
 		String username = User.findUsername(admin);
@@ -946,7 +973,9 @@ public class Block223Controller {
 		}
 		PlayedGame pgame = Block223Application.getCurrentPlayableGame();
 		Game game = pgame.getGame();
-
+		if (game==null) {
+			game=Block223Application.getCurrentGame();
+		}
 		TOHallOfFame result = new TOHallOfFame(game.getName());
 		if (start < 1)
 			start = 1;
@@ -1005,22 +1034,23 @@ public class Block223Controller {
 	private static void updateBothPaddlePosition(String userInputs) {
 		PlayedGame game=Block223Application.getCurrentPlayableGame();
 		PlayedGame game2=Block223Application.getSecondPlayableGame();
+		int coef=2;
 		for(int i=0; i<userInputs.length();i++) {
 			if(userInputs.charAt(i)=='l') {
-				if(game.getCurrentPaddleX()>=Math.abs(PlayedGame.PADDLE_MOVE_LEFT)) {
-					game.setCurrentPaddleX(game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_LEFT);
+				if(game.getCurrentPaddleX()>=Math.abs(PlayedGame.PADDLE_MOVE_LEFT/coef)) {
+					if(game.getPlayStatus()==PlayStatus.Moving)game.setCurrentPaddleX(game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_LEFT/coef);
 				}
 			}else if(userInputs.charAt(i)=='r') {
-				if(game.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-PlayedGame.PADDLE_MOVE_RIGHT-game.getCurrentPaddleLength()) {
-					game.setCurrentPaddleX(game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_RIGHT);
+				if(game.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-PlayedGame.PADDLE_MOVE_RIGHT/coef-game.getCurrentPaddleLength()) {
+					if(game.getPlayStatus()==PlayStatus.Moving)game.setCurrentPaddleX(game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_RIGHT/coef);
 				}
 			}else if (userInputs.charAt(i)=='a') {
-				if(game2.getCurrentPaddleX()>=Math.abs(PlayedGame.PADDLE_MOVE_LEFT)) {
-					game2.setCurrentPaddleX(game2.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_LEFT);
+				if(game2.getCurrentPaddleX()>=Math.abs(PlayedGame.PADDLE_MOVE_LEFT/coef)) {
+					if(game2.getPlayStatus()==PlayStatus.Moving)game2.setCurrentPaddleX(game2.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_LEFT/coef);
 				}
 			}else if (userInputs.charAt(i)=='d') {
-				if(game2.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-PlayedGame.PADDLE_MOVE_RIGHT-game2.getCurrentPaddleLength()) {
-					game2.setCurrentPaddleX(game2.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_RIGHT);
+				if(game2.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-PlayedGame.PADDLE_MOVE_RIGHT/coef-game2.getCurrentPaddleLength()) {
+					if(game2.getPlayStatus()==PlayStatus.Moving)game2.setCurrentPaddleX(game2.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_RIGHT/coef);
 				}
 			}else if(userInputs.charAt(i)==' ') {
 				break;
@@ -1059,6 +1089,7 @@ public class Block223Controller {
 		PlayedGame pgame=null;
 		PlayedGame pgame2=null;
 		if(game!=null) {
+			Block223Application.setCurrentGame(game);
 			Player player=(Player)Block223Application.getCurrentUserRole();
 			String username=User.findUsername(player);
 			pgame= new PlayedGame(username, game, block223);
@@ -1070,6 +1101,9 @@ public class Block223Controller {
 			pgame2= new PlayedGame(username2, game, block223);
 			pgame2.setPlayer(player2);
 			Block223Application.setSecondPlayableGame(pgame2);
+			
+			pgame.setGravityMode(true);
+			pgame2.setGravityMode(true);
 		}else {
 			throw new InvalidInputException("Game does not exist");
 		}
@@ -1081,30 +1115,60 @@ public class Block223Controller {
 		game.play();
 		game2.play();
 		String userInputs=ui.takeInputs();
-		while(game.getPlayStatus()==PlayStatus.Moving && game2.getPlayStatus()==PlayStatus.Moving) {
+		boolean fresh1=true;
+		boolean fresh2=true;
+		boolean gameHasPlayer=game.getPlayer()!=null;
+		while(game.getPlayStatus()!=PlayStatus.GameOver || game2.getPlayStatus()!=PlayStatus.GameOver) {
 			userInputs=ui.takeInputs();
+			if(game.getPlayStatus()!=PlayStatus.Moving &&(userInputs.contains("l") || userInputs.contains("r"))){
+				game.play();
+			}
+			if(game2.getPlayStatus()!=PlayStatus.Moving &&(userInputs.contains("a") || userInputs.contains("d"))){
+				game2.play();
+			}
 			updateBothPaddlePosition(userInputs);
 			game.move();
 			game2.move();
 			if(userInputs.contains(" ")) {
 				game.pause();
 				game2.pause();
+				break;
 			}
 			try {
-				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime()/30);
+				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime());
 			} catch (InterruptedException e) {
 				
 			}
 			ui.refresh();
+			if (game.getPlayStatus()==PlayStatus.GameOver && fresh1) {
+				fresh1=false;
+				if(game.getLives()>0) {
+					ui.endGame(1,null);
+				}else {
+					ui.endGame(0,null);
+				}
+			}
+			if (game2.getPlayStatus()==PlayStatus.GameOver && fresh2) {
+				fresh1=false;
+				if(game2.getLives()>0) {
+					ui.endGame(3,null);
+				}else {
+					ui.endGame(2,null);
+				}
+			}
+			
 		}
-		if(game.getPlayStatus()==PlayStatus.GameOver) {
-			Block223Application.setCurrentPlayableGame(null);
-		}
-		if(game.getPlayer()!=null){
+		if(gameHasPlayer){
 			game.setBounce(null);
+			game2.setBounce(null);
 			Block223 block223=Block223Application.getBlock223();
 			Block223Persistence.save(block223);
 		}
+	}
+	public static void unselectBothGames() {
+		Block223Application.setCurrentGame(null);
+		Block223Application.setCurrentPlayableGame(null);
+		Block223Application.setSecondPlayableGame(null);
 	}
 	
 	public  static void registerSecondPlayer(String username, String playerPassword, String adminPassword) throws InvalidInputException{

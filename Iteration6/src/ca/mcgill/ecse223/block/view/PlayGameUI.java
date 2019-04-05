@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -33,6 +34,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 	private JLabel lblLevel;
 	private JButton btnStartGame;
 	private JLabel errorMsg;
+	private JPanel hallOfFame ;
 	/**
 	 * Create the application.
 	 */
@@ -64,13 +66,39 @@ public class PlayGameUI implements Block223PlayModeInterface{
 		 lblLives = new JLabel("Lives: ");
 		lblLives.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
-		JPanel hallOfFame = new HallOfFame();
+		 hallOfFame = new HallOfFame();
 		
 		JButton btnGoBack = new JButton("Go Back");
 		btnGoBack.setFont(new Font("Century Gothic", Font.BOLD, 16));
-		btnGoBack.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				goBack();
+		btnGoBack.addMouseListener(new java.awt.event.MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if ( btnStartGame.isVisible()) goBack();
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		JButton btnPrevious = new JButton("< Prev");
@@ -91,7 +119,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 		errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
 		
-		
+		refresh();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -172,7 +200,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 					public void run() {
 						
 							try {
-								Block223Controller.startGame(PlayGameUI.this);
+								Block223Controller.startPlayGame(PlayGameUI.this);
 								
 							} catch (InvalidInputException e) {
 								errorMsg.setText(e.getMessage());
@@ -192,6 +220,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 	protected void goBack() {
 		// TODO Auto-generated method stub
 		if(btnStartGame.isVisible()) {
+			Block223Controller.unselectGame();
 			frame.dispose();
 			PlayerDashUI.init();
 			
@@ -215,7 +244,11 @@ public class PlayGameUI implements Block223PlayModeInterface{
 
 	@Override
 	public void endGame(int nrOfLives, TOHallOfFameEntry hof) {
-		// TODO Auto-generated method stub
-		
+		if(nrOfLives>0) {
+			((PlayAreaUI) playArea).displayCongratulations();
+		}else {
+			((PlayAreaUI) playArea).displayGameOver();
+		}
+		((HallOfFame)hallOfFame).refresh();
 	}
 }

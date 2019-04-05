@@ -8,7 +8,10 @@ class PlayedGame {
       play -> Moving;
     }
     Moving {
+    	entry/{ moveBlocks();}
       pause -> Paused;
+      move[blockOutOfBoundAndLastLife()] / {doBlockOutOfBound();}->GameOver;
+      move[blockOutOfBound()] / {doBlockOutOfBound();}->Paused;
       move [hitPaddle()] / { doHitPaddleOrWall(); } -> Moving;
       move [isOutOfBoundsAndLastLife()] / { doOutOfBounds(); } -> GameOver;
       move [isOutOfBounds()] / { doOutOfBounds(); } -> Paused;
@@ -27,6 +30,26 @@ class PlayedGame {
   }
   
   // Guards
+  private boolean blockOutOfBoundAndLastLife(){
+  	if(!gravityMode)return false;
+  	if(this.getLives() ==1){
+  		 for( PlayedBlockAssignment block : getBlocks()) {
+		  	if (block.getY()>340){
+		  		return true;
+		  	}
+		  } 
+	  }
+  	return false;
+  	}
+  private boolean blockOutOfBound(){
+  	if(!gravityMode)return false;
+  	for( PlayedBlockAssignment block : getBlocks()) {
+		  	if (block.getY()>340){
+		  		return true;
+		  	}   
+	 }
+		return false;  	
+  }
   
   private boolean hitPaddle() {
    BouncePoint bp=calculateBouncePointPaddle();
@@ -112,7 +135,28 @@ class PlayedGame {
   
   // Actions
   
-  //TODO: this method has to be implemented. 	
+ private void moveBlocks(){
+ 	
+ 	if (gravityMode){
+ 		
+ 			counter++;
+ 		if(counter%5==0){
+ 		int lowestY=0;
+ 		for (PlayedBlockAssignment blockassi:getBlocks()){
+		   		if(lowestY<blockassi.getY()){
+		   			lowestY=blockassi.getY();
+		   		}
+		  }
+		  for (PlayedBlockAssignment blockassi:getBlocks()){
+		   		if(lowestY==blockassi.getY()){
+		   			blockassi.setY(blockassi.getY()+1);
+		   		}
+		  }
+		   
+		}
+ 	}
+ 
+ }
    private void doSetup(){
 	   
 	   resetCurrentBallX(); 
@@ -167,7 +211,27 @@ class PlayedGame {
     this.resetBallDirectionY();
     this.resetCurrentPaddleX();
   }
+	private void doBlockOutOfBound(){
+	this.setLives(lives-1);
+    this.resetCurrentBallX();
+    this.resetCurrentBallY();
+    this.resetBallDirectionX();
+    this.resetBallDirectionY();
+    this.resetCurrentPaddleX();
+	int lowestY=0;
+ 	for (PlayedBlockAssignment blockassi:getBlocks()){
+		  	if(lowestY<blockassi.getY()){
+		   		lowestY=blockassi.getY();
+		  	}
+	}
+	 for (PlayedBlockAssignment blockassi:getBlocks()){
+	  		if(lowestY==blockassi.getY()){
+		  		blockassi.setY(blockassi.getY()-counter/5);
+		   	}
+	}
+	
 
+   }	
   private void doHitBlock() {
        int score = getScore(); 
 	   bounce = getBounce(); 
