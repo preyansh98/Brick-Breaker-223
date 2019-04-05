@@ -40,7 +40,7 @@ public class GameSettingUI {
 	public static void init() {
 		frame = new JFrame("Game Settings");
 		frame.setVisible(true);
-		frame.setBounds(100, 100, 782, 673);
+		frame.setBounds(100, 100, 825, 671);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblGameName = new JLabel("Game Name :");
@@ -316,9 +316,13 @@ public class GameSettingUI {
 	}
 	
 	protected static void testGame() {
-		frame.dispose();
-		TestGameUI testing=new TestGameUI();
-		
+		try {
+			Block223Controller.selectTestGame();
+			frame.dispose();
+			TestGameUI testing=new TestGameUI();
+		} catch (InvalidInputException e) {
+			errorMsg.setText(e.getMessage());
+		}
 	}
 
 	protected static void publishGame() {

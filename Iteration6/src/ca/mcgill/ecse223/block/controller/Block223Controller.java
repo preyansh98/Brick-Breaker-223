@@ -636,9 +636,11 @@ public class Block223Controller {
 			} catch (InterruptedException e) {
 				
 			}
-			ui.refresh();
+			if(game.getPlayStatus()!=PlayStatus.GameOver) {
+				ui.refresh();
+			}
+			
 		}
-		System.out.println("Done");
 		if(game.getPlayStatus()==PlayStatus.GameOver) {
 			Block223Application.setCurrentPlayableGame(null);
 		}
@@ -668,6 +670,11 @@ public class Block223Controller {
 	}
 
 	public static void testGame(Block223PlayModeInterface ui) throws InvalidInputException {
+		selectTestGame();
+		startGame(ui);
+
+	}
+	public static void selectTestGame() throws InvalidInputException{
 		if (Block223Application.getCurrentUserRole() instanceof Admin == false) {
 			throw new InvalidInputException("Admin privileges are required to test a game.");
 		}
@@ -686,8 +693,6 @@ public class Block223Controller {
 		PlayedGame pgame = new PlayedGame(username, game, block223);
 		pgame.setPlayer(null);
 		Block223Application.setCurrentPlayableGame(pgame);
-		startGame(ui);
-
 	}
 
 	public static void publishGame() throws InvalidInputException {
@@ -991,5 +996,184 @@ public class Block223Controller {
 
 		return result;
 	}
+	
+	
+	// 1 vs 1 related methods
+	
+	
+	
+	private static void updateBothPaddlePosition(String userInputs) {
+		PlayedGame game=Block223Application.getCurrentPlayableGame();
+		PlayedGame game2=Block223Application.getSecondPlayableGame();
+		for(int i=0; i<userInputs.length();i++) {
+			if(userInputs.charAt(i)=='l') {
+				if(game.getCurrentPaddleX()>=Math.abs(PlayedGame.PADDLE_MOVE_LEFT)) {
+					game.setCurrentPaddleX(game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_LEFT);
+				}
+			}else if(userInputs.charAt(i)=='r') {
+				if(game.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-PlayedGame.PADDLE_MOVE_RIGHT-game.getCurrentPaddleLength()) {
+					game.setCurrentPaddleX(game.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_RIGHT);
+				}
+			}else if (userInputs.charAt(i)=='a') {
+				if(game2.getCurrentPaddleX()>=Math.abs(PlayedGame.PADDLE_MOVE_LEFT)) {
+					game2.setCurrentPaddleX(game2.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_LEFT);
+				}
+			}else if (userInputs.charAt(i)=='d') {
+				if(game2.getCurrentPaddleX()<=Game.PLAY_AREA_SIDE-PlayedGame.PADDLE_MOVE_RIGHT-game2.getCurrentPaddleLength()) {
+					game2.setCurrentPaddleX(game2.getCurrentPaddleX()+PlayedGame.PADDLE_MOVE_RIGHT);
+				}
+			}else if(userInputs.charAt(i)==' ') {
+				break;
+			}
+		}
+	}
+	
+	
+	
+	public static TOCurrentlyPlayedGame getSecondPlayableGame() throws InvalidInputException {
+		PlayedGame pgame = Block223Application.getSecondPlayableGame();
+
+		boolean paused = (pgame.getPlayStatus() == PlayStatus.Ready || pgame.getPlayStatus() == PlayStatus.Paused);
+		
+		TOCurrentlyPlayedGame result = new TOCurrentlyPlayedGame(pgame.getGame().getName(), paused, pgame.getScore(),
+				pgame.getLives(), pgame.getCurrentLevel(), pgame.getPlayername(), (int) Math.round(pgame.getCurrentBallX()),
+				(int)Math.round( pgame.getCurrentBallY()), (int) Math.round(pgame.getCurrentPaddleLength()), (int) Math.round(pgame.getCurrentPaddleX()));
+
+		List<PlayedBlockAssignment> blocks = pgame.getBlocks();
+
+		for (PlayedBlockAssignment pblock : blocks) {
+			TOCurrentBlock to = new TOCurrentBlock(pblock.getBlock().getRed(), pblock.getBlock().getGreen(),
+					pblock.getBlock().getBlue(), pblock.getBlock().getPoints(), pblock.getX(), pblock.getY(), result);
+			result.addBlock(to);
+		}
+
+		return result;
+	}
+	
+	public static void selectBothPlayableGame(String name) throws InvalidInputException {
+		if(!(Block223Application.getCurrentUserRole() instanceof Player)) {
+			throw new InvalidInputException("Player privileges are required to play a game.");
+		}
+		Block223 block223=Block223Application.getBlock223();
+		Game game=block223.findGame(name);
+		PlayedGame pgame=null;
+		PlayedGame pgame2=null;
+		if(game!=null) {
+			Player player=(Player)Block223Application.getCurrentUserRole();
+			String username=User.findUsername(player);
+			pgame= new PlayedGame(username, game, block223);
+			pgame.setPlayer(player);
+			Block223Application.setCurrentPlayableGame(pgame);
+			
+			Player player2=(Player)Block223Application.getSecondPlayer();
+			String username2=User.findUsername(player);
+			pgame2= new PlayedGame(username2, game, block223);
+			pgame2.setPlayer(player2);
+			Block223Application.setSecondPlayableGame(pgame2);
+		}else {
+			throw new InvalidInputException("Game does not exist");
+		}
+	}
+	
+	public static void startBothGames(Block223PlayModeInterface ui) throws InvalidInputException {
+		PlayedGame game=Block223Application.getCurrentPlayableGame();
+		PlayedGame game2=Block223Application.getSecondPlayableGame();
+		game.play();
+		game2.play();
+		String userInputs=ui.takeInputs();
+		while(game.getPlayStatus()==PlayStatus.Moving && game2.getPlayStatus()==PlayStatus.Moving) {
+			userInputs=ui.takeInputs();
+			updateBothPaddlePosition(userInputs);
+			game.move();
+			game2.move();
+			if(userInputs.contains(" ")) {
+				game.pause();
+				game2.pause();
+			}
+			try {
+				TimeUnit.MILLISECONDS.sleep((long) game.getWaitTime()/30);
+			} catch (InterruptedException e) {
+				
+			}
+			ui.refresh();
+		}
+		if(game.getPlayStatus()==PlayStatus.GameOver) {
+			Block223Application.setCurrentPlayableGame(null);
+		}
+		if(game.getPlayer()!=null){
+			game.setBounce(null);
+			Block223 block223=Block223Application.getBlock223();
+			Block223Persistence.save(block223);
+		}
+	}
+	
+	public  static void registerSecondPlayer(String username, String playerPassword, String adminPassword) throws InvalidInputException{
+		String error = "";
+		 if (playerPassword == null || playerPassword.length() == 0) {
+			error = "The player password needs to be specified.";
+		} else if (playerPassword.equals(adminPassword)) {
+			error = "The passwords have to be different.";
+		}
+		if (error.equals("")) {
+			Player player = null;
+			Admin admin = null;
+			try {
+				Block223 block223 = Block223Application.getBlock223();
+				player = new Player(playerPassword, block223);
+				User user = new User(username, block223, player);
+				if (adminPassword != null && !adminPassword.equals("")) {
+					admin = new Admin(adminPassword, block223);
+					user.addRole(admin);
+				}
+				Block223Persistence.save(block223);
+				Block223Application.setSecondPlayer(player);
+			} catch (RuntimeException e) {
+				if (player != null)
+					player.delete();
+				if (admin != null)
+					admin.delete();
+				if (e.getMessage().equals("The username must be specified.")) {
+					throw new InvalidInputException("The username must be specified.");
+				} else if (e.getMessage().equals("The password must be specified.")) {
+					throw new InvalidInputException("The player password must be specified.");
+				} else if (e.getMessage().equals("Cannot create due to duplicate username")) {
+					throw new InvalidInputException("The username has already been taken.");
+				} else {
+					throw new InvalidInputException(e.getMessage());
+				}
+
+			}
+		} else {
+			throw new InvalidInputException(error);
+		}
+	}
+	
+	public  static void loginSecondPlayer(String username, String password) throws InvalidInputException{
+		//UserRole currentRole = Block223Application.getCurrentUserRole();
+		//Block223Application.resetBlock223();
+		String error = "";
+		User user = User.getWithUsername(username);
+		if (user == null) {
+			error = "The username and password do not match.";
+		} else {
+			List<UserRole> roles = user.getRoles();
+			for (UserRole role : roles) {
+				if (role.getPassword().equals(password)) {
+					if (role instanceof Admin) {
+						throw new InvalidInputException("Please enter your player password.");
+					}
+					Block223Application.setSecondPlayer((Player)role);
+					return;
+					
+				}
+			}
+			error = "The username and password do not match.";
+		}
+		if (!error.equals("")) {
+			throw new InvalidInputException(error);
+		}
+	}
+	
+	
 
 }

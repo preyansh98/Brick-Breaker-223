@@ -16,6 +16,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
+import ca.mcgill.ecse223.block.controller.TOHallOfFameEntry;
 public class TestGameUI implements Block223PlayModeInterface{
 
 	private  JFrame frame;
@@ -24,6 +25,8 @@ public class TestGameUI implements Block223PlayModeInterface{
 	private JButton btnBack;
 	private JLabel lblScore;
 	private volatile String keyString = "";
+	private JLabel lblLevel;
+	private JLabel lblLives;
 	public TestGameUI() {
 		initialize();
 	}
@@ -33,7 +36,7 @@ public class TestGameUI implements Block223PlayModeInterface{
 	 */
 	public void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 400, 586);
+		frame.setBounds(100, 100, 432, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		 playArea = new PlayAreaUI();
@@ -56,19 +59,32 @@ public class TestGameUI implements Block223PlayModeInterface{
 		lblScore.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
 		lblScore.setEnabled(false);
 		
+		lblLevel = new JLabel("Level: 1");
+		lblLevel.setEnabled(false);
+		lblLevel.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		
+		lblLives = new JLabel("Lives: 3");
+		lblLives.setEnabled(false);
+		lblLives.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(playArea, GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+						.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
 							.addComponent(btnBack, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE))
-						.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-						.addComponent(lblScore, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
+						.addComponent(playArea, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblLevel, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblScore, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+							.addComponent(lblLives, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -76,41 +92,26 @@ public class TestGameUI implements Block223PlayModeInterface{
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-					.addGap(3)
-					.addComponent(lblScore)
+					.addGap(18)
+					.addComponent(lblLevel, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblScore)
+						.addComponent(lblLives))
 					.addGap(18)
 					.addComponent(playArea, GroupLayout.PREFERRED_SIZE, 392, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnStart)
 						.addComponent(btnBack, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addContainerGap(49, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		frame.getContentPane().setLayout(groupLayout);
 		
 		btnStart.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				btnStart.setVisible(false);
-				// initiating a thread to start listening to keyboard inputs
-			//	keyListen = new Listeners();
-			
-				/*Runnable r1 = new Runnable() {
-					@Override
-					public void run() {
-						// in the actual game, add keyListener to the game window
-						frame.addKeyListener(keyListen);
-					}
-				};
-				Thread t1 = new Thread(r1);
-				t1.start();
-				// to be on the safe side use join to start executing thread t1 before executing
-				// the next thread
-				try {
-					t1.join();
-				} catch (InterruptedException e1) {
-				}*/
-
-				// initiating a thread to start the game loop
+	
 				KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher() {
 					  @Override
 					  public synchronized boolean dispatchKeyEvent(final KeyEvent e) {
@@ -137,11 +138,12 @@ public class TestGameUI implements Block223PlayModeInterface{
 					public void run() {
 						
 							try {
-								Block223Controller.testGame(TestGameUI.this);
-								btnStart.setVisible(true);
+								Block223Controller.startGame(TestGameUI.this);
+								
 							} catch (InvalidInputException e) {
 								errorMsg.setText(e.getMessage());
 							}
+							btnStart.setVisible(true);
 							
 						
 					}
@@ -169,12 +171,20 @@ public class TestGameUI implements Block223PlayModeInterface{
 	public void refresh() {
 		playArea.repaint();
 		lblScore.setText("Score: " +((PlayAreaUI)playArea).getScore());
+		lblLives.setText("Lives: "+ ((PlayAreaUI)playArea).getLives());
+		lblLevel.setText("Level: "+ ((PlayAreaUI)playArea).getLevel());
 	}
 	@Override
 	public synchronized String takeInputs() {
 		String passString = keyString;
 		keyString = "";
 		return passString;
+	}
+
+	@Override
+	public void endGame(int nrOfLives, TOHallOfFameEntry hof) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

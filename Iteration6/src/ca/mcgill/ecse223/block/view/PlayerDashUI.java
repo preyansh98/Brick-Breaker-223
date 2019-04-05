@@ -77,7 +77,7 @@ public class PlayerDashUI {
 		btnLogout.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		btnLogout.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				registerButtonActionPerformed(evt);
+				logoutButtonActionPerformed(evt);
 			}
 		});
 		
@@ -85,13 +85,20 @@ public class PlayerDashUI {
 		errorMsg.setForeground(Color.RED);
 		errorMsg.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 15));
 		
+		JButton btn2PlayerGame = new JButton("1 VS1 ");
+		btn2PlayerGame.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		btn2PlayerGame.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				start2Games();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(27)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(errorMsg, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
+						.addComponent(errorMsg, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblStartANew)
@@ -101,13 +108,14 @@ public class PlayerDashUI {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(oldGameBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(newGameBox, 0, 247, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(btnFinish, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnStart, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))))
+								.addComponent(btnStart, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+								.addComponent(btn2PlayerGame, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 					.addContainerGap())
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(271, Short.MAX_VALUE)
+					.addContainerGap(269, Short.MAX_VALUE)
 					.addComponent(lblWelcome, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
 					.addGap(265))
 		);
@@ -123,12 +131,14 @@ public class PlayerDashUI {
 						.addComponent(lblStartANew)
 						.addComponent(newGameBox, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnStart))
-					.addGap(60)
+					.addGap(18)
+					.addComponent(btn2PlayerGame)
+					.addGap(17)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblFinishAPrevious)
 						.addComponent(oldGameBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnFinish))
-					.addPreferredGap(ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
 					.addComponent(btnLogout)
 					.addGap(69))
 		);
@@ -136,6 +146,18 @@ public class PlayerDashUI {
 		setUpCombos();
 	}
 	
+	protected static void start2Games() {
+		if(newGameBox.getSelectedIndex()!=-1) {
+			try {
+				Block223Controller.selectBothPlayableGame( newGameBox.getSelectedItem().toString());
+				frame.dispose();
+				SecondPlayerLoginUI.init();
+			} catch (InvalidInputException e) {
+				errorMsg.setText(e.getMessage());
+			}
+		}
+	}
+
 	public static void continueGame() {
 		if(oldGameBox.getSelectedIndex()!=-1) {
 			try {
@@ -163,7 +185,7 @@ public class PlayerDashUI {
 		
 	}
 
-	private static void registerButtonActionPerformed(ActionEvent evt) {
+	private static void logoutButtonActionPerformed(ActionEvent evt) {
 		Block223Controller.logout();
 		delete();
 		SignInUI.init();

@@ -30,10 +30,17 @@ public class PlayAreaUI extends JLayeredPane {
 	private int score=0;
 	private int lives=0;
 	private int level=0;
+	private boolean isSecondPlayer=false;
 	public PlayAreaUI () {
 		super();
 		this.setSize(390,390);
 		//repaint();
+	}
+	public PlayAreaUI(boolean second) {
+		super();
+		this.setSize(390,390);
+		isSecondPlayer=second;
+		
 	}
 	@Override
 	public void paintComponent(Graphics g) {
@@ -47,7 +54,11 @@ public class PlayAreaUI extends JLayeredPane {
 			g2d.setRenderingHints(rh);
 			TOCurrentlyPlayedGame game=null;
 			try {
-				game = Block223Controller.getCurrentPlayableGame();
+				if (!isSecondPlayer) {
+					game = Block223Controller.getCurrentPlayableGame();
+				}else {
+					game = Block223Controller.getSecondPlayableGame();
+				}
 			} catch (InvalidInputException e) {
 				
 			}catch(Exception e) {

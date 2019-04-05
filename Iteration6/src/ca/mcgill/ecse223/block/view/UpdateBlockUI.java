@@ -24,6 +24,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
+import javax.swing.JLayeredPane;
 
 public class UpdateBlockUI {
 
@@ -35,7 +36,7 @@ public class UpdateBlockUI {
 	private static JSlider Gvalue;
 	private static JSlider Bvalue;
 	private static JSlider point;
-
+	private static JLayeredPane blockPreview;
 	/**
 	 * Initialize the contents of the frame.
 	 * 
@@ -43,7 +44,7 @@ public class UpdateBlockUI {
 	 */
 	public static void init() {
 		frame = new JFrame("Block Settings");
-		frame.setBounds(100, 100, 610, 524);
+		frame.setBounds(100, 100, 610, 540);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		JLabel lblPleaseSelectA = new JLabel("Please select a Block an update its parameters");
@@ -139,6 +140,7 @@ public class UpdateBlockUI {
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
 				change(Rvalue.getValue(), label_2);
+				((BlockPreview)blockPreview).update(Rvalue.getValue(),Gvalue.getValue(),Bvalue.getValue());
 			}
 		}));
 		Gvalue.addChangeListener((new ChangeListener() {
@@ -146,6 +148,7 @@ public class UpdateBlockUI {
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
 				change(Gvalue.getValue(), label_6);
+				((BlockPreview)blockPreview).update(Rvalue.getValue(),Gvalue.getValue(),Bvalue.getValue());
 			}
 		}));
 		Bvalue.addChangeListener((new ChangeListener() {
@@ -153,6 +156,7 @@ public class UpdateBlockUI {
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
 				change(Bvalue.getValue(), label_10);
+				((BlockPreview)blockPreview).update(Rvalue.getValue(),Gvalue.getValue(),Bvalue.getValue());
 			}
 		}));
 		point.addChangeListener((new ChangeListener() {
@@ -172,6 +176,11 @@ public class UpdateBlockUI {
 				deleteBlockActionPerformed();
 			}
 		});
+		
+		JLabel lblPreview = new JLabel("Preview: ");
+		lblPreview.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		
+		 blockPreview = new BlockPreview();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -184,10 +193,7 @@ public class UpdateBlockUI {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(26)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -195,50 +201,52 @@ public class UpdateBlockUI {
 										.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
 									.addGap(18)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(label_10, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addComponent(label_2, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-										.addComponent(label_6, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)))
+										.addComponent(label_6, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(label_10, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED))))
 								.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(label_14, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(label_15, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(41)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-												.addComponent(label_11, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)
-												.addComponent(label_16, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)
-												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-													.addComponent(label_3, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)
-													.addComponent(label_7, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)))
-											.addGap(18)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(point, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-												.addGroup(groupLayout.createSequentialGroup()
-													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-														.addComponent(Bvalue, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-														.addComponent(Gvalue, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-														.addComponent(Rvalue, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-														.addGroup(groupLayout.createSequentialGroup()
-															.addGap(12)
-															.addComponent(label_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
-														.addGroup(groupLayout.createSequentialGroup()
-															.addPreferredGap(ComponentPlacement.UNRELATED)
-															.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-																.addComponent(label_12, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-																.addComponent(label_8, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)))))))))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(55)
-									.addComponent(btnDeleteBlock)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(btnUpdateBlock, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(label_13, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE))))
+									.addComponent(label_15, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)))
+							.addComponent(lblPreview))
+						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(42)
+							.addComponent(btnDeleteBlock)
+							.addPreferredGap(ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+							.addComponent(btnUpdateBlock, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(label_11, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_16, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(label_3, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)
+									.addComponent(label_7, GroupLayout.PREFERRED_SIZE, 7, GroupLayout.PREFERRED_SIZE)))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(blockPreview, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addGroup(groupLayout.createSequentialGroup()
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addComponent(Gvalue, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(Rvalue, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(point, GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE))
+										.addPreferredGap(ComponentPlacement.RELATED)))
+								.addComponent(Bvalue, GroupLayout.PREFERRED_SIZE, 362, GroupLayout.PREFERRED_SIZE))))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(label_8, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_12, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_4, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_13, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -247,48 +255,46 @@ public class UpdateBlockUI {
 					.addComponent(lblPleaseSelectA, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(blocks, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(46)
-					.addComponent(errorMsg)
+					.addGap(33)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(errorMsg)
+							.addGap(40))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblPreview)
+							.addGap(18))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(blockPreview, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(17)))
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(33)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-									.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-									.addComponent(label_3)
-									.addComponent(label_2))
-								.addComponent(Rvalue, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(41)
-							.addComponent(label_4)))
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+							.addComponent(label_3)
+							.addComponent(label_2))
+						.addComponent(Rvalue, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_4))
 					.addGap(23)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(Gvalue, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(8)
-									.addComponent(label_8)))
-							.addPreferredGap(ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(Gvalue, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(5)
-											.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(label_9, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-												.addComponent(label_10)
-												.addComponent(label_11)))
-										.addComponent(Bvalue, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(label_12)
-									.addGap(19)))
+										.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+											.addComponent(label_9, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+											.addComponent(label_10)
+											.addComponent(label_11))
+										.addComponent(Bvalue, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addComponent(label_8)
+									.addGap(30)
+									.addComponent(label_12)))
+							.addGap(18)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(point, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label_13)))
+								.addComponent(label_13)
+								.addComponent(point, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
@@ -300,12 +306,11 @@ public class UpdateBlockUI {
 									.addComponent(label_14, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
 									.addComponent(label_15))
 								.addComponent(label_16))))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGap(74)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnDeleteBlock)
 						.addComponent(btnUpdateBlock, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-					.addGap(36)
-					.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
 					.addGap(92))
 		);
 		frame.getContentPane().setLayout(groupLayout);
@@ -351,12 +356,14 @@ public class UpdateBlockUI {
 					Bvalue.setValue(block.getBlue());
 				if (point != null)
 					point.setValue(block.getPoints());
+				((BlockPreview)blockPreview).update(Rvalue.getValue(),Gvalue.getValue(),Bvalue.getValue());
 			}
 		} else {
 			Rvalue.setValue(50);
 			Gvalue.setValue(50);
 			Bvalue.setValue(50);
 			point.setValue(50);
+			((BlockPreview)blockPreview).update(Rvalue.getValue(),Gvalue.getValue(),Bvalue.getValue());
 		}
 	}
 

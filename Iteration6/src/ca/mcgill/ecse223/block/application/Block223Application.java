@@ -5,6 +5,7 @@ import javax.swing.UIManager;
 
 import ca.mcgill.ecse223.block.model.Block223;
 import ca.mcgill.ecse223.block.model.PlayedGame;
+import ca.mcgill.ecse223.block.model.Player;
 import ca.mcgill.ecse223.block.model.UserRole;
 import ca.mcgill.ecse223.block.persistence.Block223Persistence;
 import ca.mcgill.ecse223.block.view.SignInUI;
@@ -15,7 +16,21 @@ public class Block223Application {
 	private static Game currentGame;
 	private static UserRole currentUserRole; 
 	private static PlayedGame currentPlayableGame;
+	private static Player secondPlayer; 
+	private static PlayedGame secondPlayableGame;
 	
+	public static PlayedGame getSecondPlayableGame() {
+		return secondPlayableGame;
+	}
+	public static void setSecondPlayableGame(PlayedGame secondPlayableGame) {
+		Block223Application.secondPlayableGame = secondPlayableGame;
+	}
+	public static Player getSecondPlayer() {
+		return secondPlayer;
+	}
+	public static void setSecondPlayer(Player secondPlayer) {
+		Block223Application.secondPlayer = secondPlayer;
+	}
 	public static PlayedGame getCurrentPlayableGame() {
 		return currentPlayableGame;
 	}
@@ -63,8 +78,4 @@ public class Block223Application {
 		setCurrentPlayableGame(null);
 		block223=Block223Persistence.load();
 	}
-
-
-
-
 }

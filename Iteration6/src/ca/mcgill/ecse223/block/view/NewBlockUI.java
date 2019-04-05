@@ -14,12 +14,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
+import javax.swing.JLayeredPane;
 
 public class NewBlockUI {
 
 	private static JFrame frame;
 	private static JLabel errorMsg;
-
+	private static JLayeredPane blockPreview;
 	/**
 	 * Initialize the contents of the frame.
 	 * @wbp.parser.entryPoint
@@ -27,7 +28,7 @@ public class NewBlockUI {
 	public static void init() {
 		frame = new JFrame("New Block");
 		frame.setVisible(true);
-		frame.setBounds(100, 100, 535, 466);
+		frame.setBounds(100, 100, 504, 553);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblR = new JLabel("R:");
@@ -134,6 +135,7 @@ public class NewBlockUI {
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
 				change(Rvalue.getValue(),label_8);
+				((BlockPreview)blockPreview).update(Rvalue.getValue(),Gvalue.getValue(),Bvalue.getValue());
 			}
 		}));
 		Gvalue.addChangeListener((new ChangeListener() {
@@ -141,6 +143,7 @@ public class NewBlockUI {
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
 				change(Gvalue.getValue(),label_9);
+				((BlockPreview)blockPreview).update(Rvalue.getValue(),Gvalue.getValue(),Bvalue.getValue());
 			}
 		}));
 		Bvalue.addChangeListener((new ChangeListener() {
@@ -148,6 +151,7 @@ public class NewBlockUI {
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
 				change(Bvalue.getValue(),label_10);
+				((BlockPreview)blockPreview).update(Rvalue.getValue(),Gvalue.getValue(),Bvalue.getValue());
 			}
 		}));
 		point.addChangeListener((new ChangeListener() {
@@ -160,6 +164,11 @@ public class NewBlockUI {
 		
 		 errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
+		
+		JLabel lblPreview = new JLabel("Preview: ");
+		lblPreview.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		
+		 blockPreview = new BlockPreview();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -167,54 +176,64 @@ public class NewBlockUI {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(34)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblR, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblPoints)
-										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-											.addComponent(lblB)
-											.addComponent(lblG)))
-									.addGap(21)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblR, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblPoints)
+												.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+													.addComponent(lblB)
+													.addComponent(lblG)))
+											.addGap(21)
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+														.addGroup(groupLayout.createSequentialGroup()
+															.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+															.addComponent(label_11, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+															.addPreferredGap(ComponentPlacement.RELATED))
+														.addComponent(label_10))
+													.addComponent(label_9))
+												.addComponent(label_8)))
+										.addComponent(btnCancel))
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(26)
 											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 												.addGroup(groupLayout.createSequentialGroup()
-													.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-													.addComponent(label_11, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-													.addPreferredGap(ComponentPlacement.RELATED))
-												.addComponent(label_10))
-											.addComponent(label_9))
-										.addComponent(label_8)))
-								.addComponent(btnCancel))
-							.addGap(26)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(label_2, GroupLayout.DEFAULT_SIZE, 7, Short.MAX_VALUE)
-								.addComponent(label_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(label_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(label))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-									.addComponent(btnAddBlock)
-									.addGroup(groupLayout.createSequentialGroup()
-										.addComponent(point, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-											.addComponent(label_6, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-											.addComponent(label_7, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-											.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-											.addComponent(label_4))))
-								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(Bvalue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(Gvalue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(Rvalue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))))
+													.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+														.addComponent(label_2, GroupLayout.DEFAULT_SIZE, 7, Short.MAX_VALUE)
+														.addComponent(label_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+														.addComponent(label_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+														.addComponent(label))
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+														.addGroup(groupLayout.createSequentialGroup()
+															.addComponent(point, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
+															.addPreferredGap(ComponentPlacement.RELATED)
+															.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+																.addComponent(label_6, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+																.addComponent(label_7, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+																.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+																.addComponent(label_4)))
+														.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+															.addComponent(Bvalue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+															.addComponent(Gvalue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+															.addComponent(Rvalue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))))
+												.addComponent(blockPreview, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+										.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(btnAddBlock)
+											.addGap(37))))
+								.addComponent(lblPreview)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(90)
 							.addComponent(lblPleaseEnterThe))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(55)
-							.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)))
+							.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)))
 					.addGap(10))
 		);
 		groupLayout.setVerticalGroup(
@@ -260,14 +279,19 @@ public class NewBlockUI {
 									.addComponent(label_3)
 									.addComponent(label_11))
 								.addComponent(label_7)
-								.addComponent(point, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(point, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(label))
+					.addGap(34)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblPreview)
+							.addPreferredGap(ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnCancel)
 								.addComponent(btnAddBlock))
 							.addGap(37))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(label)
+							.addComponent(blockPreview, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap())))
 		);
 		frame.getContentPane().setLayout(groupLayout);
