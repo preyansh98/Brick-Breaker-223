@@ -1,13 +1,8 @@
 package ca.mcgill.ecse223.block.view;
 
-import java.awt.EventQueue;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLayeredPane;
@@ -39,17 +34,13 @@ public class OneVsOneModeUI implements Block223PlayModeInterface{
 	private JLayeredPane player1Area;
 	private JTextArea textArea;
 	private UserEntryListener bp;
-	/**
-	 * Create the application.
-	 */
-	public OneVsOneModeUI() {
-		initialize();
-	}
+
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	@SuppressWarnings("unused") //suppressing since it is called from other UI
+	public void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1224, 741);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

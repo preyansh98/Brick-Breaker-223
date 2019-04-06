@@ -1,22 +1,19 @@
 package ca.mcgill.ecse223.block.view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
-import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Font;
@@ -25,9 +22,9 @@ public class SecondPlayerLoginUI {
 
 	private static JFrame frame;
 	private static JTextField txtLoginUser;
-	private static JTextField txtLoginPass;
+	private static JPasswordField txtLoginPass;
 	private static JTextField txtRegisterUser;
-	private static JTextField txtRegPlayPass;
+	private static JPasswordField txtRegPlayPass;
 	private static JTextField txtRegAdminPass;
 	private static JLabel errorMsg;
 
@@ -56,7 +53,7 @@ public class SecondPlayerLoginUI {
 		
 		JLabel lblPassword = new JLabel("Password: ");
 		
-		txtLoginPass = new JTextField();
+		txtLoginPass = new JPasswordField();
 		txtLoginPass.setColumns(10);
 		
 		JButton btnLogin = new JButton("Login");
@@ -75,7 +72,7 @@ public class SecondPlayerLoginUI {
 		
 		JLabel lblAdminPassowrd = new JLabel("Admin Passowrd: ");
 		
-		txtRegPlayPass = new JTextField();
+		txtRegPlayPass = new JPasswordField();
 		txtRegPlayPass.setColumns(10);
 		
 		txtRegAdminPass = new JTextField();
@@ -199,8 +196,9 @@ public class SecondPlayerLoginUI {
 
 	private static void register() {
 		try {
-			Block223Controller.registerSecondPlayer(txtRegisterUser.getText(), txtRegPlayPass.getText(),txtRegAdminPass.getText());
+			Block223Controller.registerSecondPlayer(txtRegisterUser.getText(), new String(txtRegPlayPass.getPassword()),txtRegAdminPass.getText());
 			OneVsOneModeUI test=new OneVsOneModeUI();
+			test.initialize();
 		}catch(InvalidInputException e) {
 			errorMsg.setText(e.getMessage());
 		}
@@ -208,8 +206,9 @@ public class SecondPlayerLoginUI {
 
 	private static void login() {
 		try {
-			Block223Controller.loginSecondPlayer(txtLoginUser.getText(), txtLoginPass.getText());
-			OneVsOneModeUI test=new OneVsOneModeUI();
+			Block223Controller.loginSecondPlayer(txtLoginUser.getText(), new String(txtLoginPass.getPassword()));
+			OneVsOneModeUI test = new OneVsOneModeUI();
+			test.initialize();
 		}catch(InvalidInputException e) {
 			errorMsg.setText(e.getMessage());
 		}
@@ -217,7 +216,8 @@ public class SecondPlayerLoginUI {
 	}
 
 	private static void ghostMode() {
-		OneVsOneModeUI test=new OneVsOneModeUI();
+		OneVsOneModeUI test = new OneVsOneModeUI();
+		test.initialize();
 		
 	}
 }

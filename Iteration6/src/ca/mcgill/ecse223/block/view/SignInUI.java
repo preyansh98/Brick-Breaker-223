@@ -159,9 +159,9 @@ public class SignInUI {
 		frame.getContentPane().setLayout(groupLayout);
 	}
 	private static  void signinButtonActionPerformed(JTextField usernameTextEntry,
-			JTextField passwordTextEntry, JLabel errorMsg) {
+			JPasswordField passwordTextEntry, JLabel errorMsg) {
 		try {
-			Block223Controller.login(usernameTextEntry.getText(), passwordTextEntry.getText());
+			Block223Controller.login(usernameTextEntry.getText(), new String(passwordTextEntry.getPassword()));
 			if(Block223Controller.getUserMode().getMode()==Mode.Play) {
 				delete();
 				PlayerDashUI.init();
