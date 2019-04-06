@@ -465,6 +465,11 @@ class PlayedGame {
   		if(bp.getDirection()==BounceDirection.FLIP_X){
   			 newDirX=-getBallDirectionX();
   			 newDirY=getBallDirectionY()+sign(getBallDirectionY())*0.1*Math.abs(newDirX);
+  			 if (Math.abs(newDirX)>10 || Math.abs(newDirY)>10){
+  			 	newDirX/=10;
+  			 	newDirY/=10;
+  			 
+  			 }
   			 if(getBallDirectionX()!=0){
   			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
   			 }else {
@@ -475,9 +480,23 @@ class PlayedGame {
   			 }else{
   			 	newY=bp.getY()+remainingX*newDirY/getBallDirectionX();
   			 }
+  			 if(newX>385){
+  			 	newX=385;
+  			 }
+  			 if(newX<5){
+  			 	newX=5;
+  			 }
+  			 if (newY<5){
+  			 	newY=5;
+  			 }
   		}else if (bp.getDirection()==BounceDirection.FLIP_Y){
   			 newDirY=-getBallDirectionY();
   			 newDirX=getBallDirectionX()+sign(getBallDirectionX())*0.1*Math.abs(newDirY);
+  			 if (Math.abs(newDirX)>10 || Math.abs(newDirY)>10){
+  			 	newDirX/=10;
+  			 	newDirY/=10;
+  			 
+  			 }
   			if(getBallDirectionX()!=0){
   			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
   			 }else {
@@ -487,10 +506,23 @@ class PlayedGame {
   				 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
   			 }else{
   			 	newY=bp.getY()+remainingX*newDirY/getBallDirectionX();
+  			 }
+  			 if(newX>385){
+  			 	newX=385;
+  			 }
+  			 if(newX<5){
+  			 	newX=5;
+  			 }
+  			 if (newY<5){
+  			 	newY=5;
   			 }
   		}else{
   			 newDirX=-getBallDirectionX();
   			 newDirY=-getBallDirectionY();
+  			 if (Math.abs(newDirX)>10 || Math.abs(newDirY)>10){
+  			 	newDirX/=10;
+  			 	newDirY/=10;
+  			 }
   			if(getBallDirectionX()!=0){
   			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
   			 }else {
@@ -500,6 +532,15 @@ class PlayedGame {
   				 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
   			 }else{
   			 	newY=bp.getY()+remainingX*newDirY/getBallDirectionX();
+  			 }
+  			 if(newX>385){
+  			 	newX=385;
+  			 }
+  			 if(newX<5){
+  			 	newX=5;
+  			 }
+  			 if (newY<5){
+  			 	newY=5;
   			 }
   		}
   			setCurrentBallX(newX);
