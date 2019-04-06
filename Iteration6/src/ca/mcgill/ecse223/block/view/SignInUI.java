@@ -20,6 +20,7 @@ import ca.mcgill.ecse223.block.controller.Block223Controller;
 import ca.mcgill.ecse223.block.controller.InvalidInputException;
 import ca.mcgill.ecse223.block.controller.TOUserMode.Mode;
 import java.awt.Panel;
+import javax.swing.JPanel;
 
 public class SignInUI {
 
@@ -134,16 +135,18 @@ public class SignInUI {
 		blockPreview_9.color = Color.YELLOW; 
 		
 		BlockPreview blockPreview_10 = new BlockPreview();
-		blockPreview_10.color = new Color(230,230,250); 
+		blockPreview_10.color = new Color(230,230,250);
+		
+		JPanel bouncingPanel = new BouncingBall();
 		
 		
 		 
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(363, Short.MAX_VALUE)
+					.addContainerGap(371, Short.MAX_VALUE)
 					.addComponent(lblNewUser)
 					.addGap(77)
 					.addComponent(btnRegister)
@@ -151,20 +154,20 @@ public class SignInUI {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(294)
+							.addGap(8)
+							.addComponent(bouncingPanel, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnSignin))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addContainerGap(72, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(lblPassword)
+									.addComponent(lblUsername))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(64)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblPassword)
-										.addComponent(lblUsername)))
-								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(blockPreview_1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 									.addGap(27)))
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 									.addGroup(groupLayout.createSequentialGroup()
 										.addGap(48)
@@ -175,7 +178,7 @@ public class SignInUI {
 										.addGap(110)
 										.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addGap(212)))
-								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createSequentialGroup()
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(lblWelcomeToBlock)
 									.addGap(23)))))
@@ -191,13 +194,13 @@ public class SignInUI {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(blockPreview_6, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
 							.addComponent(blockPreview_7, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(blockPreview_2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 							.addGap(126)
 							.addComponent(blockPreview_8, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
 							.addComponent(blockPreview_3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
 					.addGap(98)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -233,14 +236,7 @@ public class SignInUI {
 							.addGap(57)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblPassword)
-								.addComponent(passwordTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(50)
-							.addComponent(btnSignin)
-							.addPreferredGap(ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblNewUser)
-								.addComponent(btnRegister))
-							.addGap(71))
+								.addComponent(passwordTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(blockPreview_2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
@@ -250,8 +246,21 @@ public class SignInUI {
 								.addComponent(blockPreview_7, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 								.addComponent(blockPreview_6, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 								.addComponent(blockPreview_9, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-								.addComponent(blockPreview_10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-							.addGap(414))))
+								.addComponent(blockPreview_10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(50)
+							.addComponent(btnSignin)
+							.addPreferredGap(ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNewUser)
+								.addComponent(btnRegister))
+							.addGap(77))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(bouncingPanel, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGap(157))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
