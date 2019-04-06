@@ -1251,6 +1251,11 @@ public class PlayedGame implements Serializable
   		if(bp.getDirection()==BounceDirection.FLIP_X){
   			 newDirX=-getBallDirectionX();
   			 newDirY=getBallDirectionY()+sign(getBallDirectionY())*0.1*Math.abs(newDirX);
+  			 if (Math.abs(newDirX)>10 || Math.abs(newDirY)>10){
+  			 	newDirX/=10;
+  			 	newDirY/=10;
+  			 
+  			 }
   			 if(getBallDirectionX()!=0){
   			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
   			 }else {
@@ -1261,9 +1266,23 @@ public class PlayedGame implements Serializable
   			 }else{
   			 	newY=bp.getY()+remainingX*newDirY/getBallDirectionX();
   			 }
+  			 if(newX>385){
+  			 	newX=385;
+  			 }
+  			 if(newX<5){
+  			 	newX=5;
+  			 }
+  			 if (newY<5){
+  			 	newY=5;
+  			 }
   		}else if (bp.getDirection()==BounceDirection.FLIP_Y){
   			 newDirY=-getBallDirectionY();
   			 newDirX=getBallDirectionX()+sign(getBallDirectionX())*0.1*Math.abs(newDirY);
+  			 if (Math.abs(newDirX)>10 || Math.abs(newDirY)>10){
+  			 	newDirX/=10;
+  			 	newDirY/=10;
+  			 
+  			 }
   			if(getBallDirectionX()!=0){
   			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
   			 }else {
@@ -1273,10 +1292,23 @@ public class PlayedGame implements Serializable
   				 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
   			 }else{
   			 	newY=bp.getY()+remainingX*newDirY/getBallDirectionX();
+  			 }
+  			 if(newX>385){
+  			 	newX=385;
+  			 }
+  			 if(newX<5){
+  			 	newX=5;
+  			 }
+  			 if (newY<5){
+  			 	newY=5;
   			 }
   		}else{
   			 newDirX=-getBallDirectionX();
   			 newDirY=-getBallDirectionY();
+  			 if (Math.abs(newDirX)>10 || Math.abs(newDirY)>10){
+  			 	newDirX/=10;
+  			 	newDirY/=10;
+  			 }
   			if(getBallDirectionX()!=0){
   			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();
   			 }else {
@@ -1286,6 +1318,15 @@ public class PlayedGame implements Serializable
   				 newY=bp.getY()+remainingY*newDirY/getBallDirectionY();
   			 }else{
   			 	newY=bp.getY()+remainingX*newDirY/getBallDirectionX();
+  			 }
+  			 if(newX>385){
+  			 	newX=385;
+  			 }
+  			 if(newX<5){
+  			 	newX=5;
+  			 }
+  			 if (newY<5){
+  			 	newY=5;
   			 }
   		}
   			setCurrentBallX(newX);
@@ -1296,7 +1337,7 @@ public class PlayedGame implements Serializable
   	setBounce(null);
   }
 
-  // line 513 "../../../../../Block223States.ump"
+  // line 554 "../../../../../Block223States.ump"
    private int sign(double val){
     if(val>=0){
 			return 1;
@@ -1304,7 +1345,7 @@ public class PlayedGame implements Serializable
 		return -1;
   }
 
-  // line 521 "../../../../../Block223States.ump"
+  // line 562 "../../../../../Block223States.ump"
    private BouncePoint calculateBouncePointBlock(PlayedBlockAssignment block){
     int x=block.getX();
 	  	int y=block.getY();
@@ -1547,7 +1588,7 @@ public class PlayedGame implements Serializable
 	  	return null;
   }
 
-  // line 764 "../../../../../Block223States.ump"
+  // line 805 "../../../../../Block223States.ump"
    private boolean isCloser(BouncePoint first, BouncePoint second){
     double ballPosX = getCurrentBallX(); 
 	    double ballPosY = getCurrentBallY(); 
