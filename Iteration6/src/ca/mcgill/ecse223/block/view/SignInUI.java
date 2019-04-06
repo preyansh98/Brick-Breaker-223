@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -23,7 +25,7 @@ public class SignInUI {
 	private static JFrame frame;
 	private static JTextField usernameTXT;
 	private static JPasswordField passwordTXT;
-
+	private static JLabel errorMsg; 
 
 	/**
 	 * Initialize the contents of the frame.
@@ -50,6 +52,31 @@ public class SignInUI {
 		
 		passwordTXT = new JPasswordField();
 		passwordTXT.setColumns(10);
+		passwordTXT.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					signinButtonActionPerformed(usernameTXT,
+							passwordTXT, errorMsg);
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		JButton btnSignin = new JButton("Sign-In");
 		btnSignin.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -64,7 +91,7 @@ public class SignInUI {
 				registerButtonActionPerformed();
 			}
 		});
-		JLabel errorMsg = new JLabel("");
+		errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
 		
 		btnSignin.addActionListener(new ActionListener() {
@@ -73,6 +100,9 @@ public class SignInUI {
 						passwordTXT,  errorMsg);
 			}
 		});
+		
+		
+		 
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -142,7 +172,8 @@ public class SignInUI {
 		}catch(InvalidInputException e) {
 			errorMsg.setText(e.getMessage());
 		}
-	}
+	}	
+	
 	private static  void registerButtonActionPerformed() {
 		delete();
 		RegistrationUI.init();
@@ -151,4 +182,5 @@ public class SignInUI {
 	private static  void delete() {
 		frame.dispose();
 	}
+	
 }
