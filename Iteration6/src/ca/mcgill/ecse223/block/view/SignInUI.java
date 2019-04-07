@@ -50,11 +50,11 @@ public class SignInUI {
 		
 		JLabel lblUsername = new JLabel("Username: ");
 		lblUsername.setForeground(Color.white);
-		lblUsername.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblUsername.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		
 		JLabel lblPassword = new JLabel("Password: ");
 		lblPassword.setForeground(Color.white);
-		lblPassword.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblPassword.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		
 		usernameTXT = new JTextField();
 		usernameTXT.setColumns(10);
