@@ -1,18 +1,12 @@
 package ca.mcgill.ecse223.block.view;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -47,7 +41,6 @@ public class Trash extends JPanel{
 	
 	public void closePacMouth() {
 		label.setIcon(icon2);
-		//add a delay then call openPacMouth?
 	}
 	public void openPacMouth() {
 		label.setIcon(icon);
