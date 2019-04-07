@@ -17,15 +17,21 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Trash extends JPanel{
+	
+	public static BufferedImage img, img2; 
+	private static JLabel label; 
+	ImageIcon icon, icon2; 
+	
 	public Trash() {
 		super();
 		//System.out.println("creating trash");
-		BufferedImage img;
 		try {
 			this.setSize(200,200);
-			img = ImageIO.read(new File("pacman_resize.jpg"));
-			 ImageIcon icon = new ImageIcon(img);
-		        JLabel label = new JLabel(icon);
+			img = ImageIO.read(new File("pacman_open.jpg"));
+			img2 = ImageIO.read(new File("pacman_closed.jpg"));
+			 icon = new ImageIcon(img);
+			 icon2 = new ImageIcon(img2); 
+		        label = new JLabel(icon);
 		       // JOptionPane.showMessageDialog(null, label);
 		        label.setLocation(0,0);
 		        this.add(label);
@@ -37,6 +43,14 @@ public class Trash extends JPanel{
 		this.repaint();
 		
 		
+	}
+	
+	public void closePacMouth() {
+		label.setIcon(icon2);
+		//add a delay then call openPacMouth?
+	}
+	public void openPacMouth() {
+		label.setIcon(icon);
 	}
 	
 }
