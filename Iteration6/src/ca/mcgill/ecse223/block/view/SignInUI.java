@@ -40,14 +40,18 @@ public class SignInUI {
 		frame.getContentPane().setFont(new Font("Arial", Font.PLAIN, 15));
 		frame.setBounds(100, 100, 722, 614);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setBackground(Color.DARK_GRAY);
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		JLabel lblWelcomeToBlock = new JLabel("WELCOME to Block223!");
+		lblWelcomeToBlock.setForeground(Color.white);
 		lblWelcomeToBlock.setFont(new Font("Arial Black", Font.BOLD, 22));
 		
+		
 		JLabel lblUsername = new JLabel("Username: ");
+		lblUsername.setForeground(Color.white);
 		lblUsername.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		
 		JLabel lblPassword = new JLabel("Password: ");
+		lblPassword.setForeground(Color.white);
 		lblPassword.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		
 		usernameTXT = new JTextField();
@@ -85,6 +89,7 @@ public class SignInUI {
 		btnSignin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		JLabel lblNewUser = new JLabel("New user?");
+		lblNewUser.setForeground(Color.WHITE);
 		lblNewUser.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		JButton btnRegister = new JButton("Register");
@@ -108,31 +113,25 @@ public class SignInUI {
 		blockPreview.color = Color.PINK; 
 		
 		BlockPreview blockPreview_1 = new BlockPreview();
-		blockPreview_1.color = Color.BLACK; 
+		blockPreview_1.color = new Color(255,228,225); 
 		
 		BlockPreview blockPreview_2 = new BlockPreview();
-		blockPreview_2.color = Color.BLUE; 
+		blockPreview_2.color = new Color (255, 192, 203); 
 		
 		BlockPreview blockPreview_3 = new BlockPreview();
-		blockPreview_3.color = Color.CYAN; 
+		blockPreview_3.color = new Color (219,112,147);
 		
 		BlockPreview blockPreview_4 = new BlockPreview();
-		blockPreview_4.color = Color.GREEN; 
+		blockPreview_4.color = new Color (255,105,180);
 		
 		BlockPreview blockPreview_5 = new BlockPreview();
-		blockPreview_5.color = Color.MAGENTA; 
-		
-		BlockPreview blockPreview_6 = new BlockPreview();
-		blockPreview_6.color = Color.ORANGE; 
-		
-		BlockPreview blockPreview_7 = new BlockPreview();
-		blockPreview_7.color = Color.RED; 
+		blockPreview_5.color = new Color (252,201,208);
 		
 		BlockPreview blockPreview_8 = new BlockPreview();
-		blockPreview_8.color = Color.WHITE; 
+		blockPreview_8.color = new Color (252, 199, 227); 
 		
 		BlockPreview blockPreview_9 = new BlockPreview();
-		blockPreview_9.color = Color.YELLOW; 
+		blockPreview_9.color = new Color (254,238,246); 
 		
 		BlockPreview blockPreview_10 = new BlockPreview();
 		blockPreview_10.color = new Color(230,230,250);
@@ -145,7 +144,7 @@ public class SignInUI {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(371, Short.MAX_VALUE)
+					.addContainerGap(374, Short.MAX_VALUE)
 					.addComponent(lblNewUser)
 					.addGap(77)
 					.addComponent(btnRegister)
@@ -190,17 +189,11 @@ public class SignInUI {
 						.addComponent(blockPreview, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(blockPreview_9, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 					.addGap(115)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(blockPreview_6, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
-							.addComponent(blockPreview_7, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(blockPreview_2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addGap(126)
-							.addComponent(blockPreview_8, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
-							.addComponent(blockPreview_3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+					.addComponent(blockPreview_2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addGap(126)
+					.addComponent(blockPreview_8, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+					.addComponent(blockPreview_3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 					.addGap(98)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(blockPreview_5, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
@@ -242,15 +235,13 @@ public class SignInUI {
 								.addComponent(blockPreview_5, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(71)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(blockPreview_7, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-								.addComponent(blockPreview_6, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 								.addComponent(blockPreview_9, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 								.addComponent(blockPreview_10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))))
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(50)
 							.addComponent(btnSignin)
-							.addPreferredGap(ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblNewUser)
 								.addComponent(btnRegister))

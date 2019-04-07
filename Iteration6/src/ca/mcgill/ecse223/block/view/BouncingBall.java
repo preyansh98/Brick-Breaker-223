@@ -12,6 +12,7 @@ import javax.swing.*;
 public class BouncingBall extends JPanel implements Runnable{
 Thread thread = null;
 
+  
   int width, height;
   float radius = 10;  
   float diameter = radius * 2;
@@ -78,8 +79,9 @@ Thread thread = null;
 	      }
 	 
 	  public void paintComponent(Graphics g) {
+		super.setBackground(new Color(106,108,110));
 	    super.paintComponent(g);
-	    g.setColor(Color.RED);
+	    g.setColor(Color.white);
 	    g.fillOval((int)(X-radius), (int)(Y-radius), (int)diameter, (int)diameter);
 	  }
 	
