@@ -6,9 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,6 +36,7 @@ public class SignInUI {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws IOException 
 	 * @wbp.parser.entryPoint
 	 */
 	public static void init() {
@@ -41,9 +47,6 @@ public class SignInUI {
 		frame.setBounds(100, 100, 722, 614);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(106,108,110));
-		JLabel lblWelcomeToBlock = new JLabel("WELCOME to Block223!");
-		lblWelcomeToBlock.setForeground(Color.white);
-		lblWelcomeToBlock.setFont(new Font("Arial Black", Font.BOLD, 22));
 		
 		
 		JLabel lblUsername = new JLabel("Username: ");
@@ -84,6 +87,17 @@ public class SignInUI {
 			}
 			
 		});
+		
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("block223.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ImageIcon icon = null; 
+		if(img != null) {icon = new ImageIcon(img);}
+		
 		
 		JButton btnSignin = new JButton("Sign-In");
 		btnSignin.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -138,7 +152,9 @@ public class SignInUI {
 		
 		JPanel bouncingPanel = new BouncingBall();
 		((BouncingBall) bouncingPanel).start(); 
-		 
+		
+		JLabel imagelabel = new JLabel();
+		imagelabel.setIcon(icon); 
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -165,21 +181,18 @@ public class SignInUI {
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(blockPreview_1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 									.addGap(27)))
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addGroup(groupLayout.createSequentialGroup()
-										.addGap(48)
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-											.addComponent(usernameTXT, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
-											.addComponent(passwordTXT)))
-									.addGroup(groupLayout.createSequentialGroup()
-										.addGap(110)
-										.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addGap(212)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(48)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(usernameTXT, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+										.addComponent(passwordTXT)))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(110)
+									.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblWelcomeToBlock)
-									.addGap(23)))))
+									.addComponent(imagelabel)
+									.addGap(109)))))
 					.addGap(52)
 					.addComponent(blockPreview_4, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 					.addGap(88))
@@ -214,10 +227,14 @@ public class SignInUI {
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(19)
-											.addComponent(lblWelcomeToBlock)
-											.addGap(71)
-											.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+											.addGap(51)
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addGroup(groupLayout.createSequentialGroup()
+													.addGap(71)
+													.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+												.addGroup(groupLayout.createSequentialGroup()
+													.addPreferredGap(ComponentPlacement.UNRELATED)
+													.addComponent(imagelabel))))
 										.addComponent(blockPreview_1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 										.addComponent(blockPreview_4, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
 								.addComponent(blockPreview_3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
