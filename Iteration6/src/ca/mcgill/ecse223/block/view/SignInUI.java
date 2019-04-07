@@ -6,9 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,9 +46,6 @@ public class SignInUI {
 		frame.setBounds(100, 100, 722, 614);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(106,108,110));
-		JLabel lblWelcomeToBlock = new JLabel("WELCOME to Block223!");
-		lblWelcomeToBlock.setForeground(Color.white);
-		lblWelcomeToBlock.setFont(new Font("Arial Black", Font.BOLD, 22));
 		
 		
 		JLabel lblUsername = new JLabel("Username: ");
@@ -110,16 +112,7 @@ public class SignInUI {
 		});
 		
 		BlockPreview blockPreview = new BlockPreview();
-		blockPreview.color = Color.PINK; 
-		
-		BlockPreview blockPreview_1 = new BlockPreview();
-		blockPreview_1.color = new Color(255,228,225); 
-		
-		BlockPreview blockPreview_2 = new BlockPreview();
-		blockPreview_2.color = new Color (255, 192, 203); 
-		
-		BlockPreview blockPreview_3 = new BlockPreview();
-		blockPreview_3.color = new Color (219,112,147);
+		blockPreview.color = Color.PINK;
 		
 		BlockPreview blockPreview_4 = new BlockPreview();
 		blockPreview_4.color = new Color (255,105,180);
@@ -138,67 +131,69 @@ public class SignInUI {
 		
 		JPanel bouncingPanel = new BouncingBall();
 		((BouncingBall) bouncingPanel).start(); 
-		 
+		
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("block223.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ImageIcon icon = null; 
+		if(img != null) {icon = new ImageIcon(img);}
+		
+		JLabel imageLabel = new JLabel("");
+		imageLabel.setIcon(icon);
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(374, Short.MAX_VALUE)
-					.addComponent(lblNewUser)
-					.addGap(77)
-					.addComponent(btnRegister)
-					.addGap(109))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(8)
-							.addComponent(bouncingPanel, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnSignin))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap(72, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addComponent(lblPassword)
-									.addComponent(lblUsername))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(blockPreview_1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-									.addGap(27)))
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addGroup(groupLayout.createSequentialGroup()
-										.addGap(48)
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-											.addComponent(usernameTXT, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
-											.addComponent(passwordTXT)))
-									.addGroup(groupLayout.createSequentialGroup()
-										.addGap(110)
-										.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addGap(212)))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblWelcomeToBlock)
-									.addGap(23)))))
-					.addGap(52)
-					.addComponent(blockPreview_4, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-					.addGap(88))
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(blockPreview, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(blockPreview_9, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-					.addGap(115)
-					.addComponent(blockPreview_2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-					.addGap(126)
-					.addComponent(blockPreview_8, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
-					.addComponent(blockPreview_3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-					.addGap(98)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(blockPreview_8, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(blockPreview_9, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(imageLabel, GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(blockPreview, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(41))
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(bouncingPanel, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(lblNewUser)
+										.addGap(18)
+										.addComponent(btnRegister))
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(btnSignin)
+										.addGap(79))))
+							.addGroup(groupLayout.createSequentialGroup()
+								.addGap(157)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(lblPassword)
+										.addGap(65)
+										.addComponent(passwordTXT, GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(lblUsername)
+										.addGap(62)
+										.addComponent(usernameTXT, GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(205)
+							.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+							.addGap(212)))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(blockPreview_5, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(blockPreview_10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-					.addGap(23))
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(blockPreview_10, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(blockPreview_4, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)))
+					.addGap(38))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -206,52 +201,50 @@ public class SignInUI {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(blockPreview_5, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(19)
+							.addComponent(blockPreview_4, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(blockPreview_10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(blockPreview, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(blockPreview, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-										.addComponent(blockPreview_8, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(19)
-											.addComponent(lblWelcomeToBlock)
-											.addGap(71)
-											.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
-										.addComponent(blockPreview_1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-										.addComponent(blockPreview_4, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
-								.addComponent(blockPreview_3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-							.addGap(37)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblUsername)
-								.addComponent(usernameTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(57)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblPassword)
-								.addComponent(passwordTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(blockPreview_2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-								.addComponent(blockPreview_5, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-							.addGap(71)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(blockPreview_9, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-								.addComponent(blockPreview_10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))))
+									.addGap(1)
+									.addComponent(imageLabel, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(14)
+									.addComponent(blockPreview_9, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(blockPreview_8, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(usernameTXT, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblUsername))
+					.addGap(32)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(passwordTXT, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPassword))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(50)
+							.addGap(18)
+							.addComponent(bouncingPanel, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(45)
 							.addComponent(btnSignin)
-							.addPreferredGap(ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblNewUser)
 								.addComponent(btnRegister))
-							.addGap(77))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(bouncingPanel, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGap(157))
+							.addGap(53))))
 		);
+		
+		BlockPreview blockPreview_3 = new BlockPreview();
+		blockPreview_3.setBounds(0, 0, 40, 40);
+		blockPreview_10.add(blockPreview_3);
+		blockPreview_3.color = new Color (219,112,147);
 		frame.getContentPane().setLayout(groupLayout);
 	}
 	private static  void signinButtonActionPerformed(JTextField usernameTextEntry,
