@@ -46,11 +46,15 @@ public class Trash extends JPanel{
 	}
 	
 	public void closePacMouth() {
+		
 		label.setIcon(icon2);
+		this.repaint();
 		//add a delay then call openPacMouth?
 	}
 	public void openPacMouth() {
+		
 		label.setIcon(icon);
+		this.repaint();
 	}
 	
 }

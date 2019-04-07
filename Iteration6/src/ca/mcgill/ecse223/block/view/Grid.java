@@ -102,9 +102,20 @@ public class Grid extends JLayeredPane implements Runnable {
 		Runnable r1 = new Runnable() {
 			@Override
 			public void run() {
-				addMouseListener(new MouseAdapter() {
+				trash.addMouseListener(new MouseAdapter() {
+					@Override 
+					public void mouseExited(MouseEvent e){
+						trash.openPacMouth();
+					}
+				});
+				Grid.this.addMouseListener(new MouseAdapter() {
+					@Override 
+					public void mouseExited(MouseEvent e){
+						trash.openPacMouth();
+					}
 					@Override
 					public void mousePressed(MouseEvent e) {
+						
 						int x = e.getX();
 						int y = e.getY();
 						mouseClicked = true;
@@ -150,7 +161,11 @@ public class Grid extends JLayeredPane implements Runnable {
 								}
 							} else if (gridObjectSelected && x >= trashX && y >= trashY && x <= maxTrashX && y <= maxTrashY) {
 								trash.closePacMouth(); 
+								repaint();
 								LevelSettingUI.deleteBlock(movedX, movedY);
+								
+							//	trash.openPacMouth();
+							//	repaint();
 								gridObjectSelected=false;
 							}
 						}
