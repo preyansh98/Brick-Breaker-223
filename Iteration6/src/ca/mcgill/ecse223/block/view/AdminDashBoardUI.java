@@ -41,7 +41,7 @@ public class AdminDashBoardUI {
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 919, 569);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		JButton btnAddAGame = new JButton("Add a Game");
 		btnAddAGame.setBackground(new Color(51, 204, 153));
 		btnAddAGame.setForeground(new Color(51, 153, 0));

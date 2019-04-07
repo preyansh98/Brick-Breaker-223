@@ -1,5 +1,6 @@
 package ca.mcgill.ecse223.block.view;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
@@ -45,6 +46,7 @@ public class OneVsOneModeUI implements Block223PlayModeInterface{
 		frame.setBounds(100, 100, 1224, 741);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		 player2Area = new PlayAreaUI(true);
 		
 		 HOF = new HallOfFame();

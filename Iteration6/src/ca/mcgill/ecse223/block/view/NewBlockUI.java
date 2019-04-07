@@ -30,7 +30,7 @@ public class NewBlockUI {
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 504, 553);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		JLabel lblR = new JLabel("R:");
 		lblR.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
@@ -96,6 +96,10 @@ public class NewBlockUI {
 		JLabel label_7 = new JLabel("1000");
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
+		Rvalue.setBackground(new Color(106,108,110));
+		Gvalue.setBackground(new Color(106,108,110));
+		Bvalue.setBackground(new Color(106,108,110));
+		point.setBackground(new Color(106,108,110));
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setBackground(new Color(0, 0, 0));
 		btnCancel.setForeground(new Color(204, 0, 0));

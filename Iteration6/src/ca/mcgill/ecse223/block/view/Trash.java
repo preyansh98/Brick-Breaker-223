@@ -1,5 +1,6 @@
 package ca.mcgill.ecse223.block.view;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class Trash extends JPanel{
 	public Trash() {
 		super();
 		//System.out.println("creating trash");
+		this.setBackground(new Color(106,108,110));
 		try {
 			this.setSize(200,200);
 			img = ImageIO.read(new File("pacman_open.jpg"));

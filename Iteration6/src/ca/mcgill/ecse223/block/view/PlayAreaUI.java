@@ -115,10 +115,10 @@ public class PlayAreaUI extends JLayeredPane {
 		JLabel congrats=new JLabel("Congratulations!");
 		congrats.setLocation(180,180);
 		congrats.setSize(300,300);
-		for (int i=0; i<50;i++) {
+		for (int i=0; i<35;i++) {
 			congrats.setFont(new Font("Century Gothic", Font.BOLD, i));
-			congrats.setSize(10+i*6,10+i*6);
-			congrats.setLocation(180-(i*7)/2,180-(i*7)/2);
+			congrats.setSize(10+i*9,10+i*7);
+			congrats.setLocation(180-(i*9)/2,180-(i*9)/2);
 			congrats.setForeground(Color.RED);
 			this.add(congrats);
 			try {
@@ -127,7 +127,7 @@ public class PlayAreaUI extends JLayeredPane {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (i<49)this.remove(congrats);
+			if (i<34)this.remove(congrats);
 		}
 	}
 

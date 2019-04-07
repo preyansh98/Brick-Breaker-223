@@ -45,7 +45,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(211, 211, 211));
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		frame.getContentPane().setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
 		frame.setBounds(100, 100, 716, 648);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

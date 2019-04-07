@@ -47,6 +47,7 @@ public class UpdateBlockUI {
 		frame.setBounds(100, 100, 610, 540);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		JLabel lblPleaseSelectA = new JLabel("Please select a Block an update its parameters");
 		lblPleaseSelectA.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 
@@ -134,7 +135,10 @@ public class UpdateBlockUI {
 
 		errorMsg = new JLabel("");
 		errorMsg.setForeground(Color.RED);
-
+		Rvalue.setBackground(new Color(106,108,110));
+		Gvalue.setBackground(new Color(106,108,110));
+		Bvalue.setBackground(new Color(106,108,110));
+		point.setBackground(new Color(106,108,110));
 		Rvalue.addChangeListener((new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {

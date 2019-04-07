@@ -40,6 +40,7 @@ public class TestGameUI implements Block223PlayModeInterface{
 		frame.setBounds(100, 100, 432, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		 playArea = new PlayAreaUI();
 		
 		errorMsg = new JLabel("");

@@ -35,7 +35,7 @@ public class PlayerDashUI {
 	public static void init() {
 		playArea=null;
 		frame = new JFrame();
-		frame.getContentPane().setBackground(new Color(102, 102, 102));
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		frame.setBounds(100, 100, 749, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

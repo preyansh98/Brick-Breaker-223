@@ -42,7 +42,7 @@ public class LevelSettingUI {
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 871, 718);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		levels = new JComboBox<String>();
 		
 		JLabel lblSelectLevel = new JLabel("Select Level:");
@@ -124,7 +124,6 @@ public class LevelSettingUI {
 		layeredPane.setLayout(null);
 		layeredPane.setSize(390, 390);
 		frame.getContentPane().setLayout(groupLayout);
-		System.out.println(" frame location "+ frame.getLocation().getX()+"    "+ frame.getLocation().getY());
 		refresh();
 	
 	}
@@ -222,6 +221,7 @@ public class LevelSettingUI {
 		return to;
 	}
 	public static void positionBlock(int id, int x, int y ) {
+		errorMsg.setText("");
 		int level=levels.getSelectedIndex()+1;
 		try {
 		Block223Controller.positionBlock(id, level, x, y);
@@ -231,6 +231,7 @@ public class LevelSettingUI {
 		
 	}
 	public static void moveBlock(int oldX, int oldY, int newX , int newY) {
+		errorMsg.setText("");
 		int level=levels.getSelectedIndex()+1;
 		try {
 		Block223Controller.moveBlock(level, oldX, oldY, newX, newY);
@@ -240,6 +241,7 @@ public class LevelSettingUI {
 		
 	}
 	public static void deleteBlock(int x, int y) {
+		errorMsg.setText("");
 		int level=levels.getSelectedIndex()+1;
 		try {
 			Block223Controller.removeBlock(level, x, y);

@@ -58,14 +58,14 @@ public class Grid extends JLayeredPane implements Runnable {
 
 		list.setLocation(450, 10);
 		list.setSize(300, 150);
-		list.setBackground(this.getBackground());
+		list.setBackground(new Color(106,108,110));
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().setView(list);
 		scrollPane.setSize(300, 150);
 		scrollPane.setLocation(450, 10);
-		scrollPane.setBackground(this.getBackground());
-
+		
+		scrollPane.setBackground(new Color(106,108,110));
 		this.add(scrollPane);
 		//this.moveToFront(trash);
 		JLabel blockPrev = new JLabel("Block to drag: ");
@@ -80,6 +80,7 @@ public class Grid extends JLayeredPane implements Runnable {
 		pacmanText.setSize(200, 30);
 		pacmanText.setLocation(420, 300);
 		this.add(pacmanText);
+		
 		Trash trash = new Trash();
 		int trashX = 420+200;
 		int trashY = 230;
@@ -105,7 +106,7 @@ public class Grid extends JLayeredPane implements Runnable {
 				addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent e) {
-						trash.openPacMouth();
+						
 						int x = e.getX();
 						int y = e.getY();
 						mouseClicked = true;
@@ -118,6 +119,7 @@ public class Grid extends JLayeredPane implements Runnable {
 							for (int row = 0; row < 15; row++) {
 								for (int column = 0; column < 15; column++) {
 									if (rectangles[row][column].contains(x, y)) {
+										trash.openPacMouth();
 										LevelSettingUI.displayBlockInfo(row + 1, column + 1);
 										draggedCell=LevelSettingUI.getCell(column+1, row+1);
 										floatRect = (Rectangle2D) rectangles[row][column].clone();

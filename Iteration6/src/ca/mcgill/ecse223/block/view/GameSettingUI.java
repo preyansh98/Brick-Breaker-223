@@ -42,7 +42,7 @@ public class GameSettingUI {
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 825, 671);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		JLabel lblGameName = new JLabel("Game Name :");
 		lblGameName.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		

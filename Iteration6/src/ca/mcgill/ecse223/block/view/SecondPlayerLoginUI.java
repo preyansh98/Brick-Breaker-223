@@ -37,6 +37,7 @@ public class SecondPlayerLoginUI {
 		frame.setBounds(100, 100, 489, 533);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.getContentPane().setBackground(new Color(106,108,110));
 		JSeparator separator = new JSeparator();
 		
 		JButton btnGhost = new JButton("Ghost Mode");
