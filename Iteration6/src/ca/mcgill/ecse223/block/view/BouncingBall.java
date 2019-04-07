@@ -3,32 +3,38 @@ package ca.mcgill.ecse223.block.view;
 import java.awt.*;
 import javax.swing.*;
  
+/**
+ * Additional feature: An independent bouncing ball on our sign in page
+ * @author Preyansh
+ *
+ */
+
 public class BouncingBall extends JPanel implements Runnable{
 Thread thread = null;
 
-  // Box height and width
-  int width;
-  int height;
- 
-  // Ball Size
-  float radius = 10; 
+  int width, height;
+  float radius = 10;  
   float diameter = radius * 2;
  
-  float X = radius + 50;
+  float X = radius + 80;
   float Y = radius + 20;
  
-  // Direction
-  float dx = 1;
-  float dy = 1;
- 
+  //speeds
+  float speedX = 3;
+  float speedY = 3;
   
-  
+  /**
+   * Created to give thread functionalities. 
+   */
   public void start() {
 	  if(thread == null) {
 		  thread = new Thread(this);
 		  thread.start();
 	  }}
 
+  	/**
+  	 * This method is never needed, but added in case. 
+  	 */
 	  public void stop() {
 	    thread = null;
 	  }
@@ -40,22 +46,22 @@ Thread thread = null;
 	          width = getWidth();
 	          height = getHeight();
 	 
-	          X = X + dx;
-	          Y = Y + dy;
+	          X = X + speedX;
+	          Y = Y + speedY;
 	 
 	          if (X - radius < 0) {
-	            dx = -dx; 
+	            speedX = -speedX; 
 	            X = radius; 
 	          } else if (X + radius > width) {
-	            dx = -dx;
+	            speedX = -speedX;
 	            X = width - radius;
 	          }
 	 
 	          if (Y - radius < 0) {
-	            dy = -dy;
+	            speedY = -speedY;
 	            Y = radius;
 	          } else if (Y + radius > height) {
-	            dy = -dy;
+	            speedY = -speedY;
 	            Y = height - radius;
 	          }
 	          
