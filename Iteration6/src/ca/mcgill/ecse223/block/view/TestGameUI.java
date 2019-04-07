@@ -83,16 +83,16 @@ public class TestGameUI implements Block223PlayModeInterface{
 			}
 		});
 		 lblScore = new JLabel("Score: 0");
-		lblScore.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		lblScore.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		lblScore.setEnabled(false);
 		
 		lblLevel = new JLabel("Level: 1");
 		lblLevel.setEnabled(false);
-		lblLevel.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		lblLevel.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		
 		lblLives = new JLabel("Lives: 3");
 		lblLives.setEnabled(false);
-		lblLives.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
+		lblLives.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		refresh();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(

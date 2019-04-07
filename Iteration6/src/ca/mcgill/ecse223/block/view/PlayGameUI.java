@@ -32,6 +32,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 	private JButton btnStartGame;
 	private JLabel errorMsg;
 	private JPanel hallOfFame ;
+	private JLabel lblNewLabel;
 	/**
 	 * Create the application.
 	 */
@@ -44,6 +45,7 @@ public class PlayGameUI implements Block223PlayModeInterface{
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(211, 211, 211));
 		frame.getContentPane().setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 15));
 		frame.setBounds(100, 100, 716, 648);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,17 +53,21 @@ public class PlayGameUI implements Block223PlayModeInterface{
 		 playArea = new PlayAreaUI();
 		
 		 btnStartGame = new JButton("Start Game");
+		 btnStartGame.setForeground(new Color(0, 100, 0));
 		 btnStartGame.setBackground(new Color(51, 153, 102));
 		btnStartGame.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		
 		 lblLevel = new JLabel("Level: ");
-		lblLevel.setFont(new Font("Century Gothic", Font.BOLD, 15));
+		 lblLevel.setForeground(new Color(128, 128, 128));
+		lblLevel.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		
 		 lblScore = new JLabel("Score:");
-		lblScore.setFont(new Font("Century Gothic", Font.BOLD, 15));
+		 lblScore.setForeground(new Color(128, 128, 128));
+		lblScore.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		
 		 lblLives = new JLabel("Lives: ");
-		lblLives.setFont(new Font("Century Gothic", Font.BOLD, 15));
+		 lblLives.setForeground(new Color(128, 128, 128));
+		lblLives.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		
 		 hallOfFame = new HallOfFame();
 		
@@ -117,29 +123,39 @@ public class PlayGameUI implements Block223PlayModeInterface{
 		errorMsg.setForeground(Color.RED);
 		
 		refresh();
+		
+		lblNewLabel = new JLabel("Hall Of Fame");
+		lblNewLabel.setForeground(new Color(128, 128, 128));
+		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 21));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(errorMsg, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(errorMsg, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnStartGame)
 							.addGap(119)
 							.addComponent(btnGoBack, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addComponent(lblLives, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblScore, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblLevel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-						.addComponent(playArea, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
-					.addGap(18)
+						.addComponent(lblLives, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblScore, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblLevel, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+						.addComponent(playArea, GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnPrevious, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(btnNext))
-						.addComponent(hallOfFame, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-					.addContainerGap())
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(btnPrevious, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+									.addComponent(btnNext))
+								.addComponent(hallOfFame, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
+							.addGap(37))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(43)
+							.addComponent(lblNewLabel)
+							.addContainerGap())))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -154,7 +170,10 @@ public class PlayGameUI implements Block223PlayModeInterface{
 					.addComponent(lblLives)
 					.addPreferredGap(ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(hallOfFame, GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblNewLabel)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(hallOfFame, GroupLayout.PREFERRED_SIZE, 346, GroupLayout.PREFERRED_SIZE))
 						.addComponent(playArea, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)

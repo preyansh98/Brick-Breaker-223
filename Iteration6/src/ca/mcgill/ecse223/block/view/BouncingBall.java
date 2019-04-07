@@ -10,6 +10,8 @@ import javax.swing.*;
  */
 
 public class BouncingBall extends JPanel implements Runnable{
+	public BouncingBall() {
+	}
 Thread thread = null;
 
   
