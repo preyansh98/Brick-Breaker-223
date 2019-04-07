@@ -8,6 +8,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ChangeEvent;
@@ -105,8 +106,28 @@ public class UpdateBlockUI {
 		JLabel label_14 = new JLabel("Points:");
 		label_14.setFont(new Font("Century Gothic", Font.BOLD, 15));
 
-		JLabel label_15 = new JLabel("50");
+		JTextField pointTxt = new JTextField("50");
+		pointTxt.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pointTxt.setBackground(frame.getBackground());
+		pointTxt.addActionListener((new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int value=0;
+				try {
+					value=Integer.parseInt(pointTxt.getText());
+					if (value>=1 && value<=1000) {
+						point.setValue(value);
+					}else {
+						errorMsg.setText("Please enter a value between 1 and 1000 only for the points.");
+					}
+				}catch(Exception e) {
+					errorMsg.setText("Please enter integers only for points.");
+				}
+				
+			}
+			
+		}));
 		point = new JSlider();
 		point.setSnapToTicks(true);
 		point.setPaintTicks(true);
@@ -167,7 +188,7 @@ public class UpdateBlockUI {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
-				change(point.getValue(), label_15);
+				change(point.getValue(), pointTxt);
 			}
 		}));
 		refresh();
@@ -214,7 +235,7 @@ public class UpdateBlockUI {
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(label_14, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(label_15, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)))
+									.addComponent(pointTxt, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)))
 							.addComponent(lblPreview))
 						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -308,7 +329,7 @@ public class UpdateBlockUI {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 									.addComponent(label_14, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-									.addComponent(label_15))
+									.addComponent(pointTxt))
 								.addComponent(label_16))))
 					.addGap(74)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
@@ -374,7 +395,9 @@ public class UpdateBlockUI {
 	private static void change(int value, JLabel label) {
 		label.setText(value + "");
 	}
-
+	private static void change(int value, JTextField label) {
+		label.setText(value+"");
+	}
 	private static void goBackButtonActionPerformed() {
 		// clear error message
 		frame.dispose();

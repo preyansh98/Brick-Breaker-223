@@ -34,7 +34,7 @@ public class PersistenceObjectStream {
 			in.close();
 			fileIn.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+		//	e.printStackTrace();
 			o = null;
 			
 		}

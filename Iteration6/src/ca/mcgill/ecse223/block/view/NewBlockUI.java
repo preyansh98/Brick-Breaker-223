@@ -2,6 +2,8 @@ package ca.mcgill.ecse223.block.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -9,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -131,9 +134,28 @@ public class NewBlockUI {
 		label_10.setForeground(new Color(0, 102, 255));
 		label_10.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
-		JLabel label_11 = new JLabel("50");
-		label_11.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		
+		JTextField pointTxt = new JTextField("50");
+		pointTxt.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pointTxt.setBackground(frame.getBackground());
+		pointTxt.addActionListener((new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int value=0;
+				try {
+					value=Integer.parseInt(pointTxt.getText());
+					if (value>=1 && value<=1000) {
+						point.setValue(value);
+					}else {
+						errorMsg.setText("Please enter a value between 1 and 1000 only for the points.");
+					}
+				}catch(Exception e) {
+					errorMsg.setText("Please enter integers only for points.");
+				}
+				
+			}
+			
+		}));
 		Rvalue.addChangeListener((new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
@@ -162,7 +184,7 @@ public class NewBlockUI {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				// TODO Auto-generated method stub
-				change(point.getValue(),label_11);
+				change(point.getValue(),pointTxt);
 			}
 		}));
 		
@@ -196,7 +218,7 @@ public class NewBlockUI {
 													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 														.addGroup(groupLayout.createSequentialGroup()
 															.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-															.addComponent(label_11, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+															.addComponent(pointTxt, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
 															.addPreferredGap(ComponentPlacement.RELATED))
 														.addComponent(label_10))
 													.addComponent(label_9))
@@ -281,7 +303,7 @@ public class NewBlockUI {
 								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 									.addComponent(lblPoints)
 									.addComponent(label_3)
-									.addComponent(label_11))
+									.addComponent(pointTxt))
 								.addComponent(label_7)
 								.addComponent(point, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(label))
@@ -301,6 +323,9 @@ public class NewBlockUI {
 		frame.getContentPane().setLayout(groupLayout);
 	}
 	private static void change(int value, JLabel label) {
+		label.setText(value+"");
+	}
+	private static void change(int value, JTextField label) {
 		label.setText(value+"");
 	}
 
