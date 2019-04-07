@@ -14,7 +14,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -103,10 +102,6 @@ public class Grid extends JLayeredPane implements Runnable {
 		Runnable r1 = new Runnable() {
 			@Override
 			public void run() {
-				addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent e) {
-						trash.openPacMouth();
 						int x = e.getX();
 						int y = e.getY();
 						mouseClicked = true;

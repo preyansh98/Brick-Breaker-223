@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -46,7 +45,7 @@ public class Trash extends JPanel{
 		
 	}
 	
-	public void closePacMouth() {			
+	public void closePacMouth() {
 		label.setIcon(icon2);
 		//add a delay then call openPacMouth?
 	}
