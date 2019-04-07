@@ -40,8 +40,8 @@ public class SignInUI {
 		frame.getContentPane().setFont(new Font("Arial", Font.PLAIN, 15));
 		frame.setBounds(100, 100, 722, 614);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JLabel lblWelcomeToBlock = new JLabel("Welcome to Block223!");
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
+		JLabel lblWelcomeToBlock = new JLabel("WELCOME to Block223!");
 		lblWelcomeToBlock.setFont(new Font("Arial Black", Font.BOLD, 22));
 		
 		JLabel lblUsername = new JLabel("Username: ");
