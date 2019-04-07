@@ -3,14 +3,15 @@ package ca.mcgill.ecse223.block.view;
 import java.awt.*;
 import javax.swing.*;
  
-public class BouncingBall extends JPanel {
- 
+public class BouncingBall extends JPanel implements Runnable{
+Thread thread = null;
+
   // Box height and width
   int width;
   int height;
  
   // Ball Size
-  float radius = 20; 
+  float radius = 10; 
   float diameter = radius * 2;
  
   float X = radius + 50;
@@ -20,16 +21,26 @@ public class BouncingBall extends JPanel {
   float dx = 1;
   float dy = 1;
  
-  public BouncingBall() {
+  
+  
+  public void start() {
+	  if(thread == null) {
+		  thread = new Thread(this);
+		  thread.start();
+	  }}
+
+	  public void stop() {
+	    thread = null;
+	  }
 	  
-	    Thread thread = new Thread() {
-	      public void run() {
-	        while (true) {
-	 
+	  public void run() {
+	
+	        while (thread != null) {
+	        	
 	          width = getWidth();
 	          height = getHeight();
 	 
-	          X = X + dx ;
+	          X = X + dx;
 	          Y = Y + dy;
 	 
 	          if (X - radius < 0) {
@@ -47,6 +58,8 @@ public class BouncingBall extends JPanel {
 	            dy = -dy;
 	            Y = height - radius;
 	          }
+	          
+	          
 	          repaint();
 	 
 	          try {
@@ -55,23 +68,13 @@ public class BouncingBall extends JPanel {
 	          }
 	 
 	        }
+	        thread = null;
 	      }
-	    };
-	    thread.start();
-	  }
 	 
 	  public void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	    g.setColor(Color.RED);
 	    g.fillOval((int)(X-radius), (int)(Y-radius), (int)diameter, (int)diameter);
 	  }
-	 
-	  public static void main(String[] args) {
-	    JFrame.setDefaultLookAndFeelDecorated(true);
-	    JFrame frame = new JFrame("Bouncing Ball");
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setSize(300, 200);
-	    frame.setContentPane(new BouncingBall());
-	    frame.setVisible(true);
-	  }
+	
 	}

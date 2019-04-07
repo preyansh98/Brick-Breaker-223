@@ -138,8 +138,7 @@ public class SignInUI {
 		blockPreview_10.color = new Color(230,230,250);
 		
 		JPanel bouncingPanel = new BouncingBall();
-		
-		
+		((BouncingBall) bouncingPanel).start(); 
 		 
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
