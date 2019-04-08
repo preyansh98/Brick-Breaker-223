@@ -44,16 +44,18 @@ public class GameSettingUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(106,108,110));
 		JLabel lblGameName = new JLabel("Game Name :");
+		lblGameName.setForeground(new Color(255, 250, 250));
 		lblGameName.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		nameTXT = new JTextField();
 		nameTXT.setColumns(10);
 		
 		JLabel lblBallParameters = new JLabel("Ball Parameters: ");
-		lblBallParameters.setForeground(new Color(51, 102, 204));
+		lblBallParameters.setForeground(new Color(64, 224, 208));
 		lblBallParameters.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		JLabel lblMinSpeed = new JLabel("Min. Speed in X: ");
+		lblMinSpeed.setForeground(new Color(255, 250, 250));
 		lblMinSpeed.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		XSpeedTXT = new JTextField();
@@ -63,25 +65,29 @@ public class GameSettingUI {
 		YSpeedTXT.setColumns(10);
 		
 		JLabel lblMinSpeedIn = new JLabel("Min. Speed in Y:");
+		lblMinSpeedIn.setForeground(new Color(255, 250, 250));
 		lblMinSpeedIn.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		JLabel lblSpeedIncreaseFactor = new JLabel("Speed Increase Factor: ");
+		lblSpeedIncreaseFactor.setForeground(new Color(255, 250, 250));
 		lblSpeedIncreaseFactor.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		speedFactorTXT = new JTextField();
 		speedFactorTXT.setColumns(10);
 		
 		JLabel lblPaddleLength = new JLabel("Paddle Length:");
-		lblPaddleLength.setForeground(new Color(51, 102, 204));
+		lblPaddleLength.setForeground(new Color(64, 224, 208));
 		lblPaddleLength.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		JLabel lblMin = new JLabel("Min: ");
+		lblMin.setForeground(new Color(255, 250, 250));
 		lblMin.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		minLengthTXT = new JTextField();
 		minLengthTXT.setColumns(10);
 		
 		JLabel lblMax = new JLabel("Max:");
+		lblMax.setForeground(new Color(255, 250, 250));
 		lblMax.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		maxLengthTXT = new JTextField();
@@ -134,12 +140,14 @@ public class GameSettingUI {
 		errorMsg.setForeground(Color.RED);
 		
 		JLabel lblNumberOfLevels = new JLabel("Number of levels (1..99) :");
+		lblNumberOfLevels.setForeground(new Color(255, 250, 250));
 		lblNumberOfLevels.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		numLevelsTXT = new JTextField();
 		numLevelsTXT.setColumns(10);
 		
 		JLabel lblNumberOfBlocks = new JLabel("Number of Blocks per Level:");
+		lblNumberOfBlocks.setForeground(new Color(245, 255, 250));
 		lblNumberOfBlocks.setFont(new Font("Century Gothic", Font.BOLD, 15));
 		
 		numBlockTXT = new JTextField();
@@ -184,72 +192,76 @@ public class GameSettingUI {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(29)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblGameName)
-											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addComponent(nameTXT, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
-											.addGap(226))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblNumberOfLevels)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(numLevelsTXT, 0, 0, Short.MAX_VALUE)
-											.addGap(46)
-											.addComponent(lblNumberOfBlocks)
-											.addGap(18)
-											.addComponent(numBlockTXT, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-										.addComponent(lblBallParameters)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblMinSpeed)
-											.addGap(31)
-											.addComponent(XSpeedTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-											.addGap(134)
-											.addComponent(lblMinSpeedIn)
-											.addGap(18)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(maxLengthTXT, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-												.addComponent(YSpeedTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-									.addGap(100)
-									.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
-									.addGap(42))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblSpeedIncreaseFactor)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(speedFactorTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-											.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-												.addGroup(groupLayout.createSequentialGroup()
-													.addComponent(lblMin)
-													.addGap(18)
-													.addComponent(minLengthTXT, 0, 0, Short.MAX_VALUE))
-												.addComponent(lblPaddleLength, Alignment.LEADING))
-											.addPreferredGap(ComponentPlacement.RELATED, 334, Short.MAX_VALUE)
-											.addComponent(lblMax))
-										.addComponent(btnGoBack, Alignment.LEADING)
-										.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-											.addGap(9)
-											.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-												.addComponent(btnLevelDesign, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(btnAddNewBlock, Alignment.LEADING))
-											.addPreferredGap(ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-												.addComponent(btnPublishGame, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(btnUpdateOldBlocks, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))
-											.addGap(25)))
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addGroup(groupLayout.createSequentialGroup()
+												.addGap(53)
+												.addComponent(lblMin)
+												.addGap(18)
+												.addComponent(minLengthTXT, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED, 339, Short.MAX_VALUE)
+												.addComponent(lblMax)
+												.addPreferredGap(ComponentPlacement.RELATED))
+											.addGroup(groupLayout.createSequentialGroup()
+												.addGap(9)
+												.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+													.addComponent(btnLevelDesign, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+													.addComponent(btnAddNewBlock, Alignment.LEADING))
+												.addPreferredGap(ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+													.addComponent(btnPublishGame, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+													.addComponent(btnUpdateOldBlocks, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))
+												.addGap(25)))
 										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(122)
-											.addComponent(btnSave))
+											.addComponent(btnGoBack)
+											.addPreferredGap(ComponentPlacement.RELATED)))
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 										.addGroup(groupLayout.createSequentialGroup()
 											.addGap(18)
 											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 												.addComponent(btnTestGame, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(btnUpdateGame, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))))
-									.addGap(30))))
+												.addComponent(btnUpdateGame, GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+												.addComponent(maxLengthTXT, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+											.addGap(30))
+										.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(btnSave)
+											.addGap(70))))
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(lblSpeedIncreaseFactor)
+										.addGap(18)
+										.addComponent(speedFactorTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(lblGameName)
+												.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(nameTXT, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+												.addGap(226))
+											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(lblNumberOfLevels)
+												.addPreferredGap(ComponentPlacement.UNRELATED)
+												.addComponent(numLevelsTXT, 0, 0, Short.MAX_VALUE)
+												.addGap(46)
+												.addComponent(lblNumberOfBlocks)
+												.addGap(18)
+												.addComponent(numBlockTXT, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+											.addComponent(lblBallParameters)
+											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(lblMinSpeed)
+												.addGap(31)
+												.addComponent(XSpeedTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addGap(134)
+												.addComponent(lblMinSpeedIn)
+												.addGap(18)
+												.addComponent(YSpeedTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+										.addGap(100)
+										.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
+										.addGap(42))
+									.addComponent(lblPaddleLength))))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(56)
 							.addComponent(errorMsg, GroupLayout.PREFERRED_SIZE, 574, GroupLayout.PREFERRED_SIZE)))
@@ -292,10 +304,10 @@ public class GameSettingUI {
 							.addComponent(lblPaddleLength)
 							.addGap(33)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblMin)
+								.addComponent(lblMax)
 								.addComponent(minLengthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(maxLengthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblMax))
+								.addComponent(lblMin)
+								.addComponent(maxLengthTXT, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(44)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnAddNewBlock)
@@ -306,11 +318,14 @@ public class GameSettingUI {
 								.addComponent(btnLevelDesign)
 								.addComponent(btnPublishGame, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(btnTestGame, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnGoBack)
-								.addComponent(btnSave))
-							.addGap(34))))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(18)
+									.addComponent(btnGoBack))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(27)
+									.addComponent(btnSave)))
+							.addGap(13))))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
