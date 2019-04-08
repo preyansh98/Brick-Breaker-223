@@ -1147,10 +1147,14 @@ public class Block223Controller {
 			ui.refresh();
 			if (game.getPlayStatus()==PlayStatus.GameOver && fresh1) {
 				fresh1=false;
-				
+				while (game2.getPlayStatus()!=PlayStatus.GameOver) {
+					game2.play();
+					game2.setCurrentBallY(380);
+					game2.move();
+				}
 				game2.setCurrentBallY(380);
 				game2.move();
-				if(game.getLives()>0) {
+				if(game.getLives()>0 ) {
 					ui.endGame(1,null);
 				}else {
 					ui.endGame(0,null);
@@ -1158,9 +1162,12 @@ public class Block223Controller {
 			}
 			if (game2.getPlayStatus()==PlayStatus.GameOver && fresh2) {
 				fresh1=false;
+				while (game.getPlayStatus()!=PlayStatus.GameOver) {
+					game.play();
+					game.setCurrentBallY(380);
+					game.move();
+				}
 				
-				game.setCurrentBallY(380);
-				game.move();
 				if(game2.getLives()>0) {
 					ui.endGame(3,null);
 				}else {
