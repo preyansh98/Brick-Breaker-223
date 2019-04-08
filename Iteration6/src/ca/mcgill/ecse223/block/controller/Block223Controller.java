@@ -630,6 +630,10 @@ public class Block223Controller {
 			throw new InvalidInputException("Only the admin of a game can test the game.");
 		}
 		if((Block223Application.getCurrentUserRole() instanceof Player)
+				&& game.getPlayer()==null && game.getPlayStatus()==PlayStatus.GameOver) {
+			throw new InvalidInputException("The game is over.");
+		}
+		if((Block223Application.getCurrentUserRole() instanceof Player)
 				&& game.getPlayer()==null) {
 			throw new InvalidInputException("Admin privileges are required to test a game.");
 		}
@@ -657,15 +661,16 @@ public class Block223Controller {
 		
 		if(game.getPlayStatus()==PlayStatus.GameOver) {
 			Block223Application.setCurrentGame(initialGame);
-			ui.endGame(game.getLives(),null );
+			ui.endGame(game.getLives(),null);
 		}
 		if(gameHasPlayer){
 			game.setBounce(null);
 			Block223 block223=Block223Application.getBlock223();
-			Block223Persistence.save(block223);
-			System.out.println("saved");
-			
+			Block223Persistence.save(block223);	
 		}
+	}
+	public static int getScore() {
+		return Block223Application.getCurrentPlayableGame().getScore();
 	}
 	public static void unselectGame() {
 		Block223Application.setCurrentPlayableGame(null);
@@ -1118,7 +1123,7 @@ public class Block223Controller {
 		boolean fresh1=true;
 		boolean fresh2=true;
 		boolean gameHasPlayer=game.getPlayer()!=null;
-		while(game.getPlayStatus()!=PlayStatus.GameOver || game2.getPlayStatus()!=PlayStatus.GameOver) {
+		while(game.getPlayStatus()!=PlayStatus.GameOver && game2.getPlayStatus()!=PlayStatus.GameOver) {
 			userInputs=ui.takeInputs();
 			if(game.getPlayStatus()!=PlayStatus.Moving &&(userInputs.contains("l") || userInputs.contains("r"))){
 				game.play();
@@ -1142,6 +1147,9 @@ public class Block223Controller {
 			ui.refresh();
 			if (game.getPlayStatus()==PlayStatus.GameOver && fresh1) {
 				fresh1=false;
+				
+				game2.setCurrentBallY(380);
+				game2.move();
 				if(game.getLives()>0) {
 					ui.endGame(1,null);
 				}else {
@@ -1150,6 +1158,9 @@ public class Block223Controller {
 			}
 			if (game2.getPlayStatus()==PlayStatus.GameOver && fresh2) {
 				fresh1=false;
+				
+				game.setCurrentBallY(380);
+				game.move();
 				if(game2.getLives()>0) {
 					ui.endGame(3,null);
 				}else {
@@ -1161,10 +1172,12 @@ public class Block223Controller {
 		if(gameHasPlayer){
 			game.setBounce(null);
 			game2.setBounce(null);
+			if (Block223Application.getSecondPlayer()==null)game2.delete();
 			Block223 block223=Block223Application.getBlock223();
 			Block223Persistence.save(block223);
 		}
 	}
+
 	public static void unselectBothGames() {
 		Block223Application.setCurrentGame(null);
 		Block223Application.setCurrentPlayableGame(null);
@@ -1212,6 +1225,17 @@ public class Block223Controller {
 		}
 	}
 	
+	public static int[] getScoreAndLivePlayer(int player) {
+		int[] to=new int[2];
+		if(player==1) {
+			to[0]=Block223Application.getCurrentPlayableGame().getScore();
+			to[1]=Block223Application.getCurrentPlayableGame().getLives();
+		}else if(player==2) {
+			to[0]=Block223Application.getSecondPlayableGame().getScore();
+			to[1]=Block223Application.getSecondPlayableGame().getLives();
+		}
+		return to;
+	}
 	public  static void loginSecondPlayer(String username, String password) throws InvalidInputException{
 		//UserRole currentRole = Block223Application.getCurrentUserRole();
 		//Block223Application.resetBlock223();

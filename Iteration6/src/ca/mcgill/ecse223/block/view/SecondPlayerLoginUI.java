@@ -198,6 +198,7 @@ public class SecondPlayerLoginUI {
 	private static void register() {
 		try {
 			Block223Controller.registerSecondPlayer(txtRegisterUser.getText(), new String(txtRegPlayPass.getPassword()),txtRegAdminPass.getText());
+			frame.dispose();
 			OneVsOneModeUI test=new OneVsOneModeUI();
 			test.initialize();
 		}catch(InvalidInputException e) {

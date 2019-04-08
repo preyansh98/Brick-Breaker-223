@@ -915,7 +915,7 @@ public class PlayedGame implements Serializable
     if (gravityMode){
  		
  			counter++;
- 		if(counter%5==0){
+ 		if(counter%20==0){
  		int lowestY=0;
  		for (PlayedBlockAssignment blockassi:getBlocks()){
 		   		if(lowestY<blockassi.getY()){
@@ -1003,7 +1003,7 @@ public class PlayedGame implements Serializable
 	}
 	 for (PlayedBlockAssignment blockassi:getBlocks()){
 	  		if(lowestY==blockassi.getY()){
-		  		blockassi.setY(blockassi.getY()-counter/5);
+		  		blockassi.setY(blockassi.getY()-counter/20);
 		   	}
 	}
   }

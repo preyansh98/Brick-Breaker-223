@@ -32,11 +32,13 @@ public class PlayAreaUI extends JLayeredPane {
 	public PlayAreaUI () {
 		super();
 		this.setSize(390,390);
+		this.setBackground(Color.WHITE);
 		//repaint();
 	}
 	public PlayAreaUI(boolean second) {
 		super();
 		this.setSize(390,390);
+		this.setBackground(Color.WHITE);
 		isSecondPlayer=second;
 		
 	}
@@ -50,6 +52,7 @@ public class PlayAreaUI extends JLayeredPane {
 			g2d=(Graphics2D)g.create();
 			RenderingHints rh=new RenderingHints(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 			g2d.setRenderingHints(rh);
+			
 			TOCurrentlyPlayedGame game=null;
 			try {
 				if (!isSecondPlayer) {

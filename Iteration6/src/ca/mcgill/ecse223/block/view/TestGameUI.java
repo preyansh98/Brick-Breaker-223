@@ -84,15 +84,13 @@ public class TestGameUI implements Block223PlayModeInterface{
 			}
 		});
 		 lblScore = new JLabel("Score: 0");
+		 lblScore.setForeground(Color.BLACK);
 		lblScore.setFont(new Font("Century Gothic", Font.BOLD, 17));
-		lblScore.setEnabled(false);
 		
 		lblLevel = new JLabel("Level: 1");
-		lblLevel.setEnabled(false);
 		lblLevel.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		
 		lblLives = new JLabel("Lives: 3");
-		lblLives.setEnabled(false);
 		lblLives.setFont(new Font("Century Gothic", Font.BOLD, 17));
 		refresh();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -216,7 +214,8 @@ public class TestGameUI implements Block223PlayModeInterface{
 		}else {
 			((PlayAreaUI) playArea).displayGameOver();
 		}
-		
+		lblScore.setText("Score: " + Block223Controller.getScore());
+		lblLives.setText("Lives: "+ nrOfLives);
 	}
 	
 	

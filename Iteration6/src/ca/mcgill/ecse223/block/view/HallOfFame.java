@@ -23,14 +23,14 @@ public class HallOfFame extends JPanel {
 	private JLabel name;
 	public HallOfFame() {
 		super(new BorderLayout());
-		this.setSize(179, 500);
+		this.setSize(300, 500);
 		this.repaint();
 		
 		try {
 			
 			TOHallOfFame to=Block223Controller.getHallOfFame(1+HOFpage*10, 10+HOFpage*10);
-			name=new JLabel("Hall of Fame: "+ to.getGamename());
-			name.setSize(169,50);
+			name=new JLabel("HOF: "+ to.getGamename());
+			name.setSize(290,80);
 			name.setLocation(10, 10);
 			name.setFont(new Font("Century Gothic", Font.BOLD, 16));
 			this.add(name);
@@ -60,8 +60,8 @@ public class HallOfFame extends JPanel {
 			for (TOHallOfFameEntry entry: to.getEntries()) {
 				userScores[i]=new JLabel((HOFpage*10+i)+". "+entry.getPlayername()+ " : "+ entry.getScore());
 				userScores[i].setFont(new Font("Century Gothic", Font.BOLD, 16));
-				userScores[i].setSize(140,30);
-				userScores[i].setLocation(10,60+i*20);
+				userScores[i].setSize(290,30);
+				userScores[i].setLocation(10,90+i*20);
 				this.add(userScores[i]);
 				i++;
 			}
@@ -69,13 +69,13 @@ public class HallOfFame extends JPanel {
 			while(i<10) {
 				userScores[i]=new JLabel((HOFpage*10+i)+".TBD");
 				userScores[i].setFont(new Font("Century Gothic", Font.BOLD, 16));
-				userScores[i].setSize(140,40);
-				userScores[i].setLocation(10,60+i*20);
+				userScores[i].setSize(290,40);
+				userScores[i].setLocation(10,90+i*20);
 				this.add(userScores[i]);
 				i++;
 			}
 			JLabel dummy=new JLabel("");
-			dummy.setSize(140,40);
+			dummy.setSize(290,40);
 			dummy.setLocation(10, 300);
 			this.add(dummy);
 		} catch (InvalidInputException e) {

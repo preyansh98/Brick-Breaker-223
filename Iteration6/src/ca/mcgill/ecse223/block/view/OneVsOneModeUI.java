@@ -35,10 +35,11 @@ public class OneVsOneModeUI implements Block223PlayModeInterface{
 	private JLayeredPane player1Area;
 	private JTextArea textArea;
 	private UserEntryListener bp;
-
+	private boolean endgame=false;
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	@SuppressWarnings("unused") //suppressing since it is called from other UI
 	public void initialize() {
@@ -225,6 +226,7 @@ public class OneVsOneModeUI implements Block223PlayModeInterface{
 	}
 
 	protected void doStartGame() {
+		if (endgame)return ;
 		btnStart.setVisible(false);
 		bp = new UserEntryListener();
 		Runnable r1 = new Runnable() {
@@ -285,15 +287,25 @@ public class OneVsOneModeUI implements Block223PlayModeInterface{
 
 	@Override
 	public void endGame(int nrOfLives, TOHallOfFameEntry hof) {
+		endgame=true;
+		lblScore1.setText("Score: " +Block223Controller.getScoreAndLivePlayer(1)[0]);
+		lblLives1.setText("Lives: "+ Block223Controller.getScoreAndLivePlayer(1)[1]);
+		lblScore2.setText("Score: " +Block223Controller.getScoreAndLivePlayer(2)[0]);
+		lblLives2.setText("Lives: "+ Block223Controller.getScoreAndLivePlayer(2)[1]);
 		if(nrOfLives==0) {
 			((PlayAreaUI) player1Area).displayGameOver();
+			((PlayAreaUI) player2Area).displayCongratulations();
 		}else if (nrOfLives==1) {
 			((PlayAreaUI) player1Area).displayCongratulations();
+			((PlayAreaUI) player2Area).displayGameOver();
 		}else if (nrOfLives==2) {
+			((PlayAreaUI) player1Area).displayCongratulations();
 			((PlayAreaUI) player2Area).displayGameOver();
 		}else if (nrOfLives==3) {
 			((PlayAreaUI) player2Area).displayCongratulations();
+			((PlayAreaUI) player1Area).displayGameOver();
 		}
+		
 		((HallOfFame) HOF).refresh();
 		
 	}
