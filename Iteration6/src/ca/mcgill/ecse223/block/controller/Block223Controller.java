@@ -696,7 +696,7 @@ public class Block223Controller {
 
 	public static void testGame(Block223PlayModeInterface ui) throws InvalidInputException {
 		selectTestGame();
-		startGame(ui);
+		startPlayGame(ui);
 
 	}
 	public static void selectTestGame() throws InvalidInputException{
@@ -1160,7 +1160,7 @@ public class Block223Controller {
 					ui.endGame(0,null);
 				}
 			}
-			if (game2.getPlayStatus()==PlayStatus.GameOver && fresh2) {
+			else if (game2.getPlayStatus()==PlayStatus.GameOver && fresh2) {
 				fresh1=false;
 				while (game.getPlayStatus()!=PlayStatus.GameOver) {
 					game.play();
@@ -1179,7 +1179,6 @@ public class Block223Controller {
 		if(gameHasPlayer){
 			game.setBounce(null);
 			game2.setBounce(null);
-			if (Block223Application.getSecondPlayer()==null)game2.delete();
 			Block223 block223=Block223Application.getBlock223();
 			Block223Persistence.save(block223);
 		}
@@ -1187,6 +1186,7 @@ public class Block223Controller {
 
 	public static void unselectBothGames() {
 		Block223Application.setCurrentGame(null);
+		if (Block223Application.getSecondPlayer()==null)Block223Application.getSecondPlayableGame().delete();
 		Block223Application.setCurrentPlayableGame(null);
 		Block223Application.setSecondPlayableGame(null);
 	}

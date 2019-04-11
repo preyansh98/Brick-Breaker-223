@@ -219,7 +219,7 @@ public class OneVsOneModeUI implements Block223PlayModeInterface{
 
 	protected void goBack() {
 		if(btnStart.isVisible()) {
-			Block223Controller.unselectGame();
+			Block223Controller.unselectBothGames();
 			frame.dispose();
 			PlayerDashUI.init();	
 		}

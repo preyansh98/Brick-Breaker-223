@@ -209,6 +209,7 @@ public class SecondPlayerLoginUI {
 	private static void login() {
 		try {
 			Block223Controller.loginSecondPlayer(txtLoginUser.getText(), new String(txtLoginPass.getPassword()));
+			frame.dispose();
 			OneVsOneModeUI test = new OneVsOneModeUI();
 			test.initialize();
 		}catch(InvalidInputException e) {
@@ -218,6 +219,7 @@ public class SecondPlayerLoginUI {
 	}
 
 	private static void ghostMode() {
+		frame.dispose();
 		OneVsOneModeUI test = new OneVsOneModeUI();
 		test.initialize();
 		

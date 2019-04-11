@@ -147,7 +147,7 @@ public class Grid extends JLayeredPane implements Runnable {
 									LevelSettingUI.positionBlock(currentBlock.getId(), newX, newY);
 									previewDrag=false;
 								} else if(gridObjectSelected) {
-									LevelSettingUI.moveBlock(movedX, movedY, newX, newY);
+									if (newX!=movedX || newY!=movedY) LevelSettingUI.moveBlock(movedX, movedY, newX, newY);
 									gridObjectSelected=false;
 								}
 							} else if (gridObjectSelected && x >= trashX && y >= trashY && x <= maxTrashX && y <= maxTrashY) {

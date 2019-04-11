@@ -915,7 +915,7 @@ public class PlayedGame implements Serializable
     if (gravityMode){
  		
  			counter++;
- 		if(counter%20==0){
+ 		if(counter%10==0){
  		int lowestY=0;
  		for (PlayedBlockAssignment blockassi:getBlocks()){
 		   		if(lowestY<blockassi.getY()){
@@ -1003,7 +1003,7 @@ public class PlayedGame implements Serializable
 	}
 	 for (PlayedBlockAssignment blockassi:getBlocks()){
 	  		if(lowestY==blockassi.getY()){
-		  		blockassi.setY(blockassi.getY()-counter/20);
+		  		blockassi.setY(blockassi.getY()-counter/10);
 		   	}
 	}
   }
@@ -1252,8 +1252,8 @@ public class PlayedGame implements Serializable
   			 newDirX=-getBallDirectionX();
   			 newDirY=getBallDirectionY()+sign(getBallDirectionY())*0.1*Math.abs(newDirX);
   			 if (Math.abs(newDirX)>10 || Math.abs(newDirY)>10){
-  			 	newDirX/=10;
-  			 	newDirY/=10;
+  			 	newDirX/=2;
+  			 	newDirY/=2;
   			 
   			 }
   			 if(getBallDirectionX()!=0){
@@ -1279,8 +1279,8 @@ public class PlayedGame implements Serializable
   			 newDirY=-getBallDirectionY();
   			 newDirX=getBallDirectionX()+sign(getBallDirectionX())*0.1*Math.abs(newDirY);
   			 if (Math.abs(newDirX)>10 || Math.abs(newDirY)>10){
-  			 	newDirX/=10;
-  			 	newDirY/=10;
+  			 	newDirX/=2;
+  			 	newDirY/=2;
   			 
   			 }
   			if(getBallDirectionX()!=0){
@@ -1306,8 +1306,8 @@ public class PlayedGame implements Serializable
   			 newDirX=-getBallDirectionX();
   			 newDirY=-getBallDirectionY();
   			 if (Math.abs(newDirX)>10 || Math.abs(newDirY)>10){
-  			 	newDirX/=10;
-  			 	newDirY/=10;
+  			 	newDirX/=2;
+  			 	newDirY/=2;
   			 }
   			if(getBallDirectionX()!=0){
   			 newX=bp.getX()+remainingX*newDirX/getBallDirectionX();

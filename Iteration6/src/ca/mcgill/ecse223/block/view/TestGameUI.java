@@ -164,7 +164,7 @@ public class TestGameUI implements Block223PlayModeInterface{
 					public void run() {
 						
 							try {
-								Block223Controller.startGame(TestGameUI.this);
+								Block223Controller.startPlayGame(TestGameUI.this);
 								
 							} catch (InvalidInputException e) {
 								errorMsg.setText(e.getMessage());
