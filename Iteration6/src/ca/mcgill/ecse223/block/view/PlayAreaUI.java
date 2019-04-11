@@ -78,7 +78,7 @@ public class PlayAreaUI extends JLayeredPane {
 			}
 			// Draw Paddle
 				Rectangle2D paddle=new Rectangle2D.Double(game.getCurrentPaddleX(),355,game.getCurrentPaddleLength(),5);
-				g2d.setColor(Color.gray);
+				g2d.setColor(Color.WHITE);
 				g2d.fill(paddle);
 			// Draw Ball\
 				g2d.setColor(Color.RED);

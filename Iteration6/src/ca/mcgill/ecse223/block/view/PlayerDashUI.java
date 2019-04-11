@@ -210,7 +210,7 @@ public class PlayerDashUI {
 					newGameBox.addItem(game.getName());
 				}else{
 					ids[i]=game.getNumber();
-					oldGameBox.addItem(game.getName()+", lvl:  "+ game.getCurrentLevel());
+					oldGameBox.addItem(game.getName()+", lvl:  "+ game.getCurrentLevel()+", id: "+ids[i]);
 					i++;
 				}
 			}
