@@ -3,7 +3,8 @@ First Place Winner for implementation of arcade game Brick Breaker using an MVC 
 
 <img src = "https://user-images.githubusercontent.com/1579701/58526157-1513a100-819c-11e9-8316-2d35cf688d94.png">
 
-This repository contains all iterations in order to the final project. The release version is the <b><u>Iteration 6</b></u> folder. 
+>This repository contains all iterations in order to the final project.
+> The release version is the <b><u>Iteration 6</b></u> folder. 
 
 ## About the Project
 
@@ -30,12 +31,12 @@ Beyond the scope of the project, we implemented the following additional feature
 
 ## Contributors
 
-* <a href="(https://github.com/preyansh98/Brick-Breaker-223/commits?author=preyansh98)">Preyansh Kaushik</a>
-* <a href="(https://github.com/preyansh98/Brick-Breaker-223/commits?author=zakessad)">Zakaria Essadaoui </a>
-* <a href="(https://github.com/preyansh98/Brick-Breaker-223/commits?author=Elie-Elia)">Elie Elia</a>
-* <a href="(https://github.com/preyansh98/Brick-Breaker-223/commits?author=rqasmi)">Ragheed Qasmieh</a>
-* <a href="(https://github.com/preyansh98/Brick-Breaker-223/commits?author=osmanvee)">Osman Warsi</a>
-* <a href="(https://github.com/preyansh98/Brick-Breaker-223/commits?author=marw12)">Marwan Shiraz</a>
+* [Preyansh Kaushik](https://github.com/preyansh98/Brick-Breaker-223/commits?author=preyansh98)
+* [Zakaria Essadaoui](https://github.com/preyansh98/Brick-Breaker-223/commits?author=zakessad)
+* [Elie Elia](https://github.com/preyansh98/Brick-Breaker-223/commits?author=Elie-Elia)
+* [Ragheed Qasmieh](https://github.com/preyansh98/Brick-Breaker-223/commits?author=rqasmi)
+* [Osman Varsee](https://github.com/preyansh98/Brick-Breaker-223/commits?author=osmanvee)
+* [Marwan Khan](https://github.com/preyansh98/Brick-Breaker-223/commits?author=marw12)
 
 
 
